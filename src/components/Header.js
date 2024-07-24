@@ -4,26 +4,26 @@ import { redColor, blackColor, grayColor, whiteColor } from '../constants/Color'
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import { spacings, style } from '../constants/Fonts';
 import { BaseStyle } from '../constants/Style';
-import { LOVE_DRINK_HEADER_LOGO, SHOPPINGCART_ICON, MENU_ICON, SHOPPINGBUCKET_ICON, SEARCH_ICON, DARK_MODE_APP_CARTIFY_HEADER_LOGO_NEW, WHITE_MENU_ICON, WHITE_SHOPPINGBUCKET_ICON, WHITE_SEARCH_ICON, APP_CARTIFY_HEADER_LOGO_NEW } from '../assests/images'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from '../utils';
-import { logEvent } from '@amplitude/analytics-react-native';
-import MenuModal from '../components/Modal/MenuModal';
-import { useCart } from '../context/Cart';
+// import { logEvent } from '@amplitude/analytics-react-native';
+// import MenuModal from '../components/Modal/MenuModal';
+// import { useCart } from '../context/Cart';
+import { BELL_ICON, MAIN_ICON, MENU_ICON, SEARCH_ICON } from '../assets/Image';
 const { alignItemsCenter, alignJustifyCenter, flexDirectionRow, flex, positionRelative, positionAbsolute, justifyContentSpaceBetween } = BaseStyle;
 
 const Header = ({ navigation, backIcon, text, onPress, textinput, notification, image, closeIcon, menuImage, onClosePress, shoppingCart, onPressShopByCatagory }: { navigation: any, backIcon?: boolean, text?: string, textinput?: boolean, notification?: boolean }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const OnClickBackIcon = () => {
-    logEvent('Back Button Clicked');
+    // logEvent('Back Button Clicked');
     navigation.goBack()
   }
   const OnClickCartIcon = () => {
-    logEvent('CartIcon Clicked');
-    navigation.navigate("CartModal")
+    // logEvent('CartIcon Clicked');
+    // navigation.navigate("CartModal")
   }
   const OnClickSearchBar = () => {
-    logEvent('SearchBar Clicked');
-    navigation.navigate('Search', { navigation: navigation })
+    // logEvent('SearchBar Clicked');
+    // navigation.navigate('Search', { navigation: navigation })
   }
   const OnClickClose = () => {
     onClosePress()
@@ -36,38 +36,38 @@ const Header = ({ navigation, backIcon, text, onPress, textinput, notification, 
     return text;
   };
   return (
-    <View >
+    <View style={{paddingHorizontal:10}} >
       <View style={[flexDirectionRow, alignJustifyCenter, justifyContentSpaceBetween, { height: hp(6), width: "99%" }]}>
         <View style={[flexDirectionRow, alignItemsCenter]}>
-          {backIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickBackIcon}>
-            <Ionicons name={"arrow-back"} size={30} color={colors.blackColor} />
-          </TouchableOpacity>}
-          {closeIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickClose}>
+       {/* <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickBackIcon}>
+            <Ionicons name={"arrow-back"} size={30} color={blackColor} />
+          </TouchableOpacity> */}
+          {/* {closeIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickClose}>
             <Ionicons name={"close"} size={35} color={colors.blackColor} />
-          </TouchableOpacity>}
-          {menuImage && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={() => setModalVisible(true)}>
+          </TouchableOpacity>} */}
+           <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} >
             <Image source={MENU_ICON} style={{ width: wp(8), height: hp(5), resizeMode: "contain", marginLeft: spacings.large }} />
-          </TouchableOpacity>}
-          {text && <Text style={[styles.text, { color: colors.blackColor }]}>{trimcateText(text)}</Text>}
+          </TouchableOpacity>
+          {/* {text && <Text style={[styles.text, { color: colors.blackColor }]}>{trimcateText(text)}</Text>} */}
         </View>
 
-        {image && <Image source={ APP_CARTIFY_HEADER_LOGO_NEW} style={{ width: wp(34), height: hp(4.5), resizeMode: "contain", marginLeft: spacings.Large2x }} />}
+         <Image source={MAIN_ICON} style={{ width: wp(34), height: hp(3.5), resizeMode: "contain", marginLeft: spacings.Large2x }} />
         <View style={[flexDirectionRow, { width: "auto" }, justifyContentSpaceBetween, alignItemsCenter]}>
-          {textinput && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickSearchBar}>
-            <Image source={ SEARCH_ICON} style={{ width: wp(8), height: hp(3.5), resizeMode: "contain", marginLeft: spacings.large }} />
-          </TouchableOpacity>}
-          {shoppingCart && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickCartIcon}>
-            <Image source={SHOPPINGBUCKET_ICON} style={{ width: wp(8), height: hp(3.3), resizeMode: "contain", marginLeft: spacings.large }} />
+        <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} >
+            <Image source={SEARCH_ICON} style={{ width: wp(8), height: hp(3.5), resizeMode: "contain", marginLeft: spacings.large }} />
+          </TouchableOpacity>
+        <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickCartIcon}>
+            <Image source={BELL_ICON} style={{ width: wp(8), height: hp(3.3), resizeMode: "contain", marginLeft: spacings.large }} />
             {/* {totalQuantity > 0 && ( // Replace cartItemCount with your actual state or prop representing the item count
               <View style={styles.badgeContainer}>
                 <Text style={styles.badgeText}>{totalQuantity}</Text>
               </View>
             )} */}
-          </TouchableOpacity>}
+          </TouchableOpacity>
         </View>
       </View>
-      {modalVisible && <MenuModal
-        modalVisible={modalVisible} setModalVisible={setModalVisible} onPressCart={OnClickCartIcon} onPressSearch={OnClickSearchBar} navigation={navigation} onPressShopByCatagory={onPressShopByCatagory} />}
+      {/* {modalVisible && <MenuModal
+        modalVisible={modalVisible} setModalVisible={setModalVisible} onPressCart={OnClickCartIcon} onPressSearch={OnClickSearchBar} navigation={navigation} onPressShopByCatagory={onPressShopByCatagory} />} */}
     </View>
   );
 };

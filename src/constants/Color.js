@@ -1,5 +1,7 @@
 export const redColor="#B62025";
 export const grayColor="#646E77";
+export const black="#272727";
+export const green ="#0F6B00"
 
 
 
