@@ -4,7 +4,6 @@ import { whiteColor } from '../constants/Color';
 import { VIP_POSTER } from '../assets/Image';
 
 export default function VipAddSection({item, onPress}) {
-  console.log('RecommendedVideo>>', item);
 
   return (
     <TouchableOpacity style={styles.container}>

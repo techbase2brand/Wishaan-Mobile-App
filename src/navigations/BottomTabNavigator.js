@@ -1,4 +1,6 @@
+import { useEffect,useState } from 'react';
 import {Image, Text} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import WalletScreen from '../screens/WalletScreen';
@@ -13,10 +15,45 @@ import {
   SAVED_ICON,
   WALLET_ICON,
 } from '../assets/Image';
+import SplashScreen from '../screens/SplashScreen';
+import ReelsScreen from '../screens/ReelsScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
 
 function BottomTabNavigator() {
+  function HomeStack() {
+    return (
+      <Stack.Navigator
+        initialRouteName="Home"
+      >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ReelsScreen"
+          component={ReelsScreen}
+          options={{ headerShown: false }}
+          
+        />
+       
+      </Stack.Navigator>
+    );
+  }
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false); 
+    }, 3000);
+  }, []);
+  
+  
+  if (isLoading) {
+    return <SplashScreen />; // Render the splash screen while loading
+  }
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -64,7 +101,7 @@ function BottomTabNavigator() {
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{headerShown: false}}
       />
       <Tab.Screen

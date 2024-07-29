@@ -7,6 +7,7 @@ import rootReducer from './reducers/combineReducer'; // Ensure this path is corr
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['videos', 'cachedFiles'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

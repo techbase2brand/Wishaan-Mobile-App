@@ -3,7 +3,6 @@ import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import { whiteColor } from '../constants/Color';
 
 export default function SellersComponent({item, onPress}) {
-  console.log('RecommendedVideo>>', item);
 
   return (
     <TouchableOpacity style={styles.container}>

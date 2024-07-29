@@ -1,3 +1,7 @@
+// Splash
+export const SPLASH_IMAGE = require('./SplashImg.jpg');
+
+
 // BottomTab
 export const HOME_ICON = require('./BottomTabImages/Home.png');
 export const WALLET_ICON = require('./BottomTabImages/Wallet.png');

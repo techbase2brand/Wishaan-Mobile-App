@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,14 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  // ScrollView,
+  Dimensions,
+  SectionList,
   ScrollView,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useSelector} from 'react-redux';
+import RNFetchBlob from 'rn-fetch-blob';
 import PagerView from 'react-native-pager-view';
 import Header from '../components/Header';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
@@ -23,13 +27,14 @@ import {Images, Videos} from '../constants/Constants';
 import RecommendedVideo from '../components/RecommendedVideo';
 import SellersComponent from '../components/SellersComponent';
 import VipAddSection from '../components/VipAddSection';
+import VideoList from '../components/VideoList';
+const {width, height} = Dimensions.get('window');
+export default function HomeScreen({navigation}) {
+  const {loading, videos, error} = useSelector(state => state.videos);
+  // const cachedFiles = useSelector(state => state.cachedFiles.cachedFiles);
 
-export default function HomeScreen() {
-  const {loading, videos, error,cachedVideos } = useSelector(state => state.videos);
-  console.log('Video videos persisit:', videos);
-  console.log('Video cachedVideos cachedVideos:', cachedVideos);
-
-
+// console.log("videosvideos", videos);
+  
   const topSellingProducts = [
     {
       id: '1',
@@ -58,7 +63,17 @@ export default function HomeScreen() {
     },
   ];
   const [selectedFilter, setSelectedFilter] = useState('All');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState();
+  const [videosWithAds, setVideosWithAds] = useState([]);
+  const [videosWithoutAds, setVideosWithoutAds] = useState([]);
+
+// console.log("videosWithoutAds", videosWithoutAds, "videosWithAds>>>>>>",videosWithAds);
+  useEffect(() => {
+    if (videos && videos.length > 0) {
+      setVideosWithAds(videos.slice(0, 3));
+      setVideosWithoutAds(videos.slice(3, 6));
+    }
+  }, [videos]);
 
   // List of filters
   const filters = ['All', 'Beauty Appliances', 'Home Decor', 'Speakers'];
@@ -91,184 +106,422 @@ export default function HomeScreen() {
     // Handle video play logic here
   };
 
-  const onPageSelected = useCallback(
-    event => {
-      const newIndex = event.nativeEvent.position;
-      setCurrentIndex(newIndex);
-      // updateLastAccessedTime(cachedFiles[newIndex]);
+  
 
-      // Fetch more videos if nearing the end of the list
-      if (newIndex >= videos.length - 2) {
-        // fetchMoreVideos();
-      }
-    },
-    [videos],
-    
-  );
+  console.log('current index>>>', currentIndex);
 
-  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
-    if (viewableItems.length > 0) {
-      setCurrentIndex(viewableItems[0].index);
-    }
-  }, [videos]);
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
   };
+
+  const onViewableItemsChanged = useCallback(({viewableItems}) => {
+    if (viewableItems.length > 0) {
+      const visibleItem = viewableItems[0];
+      setCurrentIndex(visibleItem.index);
+      console.log('Current Index:', visibleItem.index);
+    }
+  }, []);
+
+  const sections = [
+    {
+      title: 'Top Selling Product',
+      data: [{type: 'header'}],
+    },
+    {
+      title: 'Top Selling Product',
+      data: [{type: 'topSellingProducts'}],
+    },
+    {
+      title: 'Carousel',
+      data: [{type: 'carousel'}],
+    },
+    {
+      title: 'Filters',
+      data: [{type: 'filters'}],
+    },
+    {
+      title: 'videosWithAds',
+      data: [{type: 'videosWithAds'}],
+    },
+    {
+      title: 'Recommended Videos',
+      data: [{type: 'recommendedVideos'}],
+    },
+    {
+      title: 'Most Popular Sellers',
+      data: [{type: 'mostPopularSellers'}],
+    },
+    {
+      title: 'videosWithoutAds',
+      data: [{type: 'videosWithoutAds'}],
+    },
+    {
+      title: 'VIP Number Shop',
+      data: [{type: 'vipNumberShop'}],
+    },
+  ];
+
+
+
+  const renderSectionContent = ({item}) => {
+    if (item.type === 'videosWithoutAds') {
+    }
+    switch (item.type) {
+      case 'header':
+        return <Header />;
+      case 'topSellingProducts':
+        return (
+          <>
+            <View style={styles.sectionTitle}>
+              <Text style={styles.titleText}>Top Selling Product</Text>
+            </View>
+            <FlatList
+              data={topSellingProducts}
+              renderItem={({item}) => <ProductItem item={item} />}
+              keyExtractor={item => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.productList}
+            />
+          </>
+        );
+      case 'carousel':
+        return <CarouselComponent />;
+      case 'filters':
+        return (
+          <FlatList
+            data={filters}
+            renderItem={renderItem}
+            keyExtractor={item => item}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.filterContainer}
+          />
+        );
+      case 'videosWithAds':
+        return (
+          <VideoList
+            videos={videosWithAds}
+            currentIndex={currentIndex}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
+            navigation={navigation}
+          />
+        );
+    
+      case 'recommendedVideos':
+        return (
+          <>
+            <View style={{height: 4, backgroundColor: grayColor}} />
+            <View style={{marginVertical: 10, marginLeft: 10}}>
+              <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
+                <Image source={REEL_PLAY_BLACK} style={styles.reelIcon} />
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginTop: 5,
+                    fontWeight: '600',
+                    color: black,
+                  }}>
+                  Recommended
+                </Text>
+              </View>
+              {/* </View> */}
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.listContainer}
+                showsHorizontalScrollIndicator={false}>
+                {Videos?.map(item => (
+                  <View key={item.video_id}>
+                    <RecommendedVideo item={item} onPress={handlePressItem} />
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+          </>
+        );
+      case 'mostPopularSellers':
+        return (
+          <>
+            <View style={{height: 4, backgroundColor: 'gray'}} />
+            <View style={{marginVertical: 20, marginLeft: 10}}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: '600',
+                  color: black,
+                  alignSelf: 'center',
+                  marginBottom: 10,
+                }}>
+                Most Popular Sellers
+              </Text>
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.listContainer}
+                showsHorizontalScrollIndicator={false}>
+                {Images.map(item => (
+                  <View key={item.video_id}>
+                    <SellersComponent item={item} onPress={handlePressItem} />
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+            <View style={{height: 4, backgroundColor: grayColor}} />
+          </>
+        );
+        case 'videosWithoutAds':
+          return (
+            <VideoList
+              videos={videosWithoutAds}
+              currentIndex={currentIndex}
+              onViewableItemsChanged={onViewableItemsChanged}
+              viewabilityConfig={viewabilityConfig}
+              navigation={navigation}
+            />
+          );
+      case 'vipNumberShop':
+        return (
+          <>
+           <View style={{height: 4, backgroundColor: grayColor}} />
+            <View style={{marginVertical: 20, marginLeft: 10}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: wp(95),
+                }}>
+                <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
+                  <Image source={VIP_LOGO} style={styles.reelIcon} />
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: '500',
+                        color: redColor,
+                      }}>
+                      VIP Number Shop
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontWeight: '500',
+                        color: '#999999',
+                      }}>
+                      Sponsored
+                    </Text>
+                  </View>
+                </View>
+                <Entypo name="cross" size={25} color="gray" />
+              </View>
+              <ScrollView
+                horizontal
+                contentContainerStyle={styles.listContainer}
+                showsHorizontalScrollIndicator={false}>
+                {Images.map(item => (
+                  <View key={item.video_id}>
+                    <VipAddSection item={item} onPress={handlePressItem} />
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <ScrollView style={{flex: 1}}>
-      <Header />
-      {/* <ScrollView> */}
-      {/* <View style={styles.container}>
-        <Image
-          source={SEARCH_RED}
-          style={{width: wp(6), height: hp(5), resizeMode: 'contain'}}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Search for ..."
-          placeholderTextColor="#888"
-        />
-      </View> */}
-
-      <View style={styles.sectionTitle}>
-        <Text style={styles.titleText}>Top Selling Product</Text>
-      </View>
-      <View>
-        <FlatList
-          data={topSellingProducts}
-          renderItem={({item}) => <ProductItem item={item} />}
-          keyExtractor={item => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.productList}
-        />
-      </View>
-      <CarouselComponent />
-      <View style={styles.filterContainer}>
-        <FlatList
-          data={filters}
-          renderItem={renderItem}
-          keyExtractor={item => item}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-      {/* <PagerView
-        // style={{flex:1}}
-        initialPage={0}
-        onPageSelected={onPageSelected}
-        orientation="vertical">
-        {videos?.map((item, index) => (
-          <VideoItem
-            key={index.toString()}
-            item={item}
-            index={index}
-            currentIndex={currentIndex}
-            // onPress={() => navigation.navigate('ReelScreen')}
-          />
-        ))}
-      </PagerView> */}
-      {/* <VideoItem />
-        <VideoItem />
-        <VideoItem /> */}
-
-      <FlatList
-        data={videos}
-        renderItem={({item, index}) => (
-          <VideoItem
-            key={index.toString()}
-            item={item}
-            index={index}
-            currentIndex={currentIndex}
-          />
-        )}
-        keyExtractor={item => item.video_id.toString()}
-        showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-      />
-      {/* <RecommendedVideo  /> */}
-      <View style={{height: 4, backgroundColor: grayColor}} />
-      <View style={{marginVertical: 20, marginLeft: 10}}>
-        <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
-          <Image source={REEL_PLAY_BLACK} style={styles.reelIcon} />
-          <Text style={{fontSize: 18, fontWeight: '500', color: black}}>
-            Recommended
-          </Text>
-        </View>
-        <FlatList
-          data={Videos}
-          renderItem={({item}) => (
-            <RecommendedVideo item={item} onPress={handlePressItem} />
-          )}
-          keyExtractor={item => item.video_id.toString()}
-          contentContainerStyle={styles.listContainer}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-      <View style={{height: 4, backgroundColor: 'gray'}} />
-      <View style={{marginVertical: 20, marginLeft: 10}}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: '500',
-            color: black,
-            alignSelf: 'center',
-            marginBottom: 10,
-          }}>
-          Most Popular Sellers
-        </Text>
-        <ScrollView
-          horizontal
-          contentContainerStyle={styles.listContainer}
-          showsHorizontalScrollIndicator={false}>
-          {Images.map(item => (
-            <View key={item.video_id}>
-              <SellersComponent item={item} onPress={handlePressItem} />
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      <View style={{height: 4, backgroundColor: grayColor}} />
-
-      <View style={{marginVertical: 20, marginLeft: 10}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: wp(95),
-          }}>
-          <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
-            <Image source={VIP_LOGO} style={styles.reelIcon} />
-            <View>
-              <Text style={{fontSize: 16, fontWeight: '500', color: redColor}}>
-                VIP Number Shop
-              </Text>
-              <Text style={{fontSize: 14, fontWeight: '500', color: '#999999'}}>
-                Sponsored
-              </Text>
-            </View>
-          </View>
-          <Entypo name="cross" size={25} color="gray" />
-        </View>
-        <ScrollView
-          horizontal
-          contentContainerStyle={styles.listContainer}
-          showsHorizontalScrollIndicator={false}>
-          {Images.map(item => (
-            <View key={item.video_id}>
-              <VipAddSection item={item} onPress={handlePressItem} />
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      {/* </ScrollView> */}
-    </ScrollView>
+    <SectionList
+      sections={sections}
+      keyExtractor={(item, index) => item.type + index}
+      renderItem={renderSectionContent}
+      // renderSectionHeader={renderSectionHeader}
+      contentContainerStyle={{paddingBottom: 20, backgroundColor: '#fff'}}
+    />
   );
 }
 
+//   return (
+//       <ScrollView style={{ flex: 1 }}>
+//       <Header />
+//       {/* <ScrollView> */}
+//       {/* <View style={styles.container}>
+//         <Image
+//           source={SEARCH_RED}
+//           style={{width: wp(6), height: hp(5), resizeMode: 'contain'}}
+//         />
+//         <TextInput
+//           style={styles.input}
+//           placeholder="Search for ..."
+//           placeholderTextColor="#888"
+//         />
+//       </View> */}
+
+//       <View style={styles.sectionTitle}>
+//         <Text style={styles.titleText}>Top Selling Product</Text>
+//       </View>
+//       <View>
+//         <FlatList
+//           data={topSellingProducts}
+//           renderItem={({item}) => <ProductItem item={item} />}
+//           keyExtractor={item => item.id}
+//           horizontal
+//           showsHorizontalScrollIndicator={false}
+//           contentContainerStyle={styles.productList}
+//         />
+//       </View>
+//       <CarouselComponent />
+//       <View style={styles.filterContainer}>
+//         <FlatList
+//           data={filters}
+//           renderItem={renderItem}
+//           keyExtractor={item => item}
+//           horizontal
+//           showsHorizontalScrollIndicator={false}
+//         />
+//       </View>
+//       <VideoList
+//         videos={videos}
+//         currentIndex={currentIndex}
+//         onViewableItemsChanged={onViewableItemsChanged}
+//         viewabilityConfig={viewabilityConfig}
+//       />
+//       {/* <View>
+//         <FlatList
+//           data={videos}
+//           renderItem={({item, index}) => (
+//             <VideoItem
+//               key={item.video_id.toString()}
+//               item={item}
+//               index={index}
+//               currentIndex={currentIndex}
+//               isPlaying={index === currentIndex}
+//             />
+//           )}
+//           keyExtractor={item => item.video_id.toString()}
+//           showsHorizontalScrollIndicator={false}
+//           onViewableItemsChanged={onViewableItemsChanged}
+//           viewabilityConfig={viewabilityConfig}
+//           maxToRenderPerBatch={1}
+//           initialNumToRender={1}
+//           scrollEventThrottle={16}
+//           snapToInterval={height}
+//           decelerationRate="fast"
+//           pagingEnabled
+//         />
+//       </View> */}
+//       {/* <RecommendedVideo  /> */}
+//       <View style={{height: 4, backgroundColor: grayColor}} />
+//       <View style={{marginVertical: 20, marginLeft: 10}}>
+//         <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
+//           <Image source={REEL_PLAY_BLACK} style={styles.reelIcon} />
+//           <Text
+//             style={{
+//               fontSize: 18,
+//               marginTop: 5,
+//               fontWeight: '500',
+//               color: black,
+//             }}>
+//             Recommended
+//           </Text>
+//         </View>
+//         {/* <FlatList
+//           data={videos}
+//           renderItem={({item}) => (
+//             <RecommendedVideo item={item}  key={item.video_id} onPress={handlePressItem} />
+//           )}
+//           keyExtractor={item => item.video_id.toString()}
+//           contentContainerStyle={styles.listContainer}
+//           horizontal
+//           showsHorizontalScrollIndicator={false}
+//         /> */}
+//         <ScrollView
+//           horizontal
+//           contentContainerStyle={styles.listContainer}
+//           showsHorizontalScrollIndicator={false}>
+//           {videos?.map(item => (
+//             <View key={item.video_id}>
+//               <RecommendedVideo
+//                 item={item}
+//                 key={item.video_id}
+//                 onPress={handlePressItem}
+//               />
+//             </View>
+//           ))}
+//         </ScrollView>
+//       </View>
+//       <View style={{height: 4, backgroundColor: 'gray'}} />
+//       <View style={{marginVertical: 20, marginLeft: 10}}>
+//         <Text
+//           style={{
+//             fontSize: 18,
+//             fontWeight: '500',
+//             color: black,
+//             alignSelf: 'center',
+//             marginBottom: 10,
+//           }}>
+//           Most Popular Sellers
+//         </Text>
+//         <ScrollView
+//           horizontal
+//           contentContainerStyle={styles.listContainer}
+//           showsHorizontalScrollIndicator={false}>
+//           {Images.map(item => (
+//             <View key={item.video_id}>
+//               <SellersComponent item={item} onPress={handlePressItem} />
+//             </View>
+//           ))}
+//         </ScrollView>
+//       </View>
+//       <View style={{height: 4, backgroundColor: grayColor}} />
+
+//       <View style={{marginVertical: 20, marginLeft: 10}}>
+//         <View
+//           style={{
+//             flexDirection: 'row',
+//             justifyContent: 'space-between',
+//             width: wp(95),
+//           }}>
+//           <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
+//             <Image source={VIP_LOGO} style={styles.reelIcon} />
+//             <View>
+//               <Text style={{fontSize: 16, fontWeight: '500', color: redColor}}>
+//                 VIP Number Shop
+//               </Text>
+//               <Text style={{fontSize: 14, fontWeight: '500', color: '#999999'}}>
+//                 Sponsored
+//               </Text>
+//             </View>
+//           </View>
+//           <Entypo name="cross" size={25} color="gray" />
+//         </View>
+//         <ScrollView
+//           horizontal
+//           contentContainerStyle={styles.listContainer}
+//           showsHorizontalScrollIndicator={false}>
+//           {Images.map(item => (
+//             <View key={item.video_id}>
+//               <VipAddSection item={item} onPress={handlePressItem} />
+//             </View>
+//           ))}
+//         </ScrollView>
+//       </View>
+//       {/* </ScrollView> */}
+//     </ScrollView>
+
+//   );
+// }
+
 const styles = StyleSheet.create({
+  sectionHeader: {
+    padding: 10,
+    backgroundColor: '#f8f8f8',
+  },
+  sectionHeaderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -288,7 +541,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 12,
     alignSelf: 'center',
   },
   titleText: {
