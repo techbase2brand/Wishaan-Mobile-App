@@ -5,28 +5,27 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
 } from 'react-native';
 // import HomeScreen from './src/screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './src/navigations/BottomTabNavigator';
+import { fetchVideosRequest, fetchVideosSuccess } from './src/redux/actions/videoActions';
+import { useDispatch } from 'react-redux';
+import { Videos } from './src/constants/Constants';
 
-function App(): React.JSX.Element {
-  // const isDarkMode = useColorScheme() === 'dark';
-
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
-
+function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchVideosRequest());
+  
+    dispatch(fetchVideosSuccess(Videos));
+  }, [, dispatch]);
+  
   return (
     <SafeAreaView style={{flex:1}}>
      <NavigationContainer>
