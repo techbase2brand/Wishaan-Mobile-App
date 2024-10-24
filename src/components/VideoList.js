@@ -14,7 +14,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const { height } = Dimensions.get('window');
 
 const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabilityConfig, navigation, }) => {
-  console.log("cachedFilescachedFiles",cachedFiles);
   const videosPerPage = 3;
   const timerRef = useRef(null);
   const VIDEO_DURATION = 5000;

@@ -107,7 +107,10 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
+    implementation project(':rn-fetch-blob')
+    implementation 'com.danikula:videocache:2.7.1'
+    implementation 'org.slf4j:slf4j-api:1.7.30' 
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

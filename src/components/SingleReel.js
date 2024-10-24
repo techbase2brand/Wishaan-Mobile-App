@@ -65,7 +65,7 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
         // poster={item?.thumb_url}
         // posterResizeMode={'contain'}
         // source={require('../assests/video3.mp4')}
-        source={{ uri: convertToProxyURL(item?.url) }}
+        source={{ uri: convertToProxyURL(item?.video_url) }}
         repeat={true}
         muted
         maxBitRate={2000000}
@@ -77,15 +77,15 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
           console.log('e.isBuffering', e.isBuffering);
           if (e.isBuffering == true) {
             setLoading(true);
-
           } else {
             setLoading(false);
           }
         }}
+        resizeMode='cover'
         style={{
           width: widthPercentageToDP(100),
           height: heightPercentageToDP(100),
-          resizeMode: "cover"
+
         }}
       />
       {/* <View
@@ -125,13 +125,13 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
         <View style={styles.header}>
           <View style={styles.profileContainer}>
             <Image
-              // source={{ uri: 'https://via.placeholder.com/100' }} // Replace with your image
-              source={require('../assests/notificationimage.png')}
+              source={{ uri: 'https://via.placeholder.com/100' }} // Replace with your image
+              // source={require('../assests/notificationimage.png')}
               style={styles.profileImage}
             />
           </View>
           <Text style={styles.userName}>Deepak_Dhingra</Text>
-          <Image
+          {/* <Image
             source={require('../assests/ReelsIcons/tagbasis.png')}
             style={{
               width: 15,
@@ -139,7 +139,7 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
               objectFit: "contain",
               marginLeft: 5
             }}
-          />
+          /> */}
           <TouchableOpacity style={styles.buyNowButton}>
             <Text style={styles.buyNowText}>Buy Now</Text>
           </TouchableOpacity>
@@ -158,7 +158,7 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
           zIndex: 1,
         }}>
         <Image
-          source={require('../assests/ReelsIcons/review.png')}
+          source={require('../assets/ReelsIcons/review.png')}
           style={{
             width: 25,
             height: 25,
@@ -172,7 +172,7 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
         <Text style={{ color: 'white', marginBottom: 10 }}>20.5k</Text>
 
         <Image
-          source={require('../assests/ReelsIcons/sharewhite.png')}
+          source={require('../assets/ReelsIcons/sharewhite.png')}
           style={{
             width: 25,
             height: 25,

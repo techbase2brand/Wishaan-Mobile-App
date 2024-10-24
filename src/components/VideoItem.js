@@ -64,13 +64,12 @@ import { green, redColor } from '../constants/Color';
 
 
 const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
-  console.log("itemitem",item);
   const [loading, setLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   useEffect(() => {
     // Check if the item is in the wishlist and update local state
-    
+
   }, []);
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -97,16 +96,16 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
     setIsSelected(!isSelected); // Toggle the state
   };
 
-  
+
   const extractNumericId = (gid) => {
     const parts = gid.split('/');
     return parts[parts.length - 1]; // Get the last part
   };
   // const variantId = extractNumericId(item.variants[0].variantId);
- const [cartLoading, setCartLoading] = useState(false)
+  const [cartLoading, setCartLoading] = useState(false)
   const handleAddToCart = () => {
     // dispatch(addProductInCart(product));
-   
+
 
   };
   const videoUrl =
@@ -151,7 +150,6 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
               setLoading(false);
             }
           }}
-
         />
       </TouchableOpacity>
       <TouchableOpacity style={{
@@ -197,9 +195,9 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
         <View style={styles.iconContainer}>
           <AntDesign
             onPress={handlePress}
-            name={isSelected ? "heart":"hearto"}
+            name={isSelected ? "heart" : "hearto"}
             size={25}
-            color={isSelected ? redColor :"black"}
+            color={isSelected ? redColor : "black"}
             style={styles.icon}
           />
           {/* <Icon name="comment-o" size={25} color="black" style={styles.icon} /> */}
@@ -297,7 +295,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     marginVertical: 10,
-    width: '27%',
+    width: '25.2%',
   },
   ratingText: {
     color: '#fff',

@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Header from '../components/Header';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../utils';
 import ProductItem from '../components/ProductItem';
@@ -72,13 +72,13 @@ const filters = [
 export default function HomeScreen({ navigation }) {
   const { loading, videos, error } = useSelector(state => state?.videos);
   const [selectedFilter, setSelectedFilter] = useState('All');
-  
+
   useEffect(() => {
   }, [videos]);
   const handleFilterPress = item => {
-  setSelectedFilter(item.name)
+    setSelectedFilter(item.name)
   };
-  
+
   // Render each filter button
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -87,7 +87,7 @@ export default function HomeScreen({ navigation }) {
         item?.name === selectedFilter && styles.selectedFilterButton,
       ]}
       onPress={() => handleFilterPress(item)}
-      >
+    >
       <Text
         style={[
           styles.filterButtonText,
@@ -139,7 +139,7 @@ export default function HomeScreen({ navigation }) {
     return () => clearAllTimers();
   }, [visibleVideoIndices]);
 
- 
+
   const onViewableItemsChanged1 = useRef(({ viewableItems }) => {
     const newVisibleIndices = viewableItems.map(item => item.index);
     if (newVisibleIndices.join() !== visibleVideoIndices.join()) {
@@ -159,7 +159,7 @@ export default function HomeScreen({ navigation }) {
     [visibleVideoIndices, playingIndex]
   );
   const [productImagesAndTitles, setProductImagesAndTitles] = useState([]);
-console.log("productImagesAndTitles..",productImagesAndTitles);
+  console.log("productImagesAndTitles..", productImagesAndTitles);
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
@@ -172,9 +172,9 @@ console.log("productImagesAndTitles..",productImagesAndTitles);
     }
   }, []);
 
- 
- 
- 
+
+
+
   const sections = [
     {
       title: 'Top Selling Product',
@@ -222,9 +222,9 @@ console.log("productImagesAndTitles..",productImagesAndTitles);
         return <Header
           navigation={navigation}
           textinput={true}
-          image={true}
+          mainIcon={true}
           menuImage={true}
-          shoppingCart={true} />;
+          notification={true} />;
       case 'topSellingProducts':
         return (
           <>
@@ -232,8 +232,8 @@ console.log("productImagesAndTitles..",productImagesAndTitles);
               <Text style={styles.titleText}>Top Selling Product</Text>
             </View>
             <FlatList
-              data={ topSellingProducts}
-              renderItem={({ item , index}) => <ProductItem item={item} />}
+              data={topSellingProducts}
+              renderItem={({ item, index }) => <ProductItem item={item} />}
               keyExtractor={index => index}
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -273,12 +273,12 @@ console.log("productImagesAndTitles..",productImagesAndTitles);
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={viewabilityConfig}
             navigation={navigation}
-            // selectedFilter={selectedFilter}
+          // selectedFilter={selectedFilter}
           />
         );
-   
-     
-        default:
+
+
+      default:
         return null;
     }
   };

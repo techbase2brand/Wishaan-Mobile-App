@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect } from 'react';
-import type {PropsWithChildren} from 'react';
+import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -22,15 +22,14 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchVideosRequest());
-  
     dispatch(fetchVideosSuccess(Videos));
-  }, [, dispatch]);
-  
+  }, [dispatch]);
+
   return (
-    <SafeAreaView style={{flex:1}}>
-     <NavigationContainer>
-      <BottomTabNavigator />
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <BottomTabNavigator />
+      </NavigationContainer>
     </SafeAreaView>
   );
 }

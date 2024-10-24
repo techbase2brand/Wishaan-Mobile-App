@@ -1,11 +1,12 @@
-import {Image, Text} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { Image, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import WalletScreen from '../screens/WalletScreen';
 import AccountScreen from '../screens/AccountScreen';
 import CartScreen from '../screens/CartScreen';
 import SavedScreen from '../screens/SavedScreen';
-import {grayColor, redColor} from '../constants/Color';
+import { grayColor, redColor } from '../constants/Color';
 import {
   ACCOUNT_ICON,
   CART_ICON,
@@ -13,14 +14,33 @@ import {
   SAVED_ICON,
   WALLET_ICON,
 } from '../assets/Image';
+import ReelsScreen from '../screens/ReelsScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator()
 
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ReelsScreen"
+        component={ReelsScreen}
+        options={{ headerShown: false }}
+
+      />
+    </Stack.Navigator>
+  );
+}
 function BottomTabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
           let iconName;
           let iconSource;
 
@@ -48,7 +68,7 @@ function BottomTabNavigator() {
             />
           );
         },
-        tabBarLabel: ({focused}) => (
+        tabBarLabel: ({ focused }) => (
           <Text
             style={{
               color: focused ? redColor : grayColor,
@@ -60,32 +80,32 @@ function BottomTabNavigator() {
         ),
       })}
       tabBarOptions={{
-        style: {height: 70, paddingBottom: 10, paddingTop: 10},
+        style: { height: 70, paddingBottom: 10, paddingTop: 10 },
       }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
-        options={{headerShown: false}}
+        component={HomeStack}
+        options={{ headerShown: false }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Wallet"
         component={WalletScreen}
         options={{headerShown: false}}
-      />
+      /> */}
       <Tab.Screen
         name="Saved"
         component={SavedScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Cart"
         component={CartScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Account"
         component={AccountScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Tab.Navigator>
   );

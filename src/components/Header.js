@@ -4,13 +4,12 @@ import { redColor, blackColor, grayColor, whiteColor } from '../constants/Color'
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import { spacings, style } from '../constants/Fonts';
 import { BaseStyle } from '../constants/Style';
-// import { LOVE_DRINK_HEADER_LOGO, SHOPPINGCART_ICON, MENU_ICON, SHOPPINGBUCKET_ICON, SEARCH_ICON, DARK_MODE_APP_CARTIFY_HEADER_LOGO_NEW, WHITE_MENU_ICON, WHITE_SHOPPINGBUCKET_ICON, WHITE_SEARCH_ICON, APP_CARTIFY_HEADER_LOGO_NEW } from '../assests/images'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from '../utils';
+import { BELL_ICON, MAIN_ICON, MENU_ICON, SEARCH_ICON } from '../assets/Image';
 // import MenuModal from '../components/Modal/MenuModal';
-import { useCart } from '../context/Cart';
 const { alignItemsCenter, alignJustifyCenter, flexDirectionRow, flex, positionRelative, positionAbsolute, justifyContentSpaceBetween } = BaseStyle;
 
-const Header = ({ navigation, backIcon, text, onPress, textinput, notification, image, closeIcon, menuImage, onClosePress, shoppingCart, onPressShopByCatagory }: { navigation: any, backIcon?: boolean, text?: string, textinput?: boolean, notification?: boolean }) => {
+const Header = ({ navigation, backIcon, text, onPress, textinput, notification, mainIcon, closeIcon, menuImage, onClosePress, shoppingCart, onPressShopByCatagory }: { navigation: any, backIcon?: boolean, text?: string, textinput?: boolean, notification?: boolean }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const OnClickBackIcon = () => {
     navigation.goBack()
@@ -36,24 +35,24 @@ const Header = ({ navigation, backIcon, text, onPress, textinput, notification, 
       <View style={[flexDirectionRow, alignJustifyCenter, justifyContentSpaceBetween, { height: hp(6), width: "99%" }]}>
         <View style={[flexDirectionRow, alignItemsCenter]}>
           {backIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickBackIcon}>
-            <Ionicons name={"arrow-back"} size={30} color={colors.blackColor} />
+            <Ionicons name={"arrow-back"} size={25} color={blackColor} />
           </TouchableOpacity>}
           {closeIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickClose}>
-            <Ionicons name={"close"} size={35} color={colors.blackColor} />
+            <Ionicons name={"close"} size={35} color={blackColor} />
           </TouchableOpacity>}
           {menuImage && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={() => setModalVisible(true)}>
             <Image source={MENU_ICON} style={{ width: wp(8), height: hp(5), resizeMode: "contain", marginLeft: spacings.large }} />
           </TouchableOpacity>}
-          {text && <Text style={[styles.text, { color: colors.blackColor }]}>{trimcateText(text)}</Text>}
+          {text && <Text style={[styles.text, { color: blackColor, textAlign: "right", width: text == "My Cart" ? wp(45) : wp(51) }]}>{text}</Text>}
         </View>
 
-        {image && <Image source={APP_CARTIFY_HEADER_LOGO_NEW} style={{ width: wp(34), height: hp(4.5), resizeMode: "contain", marginLeft: spacings.Large2x }} />}
+        {mainIcon && <Image source={MAIN_ICON} style={{ width: wp(20), height: hp(2.5), resizeMode: "contain", marginLeft: 40, }} />}
         <View style={[flexDirectionRow, { width: "auto" }, justifyContentSpaceBetween, alignItemsCenter]}>
           {textinput && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickSearchBar}>
-            <Image source={ SEARCH_ICON } style={{ width: wp(8), height: hp(3.5), resizeMode: "contain", marginLeft: spacings.large }} />
+            <Image source={SEARCH_ICON} style={{ width: wp(6), height: hp(3), resizeMode: "contain", marginLeft: spacings.large }} />
           </TouchableOpacity>}
-          {shoppingCart && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickCartIcon}>
-            <Image source={SHOPPINGBUCKET_ICON} style={{ width: wp(8), height: hp(3.3), resizeMode: "contain", marginLeft: spacings.large }} />
+          {notification && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickCartIcon}>
+            <Image source={BELL_ICON} style={{ width: wp(8), height: hp(3.3), resizeMode: "contain", marginLeft: spacings.large }} />
           </TouchableOpacity>}
         </View>
       </View>
@@ -66,7 +65,7 @@ const Header = ({ navigation, backIcon, text, onPress, textinput, notification, 
 const styles = StyleSheet.create({
   text: {
     fontSize: style.fontSizeMedium1x.fontSize,
-    fontWeight: style.fontWeightMedium1x.fontWeight,
+    fontWeight: style.fontWeightMedium.fontWeight,
     color: blackColor,
     marginLeft: spacings.normalx
   },
