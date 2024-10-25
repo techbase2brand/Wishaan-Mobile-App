@@ -15,6 +15,9 @@ import {
   WALLET_ICON,
 } from '../assets/Image';
 import ReelsScreen from '../screens/ReelsScreen';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import OrderHistory from '../screens/OrderHistory';
+import PickupAddressScreen from '../screens/PickupAddressScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
@@ -36,6 +39,85 @@ function HomeStack() {
     </Stack.Navigator>
   );
 }
+
+function ProfileStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Account"
+        component={AccountScreen}
+        options={({ route }) => ({
+          headerShown: false,
+        })}
+      />
+      <Tab.Screen
+        name="Saved"
+        component={SavedScreen}
+        options={{ headerShown: false }}
+      />
+      {/* <Stack.Screen
+        name="PickupAddressScreen"
+        component={PickupAddressScreen}
+        options={({ route }) => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="OrderDetailsScreen"
+        component={OrderDetailsScreen}
+        options={({ route }) => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
+        options={({ route }) => ({
+          headerShown: false,
+        })}
+      /> */}
+      {/* <Stack.Screen
+        name="ReturnRequestScreen"
+        component={ReturnRequestScreen}
+        options={({ route }) => ({
+          headerShown: false,
+        })} ReturnRequestScreen
+      />
+      <Stack.Screen
+        name="OrderHistory"
+        component={OrderHistory}
+        options={({ route }) => ({
+          headerShown: false,
+        })} ReturnRequestScreen
+      /> */}
+      {/* <Stack.Screen
+        name="HelpCenter"
+        component={HelpCenter}
+        options={({ route }) => ({
+          headerShown: false,
+        })} ReturnRequestScreen
+      /> */}
+      <Stack.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Orders"
+        component={OrderHistory}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Address"
+        component={PickupAddressScreen}
+        options={{ headerShown: false }} 
+      />
+
+
+    </Stack.Navigator>
+  );
+}
+
 function BottomTabNavigator() {
   return (
     <Tab.Navigator
@@ -43,7 +125,6 @@ function BottomTabNavigator() {
         tabBarIcon: ({ focused }) => {
           let iconName;
           let iconSource;
-
           if (route.name === 'Home') {
             iconSource = HOME_ICON;
           } else if (route.name === 'Wallet') {
@@ -104,8 +185,21 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Account"
-        component={AccountScreen}
-        options={{ headerShown: false }}
+        component={ProfileStack}
+        // options={{ headerShown: false ,
+        //   tabBarStyle: { display: routeName === 'Account' ? 'none':flex },
+        // }}
+
+        options={({ route }) => {
+          const routeName = getFocusedRouteNameFromRoute(route);
+
+          console.log("routename", routeName);
+          return {
+            tabBarStyle: { display: routeName == 'Account' ? 'none' : 'flex' },
+            headerShown: false,
+          }
+        }}
+
       />
     </Tab.Navigator>
   );

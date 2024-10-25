@@ -43,7 +43,7 @@ const Header = ({ navigation, backIcon, text, onPress, textinput, notification, 
           {menuImage && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={() => setModalVisible(true)}>
             <Image source={MENU_ICON} style={{ width: wp(8), height: hp(5), resizeMode: "contain", marginLeft: spacings.large }} />
           </TouchableOpacity>}
-          {text && <Text style={[styles.text, { color: blackColor, textAlign: "right", width: text == "My Cart" ? wp(45) : wp(51) }]}>{text}</Text>}
+          {text && <Text style={[styles.text, { color: blackColor, textAlign: "right", width: text == "My Cart" || text == "Account" ? wp(46) : wp(51) }]}>{text}</Text>}
         </View>
 
         {mainIcon && <Image source={MAIN_ICON} style={{ width: wp(20), height: hp(2.5), resizeMode: "contain", marginLeft: 40, }} />}
