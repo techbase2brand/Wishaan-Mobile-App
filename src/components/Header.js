@@ -1,29 +1,59 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, TextInput, Keyboard } from 'react-native';
-import { redColor, blackColor, grayColor, whiteColor } from '../constants/Color'
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  TextInput,
+  Keyboard,
+} from 'react-native';
+import {redColor, blackColor, grayColor, whiteColor} from '../constants/Color';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
-import { spacings, style } from '../constants/Fonts';
-import { BaseStyle } from '../constants/Style';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from '../utils';
-import { BELL_ICON, MAIN_ICON, MENU_ICON, SEARCH_ICON } from '../assets/Image';
+import {spacings, style} from '../constants/Fonts';
+import {BaseStyle} from '../constants/Style';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
+import {BELL_ICON, MAIN_ICON, MENU_ICON, SEARCH_ICON} from '../assets/Image';
 // import MenuModal from '../components/Modal/MenuModal';
-const { alignItemsCenter, alignJustifyCenter, flexDirectionRow, flex, positionRelative, positionAbsolute, justifyContentSpaceBetween } = BaseStyle;
+const {
+  alignItemsCenter,
+  alignJustifyCenter,
+  flexDirectionRow,
+  flex,
+  positionRelative,
+  positionAbsolute,
+  justifyContentSpaceBetween,
+} = BaseStyle;
 
-const Header = ({ navigation, backIcon, text, onPress, textinput, notification, mainIcon, closeIcon, menuImage, onClosePress, shoppingCart, onPressShopByCatagory }: { navigation: any, backIcon?: boolean, text?: string, textinput?: boolean, notification?: boolean }) => {
-  const [modalVisible, setModalVisible] = useState(false)
+const Header = ({
+  navigation,
+  backIcon,
+  text,
+  onPress,
+  textinput,
+  notification,
+  mainIcon,
+  closeIcon,
+  menuImage,
+  onClosePress,
+  shoppingCart,
+  onPressShopByCatagory,
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const OnClickBackIcon = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
   const OnClickCartIcon = () => {
-    navigation.navigate("CartModal")
-  }
+    navigation.navigate('CartModal');
+  };
   const OnClickSearchBar = () => {
-    navigation.navigate('Search', { navigation: navigation })
-  }
+    navigation.navigate('Search', {navigation: navigation});
+  };
   const OnClickClose = () => {
-    onClosePress()
-  }
-  const trimcateText = (text) => {
+    onClosePress();
+  };
+  const trimcateText = text => {
     const words = text.split(' ');
     if (words.length > 3) {
       return words.slice(0, 3).join(' ') + '...';
@@ -31,29 +61,108 @@ const Header = ({ navigation, backIcon, text, onPress, textinput, notification, 
     return text;
   };
   return (
-    <View >
-      <View style={[flexDirectionRow, alignJustifyCenter, justifyContentSpaceBetween, { height: hp(6), width: "99%" }]}>
+    <View>
+      <View
+        style={[
+          flexDirectionRow,
+          alignJustifyCenter,
+          justifyContentSpaceBetween,
+          {height: hp(6), width: '99%'},
+        ]}>
         <View style={[flexDirectionRow, alignItemsCenter]}>
-          {backIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickBackIcon}>
-            <Ionicons name={"arrow-back"} size={25} color={blackColor} />
-          </TouchableOpacity>}
-          {closeIcon && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickClose}>
-            <Ionicons name={"close"} size={35} color={blackColor} />
-          </TouchableOpacity>}
-          {menuImage && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={() => setModalVisible(true)}>
-            <Image source={MENU_ICON} style={{ width: wp(8), height: hp(5), resizeMode: "contain", marginLeft: spacings.large }} />
-          </TouchableOpacity>}
-          {text && <Text style={[styles.text, { color: blackColor, textAlign: "right", width: text == "My Cart" || text == "Account" ? wp(46) : wp(51) }]}>{text}</Text>}
+          {backIcon && (
+            <TouchableOpacity
+              style={[alignJustifyCenter, {width: wp(10)}]}
+              onPress={OnClickBackIcon}>
+              <Ionicons name={'arrow-back'} size={25} color={blackColor} />
+            </TouchableOpacity>
+          )}
+          {closeIcon && (
+            <TouchableOpacity
+              style={[alignJustifyCenter, {width: wp(10)}]}
+              onPress={OnClickClose}>
+              <Ionicons name={'close'} size={35} color={blackColor} />
+            </TouchableOpacity>
+          )}
+          {menuImage && (
+            <TouchableOpacity
+              style={[alignJustifyCenter, {width: wp(10)}]}
+              onPress={() => setModalVisible(true)}>
+              <Image
+                source={MENU_ICON}
+                style={{
+                  width: wp(8),
+                  height: hp(5),
+                  resizeMode: 'contain',
+                  marginLeft: spacings.large,
+                }}
+              />
+            </TouchableOpacity>
+          )}
+          {text && (
+            <Text
+              style={[
+                styles.text,
+                {
+                  color: blackColor,
+                  textAlign: 'right',
+                  width:
+                    text == 'My Cart' || text == 'Account' ? wp(46) : wp(51),
+                },
+              ]}>
+              {text}
+            </Text>
+          )}
         </View>
 
-        {mainIcon && <Image source={MAIN_ICON} style={{ width: wp(20), height: hp(2.5), resizeMode: "contain", marginLeft: 40, }} />}
-        <View style={[flexDirectionRow, { width: "auto" }, justifyContentSpaceBetween, alignItemsCenter]}>
-          {textinput && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickSearchBar}>
-            <Image source={SEARCH_ICON} style={{ width: wp(6), height: hp(3), resizeMode: "contain", marginLeft: spacings.large }} />
-          </TouchableOpacity>}
-          {notification && <TouchableOpacity style={[alignJustifyCenter, { width: wp(10) }]} onPress={OnClickCartIcon}>
-            <Image source={BELL_ICON} style={{ width: wp(8), height: hp(3.3), resizeMode: "contain", marginLeft: spacings.large }} />
-          </TouchableOpacity>}
+        {mainIcon && (
+          <Image
+            source={MAIN_ICON}
+            style={{
+              width: wp(20),
+              height: hp(2.5),
+              resizeMode: 'contain',
+              marginLeft: 40,
+            }}
+          />
+        )}
+        <View
+          style={[
+            flexDirectionRow,
+            {width: 'auto'},
+            justifyContentSpaceBetween,
+            alignItemsCenter,
+          ]}>
+          {textinput && (
+            <TouchableOpacity
+              style={[alignJustifyCenter, {width: wp(10)}]}
+              onPress={OnClickSearchBar}>
+              <Image
+                source={SEARCH_ICON}
+                style={{
+                  width: wp(6),
+                  height: hp(3),
+                  resizeMode: 'contain',
+                  marginLeft: spacings.large,
+                }}
+              />
+            </TouchableOpacity>
+          )}
+          {notification && (
+            <TouchableOpacity
+              style={[alignJustifyCenter, {width: wp(10)}]}
+              onPress={OnClickCartIcon}>
+              <Image
+                source={BELL_ICON}
+                style={{
+                  width: wp(8),
+                  height: hp(3.3),
+                  resizeMode: 'contain',
+                  marginLeft: spacings.large,
+                }}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       {/* {modalVisible && <MenuModal
@@ -67,13 +176,13 @@ const styles = StyleSheet.create({
     fontSize: style.fontSizeMedium1x.fontSize,
     fontWeight: style.fontWeightMedium.fontWeight,
     color: blackColor,
-    marginLeft: spacings.normalx
+    marginLeft: spacings.normalx,
   },
   input: {
-    width: "100%",
+    width: '100%',
     height: hp(6),
     borderColor: 'transparent',
-    borderWidth: .1,
+    borderWidth: 0.1,
     borderRadius: 10,
     paddingHorizontal: spacings.large,
     marginTop: spacings.large,
@@ -93,7 +202,7 @@ const styles = StyleSheet.create({
     backgroundColor: whiteColor,
     zIndex: 1,
     width: wp(95),
-    height: "auto"
+    height: 'auto',
   },
   itembox: {
     width: wp(100),
@@ -112,10 +221,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   textinputBox: {
-    width: "93%",
+    width: '93%',
     height: hp(6),
     borderColor: 'transparent',
-    borderWidth: .1,
+    borderWidth: 0.1,
     borderRadius: 10,
     paddingHorizontal: spacings.large,
     marginTop: spacings.small,
@@ -127,7 +236,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 1.5,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   badgeContainer: {
     position: 'absolute',
@@ -145,7 +254,6 @@ const styles = StyleSheet.create({
     fontSize: wp(2.5), // Adjust based on the size of your badge
     fontWeight: 'bold',
   },
-
 });
 
 export default Header;

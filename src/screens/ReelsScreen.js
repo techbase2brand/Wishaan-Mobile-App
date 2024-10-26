@@ -5,19 +5,27 @@ import React, {
   useEffect,
   useContext,
 } from 'react';
-import {View, ActivityIndicator, StyleSheet, Text, Image, FlatList,Dimensions} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  Image,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 // import PagerView from 'react-native-pager-view';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import SingleReel from '../components/SingleReel';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const MAX_CACHE_SIZE = 20;
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 const ReelsScreen = ({route, navigation}) => {
-  const { videos, error} = useSelector(state => state?.videos);
-  
+  const {videos, error} = useSelector(state => state?.videos);
+
   const [currentIndex, setCurrentIndex] = useState();
   const [ReelsVideos, setReelsVideos] = useState([]);
   const [page, setPage] = useState(1);
@@ -39,25 +47,26 @@ const ReelsScreen = ({route, navigation}) => {
       title,
       description,
       variants,
-      tags
+      tags,
     }));
     return media;
   });
-  const productVideosUrl = productMedia?.reduce((acc, val) => acc.concat(val), []).filter(Boolean);
+  const productVideosUrl = productMedia
+    ?.reduce((acc, val) => acc.concat(val), [])
+    .filter(Boolean);
 
   const videosPerPage = 10;
 
   useEffect(() => {
     loadMoreVideos();
   }, []);
-  
 
-  const insertAds = (videoArray) => {
+  const insertAds = videoArray => {
     let result = [];
     videoArray.forEach((video, index) => {
       result.push(video);
       if ((index + 1) % 10 === 0) {
-        result.push({ isAd: true, id: `ad-${index}` });
+        result.push({isAd: true, id: `ad-${index}`});
       }
     });
     return result;
@@ -99,16 +108,19 @@ const ReelsScreen = ({route, navigation}) => {
       setCurrentIndex(visibleItem.index);
     }
   }, []);
-  const onPageSelected = useCallback((event) => {
-    const newIndex = event.nativeEvent.position;
-    setCurrentIndex(newIndex);
-    // updateLastAccessedTime(cachedFiles[newIndex]);
+  const onPageSelected = useCallback(
+    event => {
+      const newIndex = event.nativeEvent.position;
+      setCurrentIndex(newIndex);
+      // updateLastAccessedTime(cachedFiles[newIndex]);
 
-    // Fetch more videos if nearing the end of the list
-    if (newIndex >= videos.length - 2) {
-      // fetchMoreVideos();
-    }
-  }, [ReelsVideos]);
+      // Fetch more videos if nearing the end of the list
+      if (newIndex >= videos.length - 2) {
+        // fetchMoreVideos();
+      }
+    },
+    [ReelsVideos],
+  );
   return (
     <View style={styles.container}>
       <View
@@ -122,8 +134,13 @@ const ReelsScreen = ({route, navigation}) => {
           zIndex: 1,
           padding: 10,
         }}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}} onPress={()=>navigation.goBack()}>
-        <Ionicons name="arrow-back" style={{fontSize: 25, color: 'white', marginTop:10}} /> 
+        <Text
+          style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}
+          onPress={() => navigation.goBack()}>
+          <Ionicons
+            name="arrow-back"
+            style={{fontSize: 25, color: 'white', marginTop: 10}}
+          />
         </Text>
         {/* <AntDesign name="camerao" style={{fontSize: 25, color: 'white'}} /> */}
       </View>
@@ -149,7 +166,7 @@ const ReelsScreen = ({route, navigation}) => {
       <FlatList
         data={ReelsVideos}
         // renderItem={renderItem}
-        renderItem={({ item, index }) => (
+        renderItem={({item, index}) => (
           <SingleReel
             key={index}
             item={item}
@@ -170,7 +187,9 @@ const ReelsScreen = ({route, navigation}) => {
         onEndReachedThreshold={0.1}
         decelerationRate="fast"
         pagingEnabled
-        ListFooterComponent={loading && !allLoaded ? <ActivityIndicator /> : null}
+        ListFooterComponent={
+          loading && !allLoaded ? <ActivityIndicator /> : null
+        }
         initialNumToRender={10}
         maxToRenderPerBatch={10}
         windowSize={21}
@@ -204,4 +223,3 @@ const styles = StyleSheet.create({
 });
 
 export default ReelsScreen;
-

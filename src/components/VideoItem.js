@@ -42,7 +42,7 @@
 
 // export default VideoItem;
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -55,21 +55,19 @@ import {
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { ADD_TO_CART, SHARE, VOICE } from '../assets/Image';
-import { green, redColor } from '../constants/Color';
+import {ADD_TO_CART, SHARE, VOICE} from '../assets/Image';
+import {green, redColor} from '../constants/Color';
 
-
-const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
+const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
   const [loading, setLoading] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   useEffect(() => {
     // Check if the item is in the wishlist and update local state
-
   }, []);
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -96,17 +94,14 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
     setIsSelected(!isSelected); // Toggle the state
   };
 
-
-  const extractNumericId = (gid) => {
+  const extractNumericId = gid => {
     const parts = gid.split('/');
     return parts[parts.length - 1]; // Get the last part
   };
   // const variantId = extractNumericId(item.variants[0].variantId);
-  const [cartLoading, setCartLoading] = useState(false)
+  const [cartLoading, setCartLoading] = useState(false);
   const handleAddToCart = () => {
     // dispatch(addProductInCart(product));
-
-
   };
   const videoUrl =
     'https://cdn.shopify.com/videos/c/vp/474e4c3b8a9a423ebd3d9ccf3fda0281/474e4c3b8a9a423ebd3d9ccf3fda0281.HD-1080p-4.8Mbps-32573231.mp4';
@@ -131,7 +126,7 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
           }}
           // poster={item?.thumb_url}
           // posterResizeMode={'cover'}
-          source={{ uri: convertToProxyURL(item?.video_url) }}
+          source={{uri: convertToProxyURL(item?.video_url)}}
           style={styles.video}
           resizeMode="cover"
           repeat={true}
@@ -145,59 +140,62 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
             console.log('e.isBuffering', e.isBuffering);
             if (e.isBuffering == true) {
               setLoading(true);
-
             } else {
               setLoading(false);
             }
           }}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={{
-        marginVertical: 10,
-        backgroundColor: "black",
-        alignItems: "center",
-        objectFit: 'contain',
-        position: 'absolute',
-        bottom: 200,
-        right: 10,
-        padding: 2,
-        borderRadius: 100,
-        width: 30,
-        height: 30,
-
-      }} onPress={toggleMute}>
-
-        {isMuted ? <Ionicons
-          name="volume-mute-outline"
-          size={25}
-          color="white"
-          style={{
-            width: 20,
-            height: 20,
-          }}
-        /> : <Ionicons
-          name="volume-high-outline"
-          size={25}
-          color="white"
-          style={{
-            width: 24,
-            height: 24,
-          }}
-        />}
+      <TouchableOpacity
+        style={{
+          marginVertical: 10,
+          backgroundColor: 'black',
+          alignItems: 'center',
+          objectFit: 'contain',
+          position: 'absolute',
+          bottom: 200,
+          right: 10,
+          padding: 2,
+          borderRadius: 100,
+          width: 30,
+          height: 30,
+        }}
+        onPress={toggleMute}>
+        {isMuted ? (
+          <Ionicons
+            name="volume-mute-outline"
+            size={25}
+            color="white"
+            style={{
+              width: 20,
+              height: 20,
+            }}
+          />
+        ) : (
+          <Ionicons
+            name="volume-high-outline"
+            size={25}
+            color="white"
+            style={{
+              width: 24,
+              height: 24,
+            }}
+          />
+        )}
       </TouchableOpacity>
       <Entypo
         name="dots-three-vertical"
         size={25}
         color="white"
-        style={{ position: 'absolute', top: 20, right: 10 }}
+        style={{position: 'absolute', top: 20, right: 10}}
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={styles.iconContainer}>
           <AntDesign
             onPress={handlePress}
-            name={isSelected ? "heart" : "hearto"}
+            name={isSelected ? 'heart' : 'hearto'}
             size={25}
-            color={isSelected ? redColor : "black"}
+            color={isSelected ? redColor : 'black'}
             style={styles.icon}
           />
           {/* <Icon name="comment-o" size={25} color="black" style={styles.icon} /> */}
@@ -211,7 +209,9 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
             }}
           />
         </View>
-        <TouchableOpacity style={styles.iconContainer} onPress={handleAddToCart}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={handleAddToCart}>
           <Image
             source={ADD_TO_CART}
             style={{
@@ -223,8 +223,8 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ marginHorizontal: 10 }}>
-        <Text style={{ color: 'black', width: '40%' }}>
+      <View style={{marginHorizontal: 10}}>
+        <Text style={{color: 'black', width: '40%'}}>
           In publishing and graphic design more...
         </Text>
       </View>
@@ -240,13 +240,13 @@ const VideoItem = ({ item, index, currentIndex, navigation, onPress }) => {
           <Text style={styles.reviewsText}>| 3.7K</Text>
         </View>
         <TouchableOpacity style={styles.buyButton} onPress={handleAddToCart}>
-          <Text style={{ color: '#fff', alignSelf: 'center' }}>{"Buy Now"}</Text>
+          <Text style={{color: '#fff', alignSelf: 'center'}}>{'Buy Now'}</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ flexDirection: 'row', marginHorizontal: 10, gap: 10 }}>
-        <Text style={{ color: 'black', fontSize: 16 }}>$620</Text>
-        <Text style={{ fontSize: 14 }}>$800</Text>
-        <Text style={{ color: green, fontSize: 14 }}>60% off</Text>
+      <View style={{flexDirection: 'row', marginHorizontal: 10, gap: 10}}>
+        <Text style={{color: 'black', fontSize: 16}}>$620</Text>
+        <Text style={{fontSize: 14}}>$800</Text>
+        <Text style={{color: green, fontSize: 14}}>60% off</Text>
       </View>
     </View>
   );
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   ratingcontainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: "green",
+    backgroundColor: 'green',
     borderRadius: 5,
     padding: 5,
     marginVertical: 10,

@@ -1,19 +1,31 @@
-import { View, FlatList, Dimensions, ScrollView, Image, Text, ActivityIndicator } from 'react-native';
+import {
+  View,
+  FlatList,
+  Dimensions,
+  ScrollView,
+  Image,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import VideoItem from './VideoItem';
 import VipAddSection from './VipAddSection';
-import { VIP_LOGO } from '../assets/Image';
-import { grayColor, redColor, blackColor } from '../constants/Color';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../utils';
-import RecommendedVideo from './RecommendedVideo'
-import { recommendedVideos } from '../constants/Constants';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {VIP_LOGO} from '../assets/Image';
+import {grayColor, redColor, blackColor} from '../constants/Color';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
+import RecommendedVideo from './RecommendedVideo';
+import {recommendedVideos} from '../constants/Constants';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
+const {height} = Dimensions.get('window');
 
-
-const { height } = Dimensions.get('window');
-
-const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabilityConfig, navigation, }) => {
+const VideoList = ({
+  cachedFiles,
+  currentIndex,
+  onViewableItemsChanged,
+  viewabilityConfig,
+  navigation,
+}) => {
   const videosPerPage = 3;
   const timerRef = useRef(null);
   const VIDEO_DURATION = 5000;
@@ -25,17 +37,13 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
   const [allLoaded, setAllLoaded] = useState(false);
   const [entriesData, setEntriesData] = useState([]);
   const [filteredVideos, setFilteredVideos] = useState([]);
-  
+
+  useEffect(() => {}, [cachedFiles, videosPerPage, page]);
+
+  useEffect(() => {}, [cachedFiles]);
 
   useEffect(() => {
-  }, [cachedFiles,videosPerPage, page]);
-  
-  useEffect(() => {
-    
-  }, [cachedFiles]);
-
-  useEffect(() => {
-    loadMoreVideos(); 
+    loadMoreVideos();
   }, [page, videosPerPage]);
 
   const loadMoreVideos = useCallback(() => {
@@ -70,8 +78,6 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
     console.log('Video pressed:', item);
   };
 
- 
-
   const viewabilityConfig1 = useRef({
     viewAreaCoveragePercentThreshold: 50, // Determines what percentage of the item is visible
   }).current;
@@ -83,7 +89,7 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
     }
   };
   const togglePlayingVideo = () => {
-    setPlayingIndex((prevIndex) => (prevIndex + 1) % visibleVideoIndices.length);
+    setPlayingIndex(prevIndex => (prevIndex + 1) % visibleVideoIndices.length);
   };
 
   useEffect(() => {
@@ -104,7 +110,7 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
     return () => clearAllTimers();
   }, [visibleVideoIndices]);
 
-  const onViewableItemsChanged1 = useRef(({ viewableItems }) => {
+  const onViewableItemsChanged1 = useRef(({viewableItems}) => {
     const newVisibleIndices = viewableItems.map(item => item.index);
     if (newVisibleIndices.join() !== visibleVideoIndices.join()) {
       setVisibleVideoIndices(newVisibleIndices);
@@ -113,7 +119,7 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
 
   // recommended
   const renderItem1 = useCallback(
-    ({ item, index }) => (
+    ({item, index}) => (
       <View key={index}>
         <RecommendedVideo
           item={item}
@@ -121,19 +127,22 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
         />
       </View>
     ),
-    [visibleVideoIndices, playingIndex]
+    [visibleVideoIndices, playingIndex],
   );
 
-  const renderItem = ({ item, index }) => {
-
+  const renderItem = ({item, index}) => {
     if (index === 5) {
-
       // Recommended Videos Section after the first 5 videos
       return (
         <View key={`recommended-${index}`}>
-          <View style={{ height: 4, backgroundColor: grayColor }} />
-          <View style={{ marginVertical: 10, marginHorizontal: 10 }}>
-            <View style={{ flexDirection: 'row', justifyContent: "space-between", marginBottom: 10 }}>
+          <View style={{height: 4, backgroundColor: grayColor}} />
+          <View style={{marginVertical: 10, marginHorizontal: 10}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: 10,
+              }}>
               {/* <Image source={REEL_PLAY_BLACK} style={styles.reelIcon} /> */}
               <Text
                 style={{
@@ -165,30 +174,34 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
               viewabilityConfig={viewabilityConfig1}
             />
           </View>
-          <View style={{ height: 4, backgroundColor: grayColor }} />
-
+          <View style={{height: 4, backgroundColor: grayColor}} />
         </View>
-
       );
     }
 
     if (index > 5 && (index - 5) % 5 === 0) {
-
       const adIndex = ((index - 5) / 5) % entriesData.length;
       const adData = entriesData[adIndex];
       return (
         <View key={`ad-${index}`}>
-          <View style={{ height: 4, backgroundColor: grayColor }} />
-          <View style={{ marginVertical: 20, marginLeft: 10 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp(95) }}>
-              <View style={{ flexDirection: 'row', gap: 5, marginBottom: 10 }}>
-                <Image source={VIP_LOGO} style={{ width: 40, height: 40 }} />
+          <View style={{height: 4, backgroundColor: grayColor}} />
+          <View style={{marginVertical: 20, marginLeft: 10}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: wp(95),
+              }}>
+              <View style={{flexDirection: 'row', gap: 5, marginBottom: 10}}>
+                <Image source={VIP_LOGO} style={{width: 40, height: 40}} />
                 <View>
-                  <Text style={{ fontSize: 16, fontWeight: '500', color: redColor }}>
+                  <Text
+                    style={{fontSize: 16, fontWeight: '500', color: redColor}}>
                     {adData?.title}
                     {/* VIP Number Shop */}
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: '500', color: '#999999' }}>
+                  <Text
+                    style={{fontSize: 14, fontWeight: '500', color: '#999999'}}>
                     Sponsored
                   </Text>
                 </View>
@@ -201,8 +214,7 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
-              showsHorizontalScrollIndicator={false}
-            >
+              showsHorizontalScrollIndicator={false}>
               {adData?.images?.map(item => (
                 <View key={item}>
                   <VipAddSection item={item} onPress={handlePressItem} />
@@ -210,7 +222,7 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
               ))}
             </ScrollView>
           </View>
-          <View style={{ height: 4, backgroundColor: grayColor }} />
+          <View style={{height: 4, backgroundColor: grayColor}} />
         </View>
       );
     }
@@ -234,7 +246,7 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
         //   });
         // }}
         onPress={() => {
-          navigation.navigate('ReelsScreen')
+          navigation.navigate('ReelsScreen');
         }}
       />
     );
@@ -255,7 +267,9 @@ const VideoList = ({ cachedFiles, currentIndex, onViewableItemsChanged, viewabil
         onEndReachedThreshold={0.1}
         decelerationRate="fast"
         pagingEnabled
-        ListFooterComponent={loading && !allLoaded ? <ActivityIndicator /> : null}
+        ListFooterComponent={
+          loading && !allLoaded ? <ActivityIndicator /> : null
+        }
         initialNumToRender={10}
         maxToRenderPerBatch={10}
         windowSize={21}

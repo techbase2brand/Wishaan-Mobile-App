@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import {useState, useCallback, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -12,17 +12,16 @@ import {
   ScrollView,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Header from '../components/Header';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from '../utils';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
 import ProductItem from '../components/ProductItem';
-import { black, grayColor, redColor } from '../constants/Color';
+import {black, grayColor, redColor} from '../constants/Color';
 import CarouselComponent from '../components/CarouselComponent';
 import RecommendedVideo from '../components/RecommendedVideo';
 import VideoList from '../components/VideoList';
 
-
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const topSellingProducts = [
   {
     id: '1',
@@ -67,27 +66,24 @@ const filters = [
     id: '4',
     name: 'Speakers',
   },
-
 ];
-export default function HomeScreen({ navigation }) {
-  const { loading, videos, error } = useSelector(state => state?.videos);
+export default function HomeScreen({navigation}) {
+  const {loading, videos, error} = useSelector(state => state?.videos);
   const [selectedFilter, setSelectedFilter] = useState('All');
 
-  useEffect(() => {
-  }, [videos]);
+  useEffect(() => {}, [videos]);
   const handleFilterPress = item => {
-    setSelectedFilter(item.name)
+    setSelectedFilter(item.name);
   };
 
   // Render each filter button
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <TouchableOpacity
       style={[
         styles.filterButton,
         item?.name === selectedFilter && styles.selectedFilterButton,
       ]}
-      onPress={() => handleFilterPress(item)}
-    >
+      onPress={() => handleFilterPress(item)}>
       <Text
         style={[
           styles.filterButtonText,
@@ -102,8 +98,7 @@ export default function HomeScreen({ navigation }) {
     // console.log('Video pressed:', item);
   };
 
-
-  // loadmore videos 
+  // loadmore videos
   // Track if there's more content to load
 
   const [currentIndex, setCurrentIndex] = useState();
@@ -125,9 +120,8 @@ export default function HomeScreen({ navigation }) {
   };
 
   const togglePlayingVideo = () => {
-    setPlayingIndex((prevIndex) => (prevIndex + 1) % visibleVideoIndices.length);
+    setPlayingIndex(prevIndex => (prevIndex + 1) % visibleVideoIndices.length);
   };
-
 
   useEffect(() => {
     clearAllTimers();
@@ -139,8 +133,7 @@ export default function HomeScreen({ navigation }) {
     return () => clearAllTimers();
   }, [visibleVideoIndices]);
 
-
-  const onViewableItemsChanged1 = useRef(({ viewableItems }) => {
+  const onViewableItemsChanged1 = useRef(({viewableItems}) => {
     const newVisibleIndices = viewableItems.map(item => item.index);
     if (newVisibleIndices.join() !== visibleVideoIndices.join()) {
       setVisibleVideoIndices(newVisibleIndices);
@@ -148,7 +141,7 @@ export default function HomeScreen({ navigation }) {
   }).current;
 
   const renderItem1 = useCallback(
-    ({ item, index }) => (
+    ({item, index}) => (
       <View style={styles.videoContainer}>
         <RecommendedVideo
           item={item}
@@ -156,75 +149,75 @@ export default function HomeScreen({ navigation }) {
         />
       </View>
     ),
-    [visibleVideoIndices, playingIndex]
+    [visibleVideoIndices, playingIndex],
   );
   const [productImagesAndTitles, setProductImagesAndTitles] = useState([]);
-  console.log("productImagesAndTitles..", productImagesAndTitles);
+  console.log('productImagesAndTitles..', productImagesAndTitles);
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
   };
 
-  const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+  const onViewableItemsChanged = useCallback(({viewableItems}) => {
     if (viewableItems.length > 0) {
       const visibleItem = viewableItems[0];
       setCurrentIndex(visibleItem.index);
     }
   }, []);
 
-
-
-
   const sections = [
     {
       title: 'Top Selling Product',
-      data: [{ type: 'header' }],
+      data: [{type: 'header'}],
     },
     {
       title: 'Top Selling Product',
-      data: [{ type: 'topSellingProducts' }],
+      data: [{type: 'topSellingProducts'}],
     },
     {
       title: 'Carousel',
-      data: [{ type: 'carousel' }],
+      data: [{type: 'carousel'}],
     },
     {
       title: 'Filters',
-      data: [{ type: 'filters' }],
+      data: [{type: 'filters'}],
     },
     {
       title: 'videosWithAds',
-      data: [{ type: 'videosWithAds' }],
+      data: [{type: 'videosWithAds'}],
     },
     {
       title: 'Recommended Videos',
-      data: [{ type: 'recommendedVideos' }],
+      data: [{type: 'recommendedVideos'}],
     },
     {
       title: 'Most Popular Sellers',
-      data: [{ type: 'mostPopularSellers' }],
+      data: [{type: 'mostPopularSellers'}],
     },
     {
       title: 'videosWithoutAds',
-      data: [{ type: 'videosWithoutAds' }],
+      data: [{type: 'videosWithoutAds'}],
     },
     {
       title: 'VIP Number Shop',
-      data: [{ type: 'vipNumberShop' }],
+      data: [{type: 'vipNumberShop'}],
     },
   ];
 
-  const renderSectionContent = ({ item }) => {
+  const renderSectionContent = ({item}) => {
     if (item.type === 'videosWithoutAds') {
     }
     switch (item.type) {
       case 'header':
-        return <Header
-          navigation={navigation}
-          textinput={true}
-          mainIcon={true}
-          menuImage={true}
-          notification={true} />;
+        return (
+          <Header
+            navigation={navigation}
+            textinput={true}
+            mainIcon={true}
+            menuImage={true}
+            notification={true}
+          />
+        );
       case 'topSellingProducts':
         return (
           <>
@@ -233,7 +226,7 @@ export default function HomeScreen({ navigation }) {
             </View>
             <FlatList
               data={topSellingProducts}
-              renderItem={({ item, index }) => <ProductItem item={item} />}
+              renderItem={({item, index}) => <ProductItem item={item} />}
               keyExtractor={index => index}
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -273,10 +266,9 @@ export default function HomeScreen({ navigation }) {
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={viewabilityConfig}
             navigation={navigation}
-          // selectedFilter={selectedFilter}
+            // selectedFilter={selectedFilter}
           />
         );
-
 
       default:
         return null;
@@ -289,11 +281,10 @@ export default function HomeScreen({ navigation }) {
       keyExtractor={(item, index) => item.type + index}
       renderItem={renderSectionContent}
       // renderSectionHeader={renderSectionHeader}
-      contentContainerStyle={{ paddingBottom: 20, backgroundColor: '#fff' }}
+      contentContainerStyle={{paddingBottom: 20, backgroundColor: '#fff'}}
     />
   );
 }
-
 
 const styles = StyleSheet.create({
   sectionHeader: {

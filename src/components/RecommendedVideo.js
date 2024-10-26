@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
-import { REEL_PLAY_BLACK, REEL_PLAY_WHITE } from '../assets/Image';
+import {REEL_PLAY_BLACK, REEL_PLAY_WHITE} from '../assets/Image';
 
-export default function RecommendedVideo({ item, onPress, isPlaying }) {
-
+export default function RecommendedVideo({item, onPress, isPlaying}) {
   const [loading, setLoading] = useState(true);
 
   const handleLoad = () => {
@@ -22,7 +21,10 @@ export default function RecommendedVideo({ item, onPress, isPlaying }) {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onPress(item)} activeOpacity={0.9}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => onPress(item)}
+      activeOpacity={0.9}>
       <Video
         bufferConfig={{
           minBufferMs: 2000,
@@ -30,7 +32,9 @@ export default function RecommendedVideo({ item, onPress, isPlaying }) {
           bufferForPlaybackMs: 1000,
           bufferForPlaybackAfterRebufferMs: 1500,
         }}
-        source={{ uri: convertToProxyURL(item?.video_url ? item?.video_url : item) }}
+        source={{
+          uri: convertToProxyURL(item?.video_url ? item?.video_url : item),
+        }}
         style={styles.thumbnail}
         resizeMode="cover"
         repeat={true}
@@ -75,7 +79,5 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  playButtonContainer: {
-
-  },
+  playButtonContainer: {},
 });

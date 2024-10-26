@@ -1,9 +1,8 @@
 import React from 'react';
 import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import { whiteColor } from '../constants/Color';
+import {whiteColor} from '../constants/Color';
 
 export default function SellersComponent({item, onPress}) {
-
   return (
     <TouchableOpacity style={styles.container}>
       <Image source={{uri: item.thumb_url}} style={styles.thumbnail} />
@@ -27,12 +26,11 @@ const styles = StyleSheet.create({
   sellerName: {
     position: 'absolute',
     bottom: 10,
-    left:50,
-    alignSelf:"center",
-    width:"100%",
-    fontSize:18,
-    fontWeight:"500",
-    color:whiteColor
-    
+    left: 50,
+    alignSelf: 'center',
+    width: '100%',
+    fontSize: 18,
+    fontWeight: '500',
+    color: whiteColor,
   },
 });

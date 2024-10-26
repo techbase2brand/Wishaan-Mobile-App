@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -14,13 +14,13 @@ import convertToProxyURL from 'react-native-video-cache';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { heightPercentageToDP, widthPercentageToDP } from '../utils';
-import { redColor } from '../constants/Color';
+import {heightPercentageToDP, widthPercentageToDP} from '../utils';
+import {redColor} from '../constants/Color';
 
 const MAX_RETRY_ATTEMPTS = 3;
 const RETRY_DELAY = 1000;
 
-const SingleReel = ({ item, index, currentIndex, navigation }) => {
+const SingleReel = ({item, index, currentIndex, navigation}) => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const videoRef = useRef(null);
@@ -47,9 +47,8 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
         height: heightPercentageToDP(100),
         // justifyContent: 'center',
         // alignItems: 'center',
-        backgroundColor: "black"
+        backgroundColor: 'black',
       }}>
-
       {loading && (
         <View style={styles.loaderContainer}>
           <ActivityIndicator size="large" color="#fff" />
@@ -65,7 +64,7 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
         // poster={item?.thumb_url}
         // posterResizeMode={'contain'}
         // source={require('../assests/video3.mp4')}
-        source={{ uri: convertToProxyURL(item?.video_url) }}
+        source={{uri: convertToProxyURL(item?.video_url)}}
         repeat={true}
         muted
         maxBitRate={2000000}
@@ -81,11 +80,10 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
             setLoading(false);
           }
         }}
-        resizeMode='cover'
+        resizeMode="cover"
         style={{
           width: widthPercentageToDP(100),
           height: heightPercentageToDP(100),
-
         }}
       />
       {/* <View
@@ -111,21 +109,22 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
         </Text>
       </View> */}
       {/* Product Information */}
-      <View style={{
-        position: 'absolute',
-        bottom: 160,
-        left: 0,
-        right: 0,
-        flexDirection: "column",
-        paddingHorizontal: 20,
-        // alignItems: 'center',
-        zIndex: 1,
-        // padding: 10,
-      }}>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 160,
+          left: 0,
+          right: 0,
+          flexDirection: 'column',
+          paddingHorizontal: 20,
+          // alignItems: 'center',
+          zIndex: 1,
+          // padding: 10,
+        }}>
         <View style={styles.header}>
           <View style={styles.profileContainer}>
             <Image
-              source={{ uri: 'https://via.placeholder.com/100' }} // Replace with your image
+              source={{uri: 'https://via.placeholder.com/100'}} // Replace with your image
               // source={require('../assests/notificationimage.png')}
               style={styles.profileImage}
             />
@@ -145,8 +144,12 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.price}>$620 <Text style={styles.discount}>60% off</Text></Text>
-        <Text style={styles.description}>In publishing and graphic design...</Text>
+        <Text style={styles.price}>
+          $620 <Text style={styles.discount}>60% off</Text>
+        </Text>
+        <Text style={styles.description}>
+          In publishing and graphic design...
+        </Text>
       </View>
       <View
         style={{
@@ -164,12 +167,9 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
             height: 25,
           }}
         />
-        <Text style={{ color: 'white', marginBottom: 10 }}>200</Text>
-        <AntDesign
-          name="hearto"
-          style={{ fontSize: 25, color: 'white' }}
-        />
-        <Text style={{ color: 'white', marginBottom: 10 }}>20.5k</Text>
+        <Text style={{color: 'white', marginBottom: 10}}>200</Text>
+        <AntDesign name="hearto" style={{fontSize: 25, color: 'white'}} />
+        <Text style={{color: 'white', marginBottom: 10}}>20.5k</Text>
 
         <Image
           source={require('../assets/ReelsIcons/sharewhite.png')}
@@ -182,10 +182,10 @@ const SingleReel = ({ item, index, currentIndex, navigation }) => {
           name="share"
           style={{fontSize: 25, color: 'white', marginVertical: 10}}
         /> */}
-        <Text style={{ color: 'white' }}>10.5k</Text>
+        <Text style={{color: 'white'}}>10.5k</Text>
         <Entypo
           name="dots-three-horizontal"
-          style={{ fontSize: 25, color: 'white', marginVertical: 20 }}
+          style={{fontSize: 25, color: 'white', marginVertical: 20}}
         />
       </View>
     </TouchableOpacity>
@@ -218,13 +218,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buyNowButton: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   buyNowText: {
     color: '#fff',

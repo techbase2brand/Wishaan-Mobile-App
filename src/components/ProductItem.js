@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 
-const ProductItem = ({ item }) => {
-  console.log("ProductItem",item);
+const ProductItem = ({item}) => {
+  console.log('ProductItem', item);
   return (
     <View style={styles.productContainer}>
       <Image source={item?.image} style={styles.productImage} />
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   productImage: {
     width: 60,
     height: 60,
-    borderRadius:100,
+    borderRadius: 100,
   },
   productName: {
     marginTop: 5,

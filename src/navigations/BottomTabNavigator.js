@@ -1,12 +1,12 @@
-import { Image, Text } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Image, Text} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import WalletScreen from '../screens/WalletScreen';
 import AccountScreen from '../screens/AccountScreen';
 import CartScreen from '../screens/CartScreen';
 import SavedScreen from '../screens/SavedScreen';
-import { grayColor, redColor } from '../constants/Color';
+import {grayColor, redColor} from '../constants/Color';
 import {
   ACCOUNT_ICON,
   CART_ICON,
@@ -15,12 +15,13 @@ import {
   WALLET_ICON,
 } from '../assets/Image';
 import ReelsScreen from '../screens/ReelsScreen';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import OrderHistory from '../screens/OrderHistory';
 import PickupAddressScreen from '../screens/PickupAddressScreen';
+import ConfirmDeliveryLocation from '../screens/ConfirmDeliveryLocation';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 function HomeStack() {
   return (
@@ -28,32 +29,46 @@ function HomeStack() {
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="ReelsScreen"
         component={ReelsScreen}
-        options={{ headerShown: false }}
-
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
 }
-
+function AddressStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Address"
+        component={PickupAddressScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ConfirmDeliveryLocation"
+        component={ConfirmDeliveryLocation}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
 function ProfileStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Account"
         component={AccountScreen}
-        options={({ route }) => ({
+        options={({route}) => ({
           headerShown: false,
         })}
       />
       <Tab.Screen
         name="Saved"
         component={SavedScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* <Stack.Screen
         name="PickupAddressScreen"
@@ -100,20 +115,23 @@ function ProfileStack() {
       <Stack.Screen
         name="Cart"
         component={CartScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
+      {/* <Stack.Screen
+        name="ConfirmDeliveryLocation"
+        component={ConfirmDeliveryLocation}
+        options={{headerShown: false}}
+      /> */}
       <Stack.Screen
         name="Orders"
         component={OrderHistory}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Address"
-        component={PickupAddressScreen}
-        options={{ headerShown: false }} 
+        component={AddressStack}
+        options={{headerShown: false}}
       />
-
-
     </Stack.Navigator>
   );
 }
@@ -121,8 +139,8 @@ function ProfileStack() {
 function BottomTabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused}) => {
           let iconName;
           let iconSource;
           if (route.name === 'Home') {
@@ -149,24 +167,24 @@ function BottomTabNavigator() {
             />
           );
         },
-        tabBarLabel: ({ focused }) => (
+        tabBarLabel: ({focused}) => (
           <Text
             style={{
               color: focused ? redColor : grayColor,
               fontSize: 12,
               marginTop: -5,
             }}>
-            {route.name}
+            {route?.name}
           </Text>
         ),
       })}
       tabBarOptions={{
-        style: { height: 70, paddingBottom: 10, paddingTop: 10 },
+        style: {height: 70, paddingBottom: 10, paddingTop: 10},
       }}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* <Tab.Screen
         name="Wallet"
@@ -176,12 +194,12 @@ function BottomTabNavigator() {
       <Tab.Screen
         name="Saved"
         component={SavedScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Tab.Screen
         name="Cart"
         component={CartScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Tab.Screen
         name="Account"
@@ -189,17 +207,20 @@ function BottomTabNavigator() {
         // options={{ headerShown: false ,
         //   tabBarStyle: { display: routeName === 'Account' ? 'none':flex },
         // }}
-
-        options={({ route }) => {
+        options={({route}) => {
           const routeName = getFocusedRouteNameFromRoute(route);
-
-          console.log("routename", routeName);
           return {
-            tabBarStyle: { display: routeName == 'Account' ? 'none' : 'flex' },
+            tabBarStyle: {
+              display:
+                routeName == 'Account' ||
+                routeName == 'Address' ||
+                routeName == 'ConfirmDeliveryLocation'
+                  ? 'none'
+                  : 'flex',
+            },
             headerShown: false,
-          }
+          };
         }}
-
       />
     </Tab.Navigator>
   );

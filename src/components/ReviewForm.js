@@ -1,10 +1,16 @@
-
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // For star icons
-import { redColor } from '../constants/Color';
+import {redColor} from '../constants/Color';
 
-const ReviewForm = ({ productId }) => {
+const ReviewForm = ({productId}) => {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [reviewDescriptions, setReviewDescriptions] = useState([]);
@@ -14,15 +20,12 @@ const ReviewForm = ({ productId }) => {
     //   Alert.alert('Error', 'Please complete all fields.');
     //   return;
     // }
-
     // const newReviewDescription = reviewText.trim();
     // setReviewDescriptions(prev => [...prev, newReviewDescription]);
-
     // // Prepare data
     // const reviewData = {
     //   descriptions: reviewDescriptions.concat(newReviewDescription),
     // };
-
     // const ratingData = {
     //   ratings: [
     //     { "scale_min": "1.0", "scale_max": "5.0", "value": rating.toFixed(1) }
@@ -30,7 +33,6 @@ const ReviewForm = ({ productId }) => {
     // };
     // const numericProductID = productId.replace('gid://shopify/Product/', '');
     // console.log("reviewData Product ID:", reviewData);
-
     // try {
     //   // Update review descriptions
     //   await axios.post(`https://wishandemoapp.myshopify.com/admin/api/2024-07/products/${numericProductID}/metafields.json`, {
@@ -45,7 +47,6 @@ const ReviewForm = ({ productId }) => {
     //       'Content-Type': 'application/json'
     //     }
     //   });
-
     //   // Update rating
     //   await axios.post(`https://wishandemoapp.myshopify.com/admin/api/2024-07/products/${numericProductID}/metafields.json`, {
     //     metafield: {
@@ -59,7 +60,6 @@ const ReviewForm = ({ productId }) => {
     //       'Content-Type': 'application/json'
     //     }
     //   });
-
     //   Alert.alert('Success', 'Review posted successfully!');
     //   // Reset form
     //   setReviewText('');
@@ -75,7 +75,7 @@ const ReviewForm = ({ productId }) => {
       <Text style={styles.title}>Submit Your Review</Text>
 
       <View style={styles.starsContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
+        {[1, 2, 3, 4, 5].map(star => (
           <TouchableOpacity key={star} onPress={() => setRating(star)}>
             <Icon
               name={star <= rating ? 'star' : 'star-border'}
@@ -103,19 +103,18 @@ const ReviewForm = ({ productId }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    width:"100%"
+    width: '100%',
   },
   title: {
     fontSize: 20,
     fontWeight: '500',
     marginBottom: 10,
-    textAlign:"center",
-   
+    textAlign: 'center',
   },
   starsContainer: {
     flexDirection: 'row',
     marginBottom: 20,
-    justifyContent:"center"
+    justifyContent: 'center',
   },
   textInput: {
     borderColor: '#ddd',
@@ -123,15 +122,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 20,
-    height:50
+    height: 50,
   },
   button: {
     backgroundColor: redColor,
     padding: 10,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent:"center",
-    height:54
+    justifyContent: 'center',
+    height: 54,
   },
   buttonText: {
     color: '#fff',
@@ -140,5 +139,3 @@ const styles = StyleSheet.create({
 });
 
 export default ReviewForm;
-
-

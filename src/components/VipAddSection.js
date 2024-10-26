@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { whiteColor } from '../constants/Color';
-import { VIP_POSTER } from '../assests/images';
+import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {whiteColor} from '../constants/Color';
+import {VIP_POSTER} from '../assests/images';
 
-export default function VipAddSection({ item, onPress }) {
+export default function VipAddSection({item, onPress}) {
   return (
     <TouchableOpacity style={styles.container}>
-      <Image source={{ uri: item }} style={styles.thumbnail} />
+      <Image source={{uri: item}} style={styles.thumbnail} />
       {/* <Text style={styles.sellerName}>{item.name}</Text> */}
     </TouchableOpacity>
   );
@@ -27,12 +27,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     left: 50,
-    alignSelf: "center",
-    width: "100%",
+    alignSelf: 'center',
+    width: '100%',
     fontSize: 18,
-    fontWeight: "500",
-    color: whiteColor
-
+    fontWeight: '500',
+    color: whiteColor,
   },
 });
-
