@@ -119,7 +119,11 @@ export default function SavedScreen({navigation}) {
                       borderRadius: 10,
                       overflow: 'hidden',
                     }}
-                    // onPress={() => navigation.navigate("ProductDetails")}
+                    onPress={() => {
+                      navigation.navigate('ProductDetails', {
+                        product: item,
+                      });
+                    }}
                   >
                     <Video
                       bufferConfig={{

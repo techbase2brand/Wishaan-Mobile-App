@@ -39,8 +39,6 @@ const CartItem = ({item}) => {
       <Image
         resizeMethod="resize"
         style={[styles.productImage, resizeModeCover, borderRadius5]}
-        // alt={item?.merchandise?.image?.altText}
-        // source={{ uri: item?.merchandise?.image?.url }}
         source={require('../assets/vipPoster.png')}
       />
       <View
@@ -75,7 +73,6 @@ const CartItem = ({item}) => {
           <View
             style={[
               styles.quantityContainer,
-              ,
               {backgroundColor: whiteColor, borderColor: blackColor},
             ]}>
             <TouchableOpacity onPress={() => console.log('decriment')}>
@@ -122,7 +119,6 @@ const styles = StyleSheet.create({
   productText: {
     paddingLeft: 10,
     display: 'flex',
-    // color: textSubdued
   },
   productTitle: {
     fontSize: style.fontSizeNormal1x.fontSize,
@@ -132,12 +128,9 @@ const styles = StyleSheet.create({
   },
   productDescription: {
     fontSize: style.fontSizeNormal.fontSize,
-    // color: colors.textSubdued,
-    // padding: spacings.xLarge
   },
   productPrice: {
     fontSize: style.fontSizeNormal.fontSize,
-    // padding: spacings.xLarge,
     fontWeight: style.fontWeightThin1x.fontWeight,
     color: blackColor,
   },
@@ -163,7 +156,6 @@ const styles = StyleSheet.create({
   },
   quantityButton: {
     paddingHorizontal: 8,
-    // paddingVertical: 5,
     borderRadius: 5,
     color: redColor,
     fontSize: 16,
@@ -173,7 +165,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 2,
     fontSize: 16,
-    // fontWeight: 'bold',
     color: redColor,
   },
 });

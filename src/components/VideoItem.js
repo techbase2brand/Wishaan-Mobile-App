@@ -61,16 +61,31 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ADD_TO_CART, SHARE, VOICE} from '../assets/Image';
 import {green, redColor} from '../constants/Color';
+import {toggleMute, resetMute} from '../redux/actions/videoActions';
 
 const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
+  const isMuted = useSelector(state => state.muted.isMuted); // Access global state
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  // const [isMuted, setIsMuted] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  // const [isMuted, setIsMuted] = useState(false); // Manage mute state
+  // Function to toggle mute
+  // const toggleMute = () => {
+  //   setIsMuted(prevState => !prevState);
+  // };
   useEffect(() => {
-    // Check if the item is in the wishlist and update local state
-  }, []);
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
+    dispatch(resetMute());
+  }, [dispatch]);
+  useEffect(() => {
+    console.log('All videos muted:', isMuted);
+  }, [isMuted]);
+  // useEffect(() => {
+  //   // Check if the item is in the wishlist and update local state
+  // }, []);
+  const handleToggleMute = () => {
+    console.log('Toggling mute'); // Debug log
+    dispatch(toggleMute());
   };
 
   const handleLoad = () => {
@@ -85,6 +100,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
     console.log('Buffering:');
     setLoading(meta.isBuffering);
   };
+
   const handlePress = () => {
     if (!isSelected) {
       // dispatch(addToWishlist(item));
@@ -109,7 +125,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
     <View style={styles.container}>
       <TouchableOpacity
         onPress={onPress}
-        // onPress={() => navigation.navigate('ReelsScreen')}
+        // onPress={() => navigation.navigate('ProductDetails')}
         style={styles.videoContainer}
         activeOpacity={0.8}>
         {loading && (
@@ -160,7 +176,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           width: 30,
           height: 30,
         }}
-        onPress={toggleMute}>
+        onPress={handleToggleMute}>
         {isMuted ? (
           <Ionicons
             name="volume-mute-outline"

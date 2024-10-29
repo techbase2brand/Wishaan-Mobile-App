@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['videos', 'cachedFiles','activeCollectionId','titles'],  // specify which reducers you want to persist
+  whitelist: ['videos', 'cachedFiles','activeCollectionId','titles','muted'],  // specify which reducers you want to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -5,6 +5,9 @@ export const SET_CACHED_FILES = 'SET_CACHED_FILES';
 export const FETCH_CACHED_VIDEOS_SUCCESS = 'FETCH_CACHED_VIDEOS_SUCCESS';
 export const UPDATE_PAGINATION = 'UPDATE_PAGINATION';
 export const FETCH_VIDEOS_FAILURE = 'FETCH_VIDEOS_FAILURE';
+export const TOGGLE_MUTE = 'TOGGLE_MUTE';
+export const RESET_MUTE = 'RESET_MUTE';
+
 
 export const fetchVideosRequest = () => ({
   type: FETCH_VIDEOS_REQUEST,
@@ -30,8 +33,11 @@ export const fetchVideosFailure = (error) => ({
   payload: error,
 });
 
+// actions.js
 
-// export const fetchCachedVideosSuccess = (videos) => ({
-//   type: FETCH_CACHED_VIDEOS_SUCCESS,
-//   payload: videos,
-// });
+export const toggleMute = () => ({
+  type: TOGGLE_MUTE,
+});
+export const resetMute = () => ({
+  type: RESET_MUTE,
+});

@@ -107,7 +107,12 @@ const Header = ({
                   color: blackColor,
                   textAlign: 'right',
                   width:
-                    text == 'My Cart' || text == 'Account' ? wp(46) : wp(51),
+                    text == 'My Cart' ||
+                    text == 'Account' ||
+                    text == 'Details' ||
+                    text == 'Search'
+                      ? wp(46)
+                      : wp(51),
                 },
               ]}>
               {text}

@@ -19,6 +19,12 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import OrderHistory from '../screens/OrderHistory';
 import PickupAddressScreen from '../screens/PickupAddressScreen';
 import ConfirmDeliveryLocation from '../screens/ConfirmDeliveryLocation';
+import ProductDetailsScreen from '../screens/ProductDetailsScreen';
+import ReviewScreen from '../screens/ReviewScreen';
+import SearchScreen from '../screens/SearchScreen';
+import SellerProfileScreen from '../screens/SellerProfileScreen';
+import {useEffect, useState} from 'react';
+import SplashScreen from '../screens/SplashScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,9 +42,25 @@ function HomeStack() {
         component={ReelsScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetailsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReviewScreen"
+        component={ReviewScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
+
 function AddressStack() {
   return (
     <Stack.Navigator>
@@ -55,6 +77,34 @@ function AddressStack() {
     </Stack.Navigator>
   );
 }
+
+function SavedStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Saved"
+        component={SavedScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetailsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReviewScreen"
+        component={ReviewScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SellerProfile"
+        component={SellerProfileScreen}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function ProfileStack() {
   return (
     <Stack.Navigator>
@@ -137,6 +187,16 @@ function ProfileStack() {
 }
 
 function BottomTabNavigator() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  if (isLoading) {
+    return <SplashScreen />; // Render the splash screen while loading
+  }
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -186,15 +246,23 @@ function BottomTabNavigator() {
         component={HomeStack}
         options={{headerShown: false}}
       />
-      {/* <Tab.Screen
-        name="Wallet"
-        component={WalletScreen}
-        options={{headerShown: false}}
-      /> */}
       <Tab.Screen
         name="Saved"
-        component={SavedScreen}
-        options={{headerShown: false}}
+        component={SavedStack}
+        options={({route}) => {
+          const routeName = getFocusedRouteNameFromRoute(route);
+          return {
+            tabBarStyle: {
+              display:
+                routeName == 'Saved' ||
+                routeName == 'ReviewScreen' ||
+                routeName == 'ProductDetails'
+                  ? 'none'
+                  : 'flex',
+            },
+            headerShown: false,
+          };
+        }}
       />
       <Tab.Screen
         name="Cart"
@@ -204,9 +272,6 @@ function BottomTabNavigator() {
       <Tab.Screen
         name="Account"
         component={ProfileStack}
-        // options={{ headerShown: false ,
-        //   tabBarStyle: { display: routeName === 'Account' ? 'none':flex },
-        // }}
         options={({route}) => {
           const routeName = getFocusedRouteNameFromRoute(route);
           return {

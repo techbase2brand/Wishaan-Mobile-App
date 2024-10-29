@@ -66,14 +66,13 @@ const SingleReel = ({item, index, currentIndex, navigation}) => {
         // source={require('../assests/video3.mp4')}
         source={{uri: convertToProxyURL(item?.video_url)}}
         repeat={true}
-        muted
+        // muted
         maxBitRate={2000000}
         paused={currentIndex === index ? false : true}
         hideShutterView={true}
         onLoad={handleLoad}
         onEnd={handleEnd}
         onBuffer={e => {
-          console.log('e.isBuffering', e.isBuffering);
           if (e.isBuffering == true) {
             setLoading(true);
           } else {

@@ -69,8 +69,11 @@ const filters = [
 ];
 export default function HomeScreen({navigation}) {
   const {loading, videos, error} = useSelector(state => state?.videos);
+  const {cachedFiles} = useSelector(state => state.cachedFiles);
+  const [productImagesAndTitles, setProductImagesAndTitles] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('All');
 
+  console.log('cachedFiles', cachedFiles);
   useEffect(() => {}, [videos]);
   const handleFilterPress = item => {
     setSelectedFilter(item.name);
@@ -151,8 +154,6 @@ export default function HomeScreen({navigation}) {
     ),
     [visibleVideoIndices, playingIndex],
   );
-  const [productImagesAndTitles, setProductImagesAndTitles] = useState([]);
-  console.log('productImagesAndTitles..', productImagesAndTitles);
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
@@ -222,7 +223,7 @@ export default function HomeScreen({navigation}) {
         return (
           <>
             <View style={styles.sectionTitle}>
-              <Text style={styles.titleText}>Top Selling Product</Text>
+              {/* <Text style={styles.titleText}>Top Selling Product</Text> */}
             </View>
             <FlatList
               data={topSellingProducts}
