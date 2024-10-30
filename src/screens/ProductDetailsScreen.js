@@ -1056,12 +1056,14 @@ const styles = StyleSheet.create({
     fontSize: style.fontSizeExtraExtraSmall.fontSize,
     backgroundColor: redColor,
     padding: spacings.xxLarge,
-  },
+  }, 
   outOfStockButton: {
-    width: wp(95),
+    width: wp(60),
     fontSize: style.fontSizeExtraExtraSmall.fontSize,
     backgroundColor: redColor,
-    padding: spacings.xxLarge,
+    paddingHorizontal: spacings.xxLarge,
+    paddingVertical: 8,
+    alignSelf: 'center',
   },
   addToCartButtonText: {
     fontSize: style.fontSizeNormal.fontSize,
@@ -1083,7 +1085,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     paddingHorizontal: spacings.xxLarge,
-    paddingVertical: spacings.xSmall,
+    paddingVertical: spacings.xsmall,
     fontSize: style.fontSizeNormal2x.fontSize,
     fontWeight: style.fontWeightThin1x.fontWeight,
     color: blackColor,

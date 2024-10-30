@@ -153,7 +153,6 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           onLoad={handleLoad}
           onEnd={handleEnd}
           onBuffer={e => {
-            console.log('e.isBuffering', e.isBuffering);
             if (e.isBuffering == true) {
               setLoading(true);
             } else {
@@ -169,7 +168,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           alignItems: 'center',
           objectFit: 'contain',
           position: 'absolute',
-          bottom: 200,
+          bottom: 150,
           right: 10,
           padding: 2,
           borderRadius: 100,
@@ -193,15 +192,15 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             size={25}
             color="white"
             style={{
-              width: 24,
-              height: 24,
+              width: 20,
+              height: 20,
             }}
           />
         )}
       </TouchableOpacity>
       <Entypo
         name="dots-three-vertical"
-        size={25}
+        size={20}
         color="white"
         style={{position: 'absolute', top: 20, right: 10}}
       />
@@ -210,16 +209,15 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           <AntDesign
             onPress={handlePress}
             name={isSelected ? 'heart' : 'hearto'}
-            size={25}
+            size={20}
             color={isSelected ? redColor : 'black'}
             style={styles.icon}
           />
-          {/* <Icon name="comment-o" size={25} color="black" style={styles.icon} /> */}
           <Image
             source={SHARE}
             style={{
-              width: 24,
-              height: 24,
+              width: 20,
+              height: 20,
               marginVertical: 10,
               objectFit: 'contain',
             }}
@@ -233,7 +231,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             style={{
               width: 27,
               height: 27,
-              marginVertical: 10,
+              marginVertical: 5,
               objectFit: 'contain',
             }}
           />
@@ -260,8 +258,8 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
         </TouchableOpacity>
       </View>
       <View style={{flexDirection: 'row', marginHorizontal: 10, gap: 10}}>
-        <Text style={{color: 'black', fontSize: 16}}>$620</Text>
-        <Text style={{fontSize: 14}}>$800</Text>
+        <Text style={{color: 'black', fontSize: 16}}>₹620</Text>
+        <Text style={{fontSize: 14,textDecorationLine: 'line-through', color:"#808080"}}>₹800</Text>
         <Text style={{color: green, fontSize: 14}}>60% off</Text>
       </View>
     </View>
@@ -271,7 +269,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingBottom: 40,
+    paddingBottom: 10,
   },
   title: {
     marginLeft: 10,

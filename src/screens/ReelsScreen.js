@@ -32,29 +32,6 @@ const ReelsScreen = ({route, navigation}) => {
   const [loading, setLoading] = useState(false);
   const [allLoaded, setAllLoaded] = useState(false);
 
-  const productMedia = videos?.map(productEdge => {
-    const productId = productEdge?.node?.id;
-    const title = productEdge?.node?.title;
-    const description = productEdge?.node?.descriptionHtml;
-    const tags = productEdge?.node?.tags;
-    const variants = productEdge?.node?.variants?.edges?.map(variantEdge => ({
-      variantId: variantEdge?.node?.id,
-      // variantTitle: variantEdge?.node?.title,
-    }));
-    const media = productEdge?.node?.media?.edges?.map(mediaEdge => ({
-      ...mediaEdge?.node?.sources[0],
-      productId,
-      title,
-      description,
-      variants,
-      tags,
-    }));
-    return media;
-  });
-  const productVideosUrl = productMedia
-    ?.reduce((acc, val) => acc.concat(val), [])
-    .filter(Boolean);
-
   const videosPerPage = 10;
 
   useEffect(() => {

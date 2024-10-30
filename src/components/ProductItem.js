@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     width: 62,
     height: 62,
     borderRadius: 100,
-    // borderWidth: 1,
     backgroundColor: 'white', // Optional: to give a white background for the image
   },
   productName: {

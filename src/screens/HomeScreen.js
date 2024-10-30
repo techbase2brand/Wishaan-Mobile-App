@@ -20,8 +20,15 @@ import {black, grayColor, redColor} from '../constants/Color';
 import CarouselComponent from '../components/CarouselComponent';
 import RecommendedVideo from '../components/RecommendedVideo';
 import VideoList from '../components/VideoList';
+import FastImage from 'react-native-fast-image';
+import {spacings} from '../constants/Fonts';
 
 const {width, height} = Dimensions.get('window');
+const GIF = {
+  id: 1,
+  gif: 'https://firebasestorage.googleapis.com/v0/b/reelsclone-693a1.appspot.com/o/Wishaan%20video.gif?alt=media&token=89d51353-dfc5-4fc3-8c07-b3fe545b77c4',
+};
+
 const topSellingProducts = [
   {
     id: '1',
@@ -236,7 +243,22 @@ export default function HomeScreen({navigation}) {
           </>
         );
       case 'carousel':
-        return <CarouselComponent />;
+        return (
+          <View>
+            <FastImage
+              source={{uri: GIF.gif}}
+              resizeMode="cover"
+              style={[
+                {
+                  width: wp(100),
+                  height: hp(28),
+                  marginVertical: spacings.large,
+                },
+              ]}
+            />
+          </View>
+        );
+      // return <CarouselComponent />;
 
       case 'filters':
         return (
@@ -325,17 +347,18 @@ const styles = StyleSheet.create({
   },
   productList: {
     paddingLeft: 20,
-    height: hp(12),
+    height: hp(10),
   },
   filterContainer: {
     marginVertical: 20,
-    paddingLeft: 20,
+    paddingLeft: 10,
   },
   filterButton: {
     // backgroundColor: ',
     borderRadius: 4,
-    marginHorizontal: 5,
-    paddingHorizontal: 15,
+    // marginRight:10,
+    marginHorizontal: 7,
+    paddingHorizontal: 8,
     paddingVertical: 5,
     borderWidth: 0.2,
   },
@@ -344,7 +367,7 @@ const styles = StyleSheet.create({
   // },
   selectedFilterButton: {
     backgroundColor: redColor,
-    borderRadius: 8,
+    borderRadius: 4,
     borderWidth: 0,
   },
   filterButtonText: {
