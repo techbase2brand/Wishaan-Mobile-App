@@ -200,7 +200,7 @@ export default function AccountScreen({navigation}) {
             </Text>
           </View>
 
-          <TouchableOpacity style={styles.section}>
+          <TouchableOpacity style={styles.section} onPress={()=>navigation.navigate("AccountSettings")}>
             <View style={styles.sectionRow}>
               <AntDesign name="setting" size={20} color="black" />
               <Text style={styles.sectionText}>Settings</Text>

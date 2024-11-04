@@ -25,6 +25,7 @@ import SearchScreen from '../screens/SearchScreen';
 import SellerProfileScreen from '../screens/SellerProfileScreen';
 import {useEffect, useState} from 'react';
 import SplashScreen from '../screens/SplashScreen';
+import AccountSettingsScreen from '../screens/AccountSettingsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -167,11 +168,11 @@ function ProfileStack() {
         component={CartScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="ConfirmDeliveryLocation"
-        component={ConfirmDeliveryLocation}
+      <Stack.Screen
+        name="AccountSettings"
+        component={AccountSettingsScreen}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="Orders"
         component={OrderHistory}
@@ -279,7 +280,8 @@ function BottomTabNavigator() {
               display:
                 routeName == 'Account' ||
                 routeName == 'Address' ||
-                routeName == 'ConfirmDeliveryLocation'
+                routeName == 'ConfirmDeliveryLocation' ||
+                routeName == 'AccountSettings'
                   ? 'none'
                   : 'flex',
             },

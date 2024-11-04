@@ -4,7 +4,7 @@ export const SAVED_ICON = require('./BottomTabImages/Heart.png');
 export const CART_ICON = require('./BottomTabImages/Cart.png');
 export const ACCOUNT_ICON = require('./BottomTabImages/User.png');
 
-export const SPLASH_IMAGE= require('./Splash.jpg')
+export const SPLASH_IMAGE = require('./Splash.jpg');
 
 export const BELL_ICON = require('./Header/Bell.png');
 export const MAIN_ICON = require('./Header/MainLogo.png');
@@ -21,6 +21,8 @@ export const REEL_PLAY_WHITE = require('./VideoSection/reelPlayWhite.png');
 
 export const VIP_LOGO = require('./vipLogo.png');
 export const VIP_POSTER = require('./vipPoster.png');
+export const GOOGLE_LOGO = require('../assets/googleLogo.png');
+export const APPLE_LOGO = require('../assets/apple.png');
 
-
-export const LOGIN_IMG= require('./loginimg.png')
+export const LOGIN_IMG = require('./loginimg.png');
+export const SUCCESS_IMAGE = require('./success.png');

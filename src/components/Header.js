@@ -37,6 +37,7 @@ const Header = ({
   closeIcon,
   menuImage,
   onClosePress,
+  marginleft,
   shoppingCart,
   onPressShopByCatagory,
 }) => {
@@ -113,6 +114,7 @@ const Header = ({
                     text == 'Search'
                       ? wp(46)
                       : wp(51),
+                      marginLeft:marginleft?marginleft:0
                 },
               ]}>
               {text}
