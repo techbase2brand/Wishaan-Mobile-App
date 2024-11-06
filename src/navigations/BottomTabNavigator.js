@@ -26,6 +26,11 @@ import SellerProfileScreen from '../screens/SellerProfileScreen';
 import {useEffect, useState} from 'react';
 import SplashScreen from '../screens/SplashScreen';
 import AccountSettingsScreen from '../screens/AccountSettingsScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import DeleteAccount from '../screens/DeleteAccount';
+import DeleteAccountConfirmation from '../screens/DeleteAccountConfirmation';
+import NotificationScreen from '../screens/NotificationScreen';
+import ReferralScreen from '../screens/ReferralScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,6 +63,12 @@ function HomeStack() {
         component={SearchScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
+        options={{headerShown: false}}
+      />
+      
     </Stack.Navigator>
   );
 }
@@ -73,6 +84,11 @@ function AddressStack() {
       <Stack.Screen
         name="ConfirmDeliveryLocation"
         component={ConfirmDeliveryLocation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -100,6 +116,11 @@ function SavedStack() {
       <Stack.Screen
         name="SellerProfile"
         component={SellerProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -174,6 +195,21 @@ function ProfileStack() {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="DeleteAccountConfirmation"
+        component={DeleteAccountConfirmation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Orders"
         component={OrderHistory}
         options={{headerShown: false}}
@@ -181,6 +217,16 @@ function ProfileStack() {
       <Stack.Screen
         name="Address"
         component={AddressStack}
+        options={{headerShown: false}}
+      />
+       <Stack.Screen
+        name="ReferralScreen"
+        component={ReferralScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NotificationScreen"
+        component={NotificationScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

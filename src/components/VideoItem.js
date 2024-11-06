@@ -1,47 +1,3 @@
-// // components/VideoItem.js
-// import React from 'react';
-// import {TouchableOpacity, StyleSheet, View, Text, Image} from 'react-native';
-// import Video from 'react-native-video';
-
-// const VideoItem = ({videoUri, onPress, index, currentIndex}) => {
-//   return (
-//     <View style={{ flex:1,  width:"100%", height:"100%"}}>
-//       <Text style={{marginLeft: 20, fontSize: 25, color: '#fff', marginTop:20}}>
-//         John Doe
-//       </Text>
-//       <Text style={{marginLeft: 20, fontSize: 20, color: '#fff'}}>
-//         march, 20
-//       </Text>
-//       <TouchableOpacity onPress={onPress} style={styles.container}>
-//         <Video
-//           source={videoUri}
-//           style={styles.video}
-//           resizeMode="cover"
-//           repeat={true}
-//           paused={currentIndex == index ? false : true}
-//           muted
-//         />
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     width: '100%',
-//     // height:'100%',
-//     marginBottom: 60,
-//     marginTop: 80,
-//   },
-//   video: {
-//     width: '100%',
-//     height: 400,
-//   },
-// });
-
-// export default VideoItem;
-
 import React, {useEffect, useState, useRef} from 'react';
 import {
   TouchableOpacity,
@@ -62,8 +18,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ADD_TO_CART, SHARE, VOICE} from '../assets/Image';
 import {green, redColor} from '../constants/Color';
 import {toggleMute, resetMute} from '../redux/actions/videoActions';
+import {useIsFocused} from '@react-navigation/native';
 
 const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
+  const isFocused = useIsFocused();
   const isMuted = useSelector(state => state.muted.isMuted); // Access global state
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -77,14 +35,12 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
   useEffect(() => {
     dispatch(resetMute());
   }, [dispatch]);
+
   useEffect(() => {
     console.log('All videos muted:', isMuted);
   }, [isMuted]);
-  // useEffect(() => {
-  //   // Check if the item is in the wishlist and update local state
-  // }, []);
+
   const handleToggleMute = () => {
-    console.log('Toggling mute'); // Debug log
     dispatch(toggleMute());
   };
 
@@ -148,7 +104,8 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           repeat={true}
           muted={isMuted}
           maxBitRate={2000000}
-          paused={currentIndex === index ? false : true}
+          paused={!isFocused || currentIndex !== index}
+          // paused={currentIndex === index ? false : true}
           hideShutterView={true}
           onLoad={handleLoad}
           onEnd={handleEnd}
@@ -259,13 +216,19 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
       </View>
       <View style={{flexDirection: 'row', marginHorizontal: 10, gap: 10}}>
         <Text style={{color: 'black', fontSize: 16}}>₹620</Text>
-        <Text style={{fontSize: 14,textDecorationLine: 'line-through', color:"#808080"}}>₹800</Text>
+        <Text
+          style={{
+            fontSize: 14,
+            textDecorationLine: 'line-through',
+            color: '#808080',
+          }}>
+          ₹800
+        </Text>
         <Text style={{color: green, fontSize: 14}}>60% off</Text>
       </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     width: '100%',

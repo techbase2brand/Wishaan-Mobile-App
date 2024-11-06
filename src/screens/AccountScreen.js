@@ -207,7 +207,15 @@ export default function AccountScreen({navigation}) {
             </View>
             <Icon name="chevron-right" size={24} color="black" />
           </TouchableOpacity>
+          <View style={styles.sectionDivider} />
 
+          <TouchableOpacity style={styles.section} onPress={()=>navigation.navigate("ReferralScreen")}>
+            <View style={styles.sectionRow}>
+              <AntDesign name="setting" size={20} color="black" />
+              <Text style={styles.sectionText}>Referral & Earn</Text>
+            </View>
+            <Icon name="chevron-right" size={24} color="black" />
+          </TouchableOpacity>
           <View style={styles.sectionDivider} />
           <TouchableOpacity style={styles.section}>
             <View style={styles.sectionRow}>

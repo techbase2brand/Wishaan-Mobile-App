@@ -18,6 +18,7 @@ import {REEL_PLAY_WHITE} from '../assets/Image';
 import {staticWishList} from '../constants/Constants';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
 import Header from '../components/Header';
+import { useIsFocused } from '@react-navigation/native';
 
 const {
   alignJustifyCenter,
@@ -31,6 +32,8 @@ const {
   alignItemsCenter,
 } = BaseStyle;
 export default function SavedScreen({navigation}) {
+  const isFocused = useIsFocused();
+
   const VIDEO_DURATION = 5000; // 5 seconds
   const [visibleVideoIndices, setVisibleVideoIndices] = useState([]);
   const [playingIndex, setPlayingIndex] = useState(0);
@@ -134,7 +137,8 @@ export default function SavedScreen({navigation}) {
                       }}
                       source={{uri: convertToProxyURL(item?.url)}}
                       style={{height: '100%', width: '100%'}}
-                      paused={!isPlaying}
+                      // paused={!isPlaying}
+                      paused={!isFocused || !isPlaying}
                       resizeMode="cover"
                       muted
                       repeat={true}

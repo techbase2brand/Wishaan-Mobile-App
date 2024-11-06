@@ -25,7 +25,7 @@ const {
   positionAbsolute,
   justifyContentSpaceBetween,
 } = BaseStyle;
-
+const totalQuantity = 4;
 const Header = ({
   navigation,
   backIcon,
@@ -46,7 +46,7 @@ const Header = ({
     navigation.goBack();
   };
   const OnClickCartIcon = () => {
-    navigation.navigate('CartModal');
+    navigation.navigate('NotificationScreen');
   };
   const OnClickSearchBar = () => {
     navigation.navigate('Search', {navigation: navigation});
@@ -114,7 +114,7 @@ const Header = ({
                     text == 'Search'
                       ? wp(46)
                       : wp(51),
-                      marginLeft:marginleft?marginleft:0
+                  marginLeft: marginleft ? marginleft : 0,
                 },
               ]}>
               {text}
@@ -156,19 +156,26 @@ const Header = ({
             </TouchableOpacity>
           )}
           {notification && (
-            <TouchableOpacity
-              style={[alignJustifyCenter, {width: wp(10)}]}
-              onPress={OnClickCartIcon}>
-              <Image
-                source={BELL_ICON}
-                style={{
-                  width: wp(8),
-                  height: hp(3.3),
-                  resizeMode: 'contain',
-                  marginLeft: spacings.large,
-                }}
-              />
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                style={[alignJustifyCenter, {width: wp(10)}]}
+                onPress={OnClickCartIcon}>
+                <Image
+                  source={BELL_ICON}
+                  style={{
+                    width: wp(8),
+                    height: hp(3.3),
+                    resizeMode: 'contain',
+                    marginLeft: spacings.large,
+                  }}
+                />
+              </TouchableOpacity>
+              {totalQuantity > 0 && (
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>{totalQuantity}</Text>
+                </View>
+              )}
+            </View>
           )}
         </View>
       </View>
@@ -247,8 +254,8 @@ const styles = StyleSheet.create({
   },
   badgeContainer: {
     position: 'absolute',
-    top: 0,
-    right: 4,
+    top: -4,
+    right: 2,
     backgroundColor: redColor, // Your preferred badge color
     borderRadius: wp(2), // Adjust based on the size of your badge
     width: wp(4), // Adjust based on the size of your badge

@@ -12,7 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {redColor} from '../constants/Color';
 import Header from '../components/Header';
 
-const AccountSettingsScreen = ({navigation}) => {
+const DeleteAccount = ({navigation}) => {
   const adImageUrl = 'https://example.com/single-ad-image.jpg'; // Replace with your ad image URL
 
   return (
@@ -21,32 +21,62 @@ const AccountSettingsScreen = ({navigation}) => {
         backIcon={true}
         navigation={navigation}
         marginleft={30}
-        text={'Account settings'}
+        text={'Delete Account'}
       />
       {/* <Text style={styles.header}>Account settings</Text> */}
 
       {/* Settings Options */}
       {/* <TouchableOpacity style={styles.option}>
         <Text style={styles.optionText}>Delete account</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> 
       <TouchableOpacity style={styles.option}>
         <Text style={styles.optionText}>Change Password</Text>
       </TouchableOpacity> */}
+      <Text style={{textAlign: 'center', marginVertical: 20}}>
+        Why would you like to delete your account?
+      </Text>
       <View style={styles.sectionDivider} />
+      <TouchableOpacity
+        style={[styles.section]}
+        onPress={() => navigation.navigate('DeleteAccountConfirmation')}>
+        <View style={styles.sectionRow}>
+          <Text style={styles.sectionText}>
+            I don't want to use wishaan anymore{' '}
+          </Text>
+        </View>
+        <Icon name="chevron-right" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={styles.sectionDivider} />
+      <TouchableOpacity
+        style={styles.section}
+        onPress={() => navigation.navigate('DeleteAccountConfirmation')}>
+        <View style={styles.sectionRow}>
+          <Text style={styles.sectionText}>I’m using a different account</Text>
+        </View>
+        <Icon name="chevron-right" size={24} color="black" />
+      </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.section]} onPress={()=> navigation.navigate('DeleteAccount')}>
+      <View style={styles.sectionDivider} />
+      <TouchableOpacity
+        style={styles.section}
+        onPress={() => navigation.navigate('DeleteAccountConfirmation')}>
         <View style={styles.sectionRow}>
-          <Text style={styles.sectionText}>Delete account</Text>
+          <Text style={styles.sectionText}>
+            The app is not working properly
+          </Text>
         </View>
         <Icon name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.sectionDivider} />
-      <TouchableOpacity style={styles.section} onPress={()=> navigation.navigate('ChangePassword')}>
+      <TouchableOpacity
+        style={styles.section}
+        onPress={() => navigation.navigate('DeleteAccountConfirmation')}>
         <View style={styles.sectionRow}>
-          <Text style={styles.sectionText}>Change Password</Text>
+          <Text style={styles.sectionText}>other</Text>
         </View>
         <Icon name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
+      <View style={styles.sectionDivider} />
 
       {/* Ads Section */}
       <Text style={styles.adsTitle}>Ads</Text>
@@ -136,7 +166,7 @@ const styles = StyleSheet.create({
   },
   sectionText: {
     marginLeft: 16,
-    fontSize: 16,
+    fontSize: 14,
   },
   sectionDivider: {
     height: 1,
@@ -146,4 +176,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountSettingsScreen;
+export default DeleteAccount;

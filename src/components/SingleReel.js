@@ -16,11 +16,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {heightPercentageToDP, widthPercentageToDP} from '../utils';
 import {redColor} from '../constants/Color';
+import { useIsFocused } from '@react-navigation/native';
 
 const MAX_RETRY_ATTEMPTS = 3;
 const RETRY_DELAY = 1000;
 
 const SingleReel = ({item, index, currentIndex, navigation}) => {
+  const isFocused = useIsFocused();
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const videoRef = useRef(null);
@@ -68,7 +70,8 @@ const SingleReel = ({item, index, currentIndex, navigation}) => {
         repeat={true}
         // muted
         maxBitRate={2000000}
-        paused={currentIndex === index ? false : true}
+        paused={!isFocused || currentIndex !== index}
+        // paused={currentIndex === index ? false : true}
         hideShutterView={true}
         onLoad={handleLoad}
         onEnd={handleEnd}

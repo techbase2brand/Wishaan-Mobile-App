@@ -4,8 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
 import {REEL_PLAY_BLACK, REEL_PLAY_WHITE} from '../assets/Image';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function RecommendedVideo({item, onPress, isPlaying}) {
+  const isFocused = useIsFocused();
+
   const [loading, setLoading] = useState(true);
 
   const handleLoad = () => {
@@ -51,7 +54,8 @@ export default function RecommendedVideo({item, onPress, isPlaying}) {
             setLoading(false);
           }
         }}
-        paused={!isPlaying}
+        // paused={!isFocused || currentIndex !== index}
+        paused={!isFocused || !isPlaying}
       />
       <Image source={REEL_PLAY_WHITE} style={styles.reelIcon} />
     </TouchableOpacity>
