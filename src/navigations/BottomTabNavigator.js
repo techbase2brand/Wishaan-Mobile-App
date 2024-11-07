@@ -31,6 +31,7 @@ import DeleteAccount from '../screens/DeleteAccount';
 import DeleteAccountConfirmation from '../screens/DeleteAccountConfirmation';
 import NotificationScreen from '../screens/NotificationScreen';
 import ReferralScreen from '../screens/ReferralScreen';
+import ReportIssueScreen from '../screens/ReportIssueScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -225,6 +226,11 @@ function ProfileStack() {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
         options={{headerShown: false}}
@@ -327,7 +333,8 @@ function BottomTabNavigator() {
                 routeName == 'Account' ||
                 routeName == 'Address' ||
                 routeName == 'ConfirmDeliveryLocation' ||
-                routeName == 'AccountSettings'
+                routeName == 'AccountSettings' ||
+                routeName == 'ReportIssueScreen'
                   ? 'none'
                   : 'flex',
             },

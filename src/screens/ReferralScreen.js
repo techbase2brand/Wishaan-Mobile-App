@@ -35,7 +35,7 @@ const ReferralScreen = ({navigation}) => {
   );
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Header
         backIcon={true}
         text={'Referral & Earn'}
@@ -43,9 +43,9 @@ const ReferralScreen = ({navigation}) => {
       />
       <View style={styles.container}>
         {/* <Text style={styles.headerText}>Referral & Earn</Text> */}
-        <Text style={styles.codeText}>Your Referral Code: {referralCode}</Text>
+        <Text style={styles.codeText}>Your Referral Link: {referralCode}</Text>
         <TouchableOpacity style={styles.shareButton} onPress={onShare}>
-          <Text style={styles.shareButtonText}>Share Code</Text>
+          <Text style={styles.shareButtonText}>Share Link</Text>
         </TouchableOpacity>
 
         <Text style={styles.earningsHeader}>Referral Earnings</Text>

@@ -20,8 +20,8 @@ export default function AccountScreen({navigation}) {
         navigation={navigation}
         notification={true}
         text={'Account'}
+        marginleft={6}
       />
-
       {/* {/ User Profile /} */}
       <View style={{paddingHorizontal: 16}}>
         <View style={styles.profileContainer}>
@@ -32,9 +32,9 @@ export default function AccountScreen({navigation}) {
           />
           <View style={styles.profileInfo}>
             <Text style={styles.profileName}>{'Aman Kumar'}</Text>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Text style={styles.viewActivity}>View activity</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
 
@@ -200,19 +200,40 @@ export default function AccountScreen({navigation}) {
             </Text>
           </View>
 
-          <TouchableOpacity style={styles.section} onPress={()=>navigation.navigate("AccountSettings")}>
+          <TouchableOpacity
+            style={styles.section}
+            onPress={() => navigation.navigate('ReferralScreen')}>
             <View style={styles.sectionRow}>
-              <AntDesign name="setting" size={20} color="black" />
-              <Text style={styles.sectionText}>Settings</Text>
+              <Image
+                source={require('../assets/AccountScreen/product-return.png')}
+                style={{width: 24, height: 24}}
+              />
+              <Text style={styles.sectionText}>Referral & Earn</Text>
             </View>
             <Icon name="chevron-right" size={24} color="black" />
           </TouchableOpacity>
           <View style={styles.sectionDivider} />
 
-          <TouchableOpacity style={styles.section} onPress={()=>navigation.navigate("ReferralScreen")}>
+          <TouchableOpacity
+            style={styles.section}
+            onPress={() => navigation.navigate('ReportIssueScreen')}>
+            <View style={styles.sectionRow}>
+              <Image
+                source={require('../assets/AccountScreen/about.png')}
+                style={{width: 20, height: 20}}
+              />
+              <Text style={styles.sectionText}>Report a Issue</Text>
+            </View>
+            <Icon name="chevron-right" size={24} color="black" />
+          </TouchableOpacity>
+          <View style={styles.sectionDivider} />
+
+          <TouchableOpacity
+            style={styles.section}
+            onPress={() => navigation.navigate('AccountSettings')}>
             <View style={styles.sectionRow}>
               <AntDesign name="setting" size={20} color="black" />
-              <Text style={styles.sectionText}>Referral & Earn</Text>
+              <Text style={styles.sectionText}>Settings</Text>
             </View>
             <Icon name="chevron-right" size={24} color="black" />
           </TouchableOpacity>

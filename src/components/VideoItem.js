@@ -180,7 +180,12 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             }}
           />
         </View>
-        <TouchableOpacity
+        <View style={[styles.ratingcontainer, {marginRight: 10}]}>
+          <Text style={styles.ratingText}>3.8</Text>
+          <Icon name="star" size={16} color="#fff" />
+          {/* <Text style={styles.reviewsText}>| 3.7K</Text> */}
+        </View>
+        {/* <TouchableOpacity
           style={styles.iconContainer}
           onPress={handleAddToCart}>
           <Image
@@ -192,12 +197,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
               objectFit: 'contain',
             }}
           />
-        </TouchableOpacity>
-      </View>
-      <View style={{marginHorizontal: 10}}>
-        <Text style={{color: 'black', width: '40%'}}>
-          In publishing and graphic design more...
-        </Text>
+        </TouchableOpacity> */}
       </View>
       <View
         style={{
@@ -205,16 +205,44 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           justifyContent: 'space-between',
           marginHorizontal: 10,
         }}>
-        <View style={styles.ratingcontainer}>
+        <Text style={{color: 'black', width: '60%'}}>
+          In publishing and graphic design more
+        </Text>
+        {/* <View style={styles.ratingcontainer}>
           <Text style={styles.ratingText}>3.8</Text>
           <Icon name="star" size={16} color="#fff" />
           <Text style={styles.reviewsText}>| 3.7K</Text>
+        </View> */}
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginHorizontal: 10,
+          alignItems: 'center',
+        }}>
+        {/* <View style={styles.ratingcontainer}>
+          <Text style={styles.ratingText}>3.8</Text>
+          <Icon name="star" size={16} color="#fff" />
+          <Text style={styles.reviewsText}>| 3.7K</Text>
+        </View> */}
+        <View style={{flexDirection: 'row', gap: 10}}>
+          <Text style={{color: 'black', fontSize: 16}}>₹620</Text>
+          <Text
+            style={{
+              fontSize: 14,
+              textDecorationLine: 'line-through',
+              color: '#808080',
+            }}>
+            ₹800
+          </Text>
+          <Text style={{color: green, fontSize: 14}}>60% off</Text>
         </View>
         <TouchableOpacity style={styles.buyButton} onPress={handleAddToCart}>
           <Text style={{color: '#fff', alignSelf: 'center'}}>{'Buy Now'}</Text>
         </TouchableOpacity>
       </View>
-      <View style={{flexDirection: 'row', marginHorizontal: 10, gap: 10}}>
+      {/* <View style={{flexDirection: 'row', marginHorizontal: 10, gap: 10}}>
         <Text style={{color: 'black', fontSize: 16}}>₹620</Text>
         <Text
           style={{
@@ -225,7 +253,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           ₹800
         </Text>
         <Text style={{color: green, fontSize: 14}}>60% off</Text>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -271,8 +299,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     borderRadius: 5,
     padding: 5,
-    marginVertical: 10,
-    width: '25.2%',
+    marginTop: 10,
+    // width: '14%',
   },
   ratingText: {
     color: '#fff',
