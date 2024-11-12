@@ -453,7 +453,7 @@ function ProductDetails({
                   View All Reviews
                 </Text>
               </Pressable>
-              <Text
+              {/* <Text
                 style={[
                   styles.relatedProductsTitle,
                   {color: blackColor, marginBottom: 20},
@@ -519,7 +519,7 @@ function ProductDetails({
                     style={{marginTop: 0}}
                   />
                 </View>
-              </Pressable>
+              </Pressable> */}
 
               {/* Recommended videos section */}
               <View style={{marginVertical: 10, marginLeft: 10}}>

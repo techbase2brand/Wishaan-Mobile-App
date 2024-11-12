@@ -26,7 +26,7 @@ export default function AccountScreen({navigation}) {
       <View style={{paddingHorizontal: 16}}>
         <View style={styles.profileContainer}>
           <Image
-            source={{uri: 'https://via.placeholder.com/100'}} // Replace with your image
+            source={require('../assets/profileimg.png')} // Replace with your image
             // source={require('../assests/notificationimage.png')}
             style={styles.profileImage}
           />

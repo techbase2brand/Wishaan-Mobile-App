@@ -125,7 +125,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           alignItems: 'center',
           objectFit: 'contain',
           position: 'absolute',
-          bottom: 150,
+          bottom: 120,
           right: 10,
           padding: 2,
           borderRadius: 100,

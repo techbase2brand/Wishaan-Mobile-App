@@ -32,16 +32,34 @@ const AccountSettingsScreen = ({navigation}) => {
       <TouchableOpacity style={styles.option}>
         <Text style={styles.optionText}>Change Password</Text>
       </TouchableOpacity> */}
-      <View style={styles.sectionDivider} />
 
-      <TouchableOpacity style={[styles.section]} onPress={()=> navigation.navigate('DeleteAccount')}>
+      {/* edit profile  */}
+
+      <View style={styles.sectionDivider} />
+      <TouchableOpacity
+        style={[styles.section]}
+        onPress={() => navigation.navigate('ProfileScreen')}>
+        <View style={{}}>
+          <Text style={styles.sectionText}>Edit Profile</Text>
+          <Text style={{marginLeft: 16, marginTop: 4}}>
+            Change your Name, Email and Profile Photo
+          </Text>
+        </View>
+        <Icon name="chevron-right" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={styles.sectionDivider} />
+      <TouchableOpacity
+        style={[styles.section]}
+        onPress={() => navigation.navigate('DeleteAccount')}>
         <View style={styles.sectionRow}>
           <Text style={styles.sectionText}>Delete account</Text>
         </View>
         <Icon name="chevron-right" size={24} color="black" />
       </TouchableOpacity>
       <View style={styles.sectionDivider} />
-      <TouchableOpacity style={styles.section} onPress={()=> navigation.navigate('ChangePassword')}>
+      <TouchableOpacity
+        style={styles.section}
+        onPress={() => navigation.navigate('ChangePassword')}>
         <View style={styles.sectionRow}>
           <Text style={styles.sectionText}>Change Password</Text>
         </View>
@@ -137,6 +155,7 @@ const styles = StyleSheet.create({
   sectionText: {
     marginLeft: 16,
     fontSize: 16,
+    fontWeight: '600',
   },
   sectionDivider: {
     height: 1,

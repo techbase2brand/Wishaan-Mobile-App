@@ -1,31 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
   StyleSheet,
-  ScrollView,
-  Platform,
+  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {APPLE_LOGO, GOOGLE_LOGO, LOGIN_IMG} from '../assets/Image';
 import {blackColor, grayColor, redColor} from '../constants/Color';
+import {APPLE_LOGO, GOOGLE_LOGO, LOGIN_IMG} from '../assets/Image';
+import {widthPercentageToDP as wp} from '../utils';
 import {BaseStyle} from '../constants/Style';
 import {spacings} from '../constants/Fonts';
 
-const {alignJustifyCenter, flexDirectionRow, textAlign} = BaseStyle;
+const {
+  alignJustifyCenter,
+  flexDirectionRow,
+  textAlign,
+  positionAbsolute,
+  textDecorationUnderline,
+} = BaseStyle;
+const LoginScreen = () => {
+  const [selectedTab, setSelectedTab] = useState('otp'); // State to manage selected tab
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [password, setPassword] = useState('');
 
-const LoginScreen = ({navigation}) => {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Back Arrow */}
-      {/* <TouchableOpacity style={styles.backButton}>
-        <Icon name="arrow-left" size={24} color="black" />
-      </TouchableOpacity> */}
-
-      {/* Logo */}
+    <View style={styles.container}>
       <Image
         source={require('../assets/LoginLogo.png')} // Replace with your logo URL
         style={styles.logo}
@@ -42,75 +44,102 @@ const LoginScreen = ({navigation}) => {
       {/* Login Title */}
       <Text style={styles.title}>Login to your account!</Text>
 
-      {/* Email Input with Label */}
-      <View style={styles.inputContainer}>
-        <Text
+      {/* Tab Buttons */}
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
           style={[
-            styles.inputLabel,
+            styles.tabButton,
+            selectedTab === 'otp' && styles.activeTab,
             {
-              width: '20%',
-              backgroundColor: '#fff',
-              marginLeft: 10,
-              marginBottom: -10,
-              zIndex: 99999,
-              textAlign: 'center',
+              borderTopLeftRadius: selectedTab === 'otp' ? 8 : 8,
+              borderBottomLeftRadius: selectedTab === 'otp' ? 8 : 8,
             },
-          ]}>
-          Email <Text style={styles.asterisk}>*</Text>
-        </Text>
-        <TextInput
-          placeholder="Enter your Email"
-          placeholderTextColor="#aaa"
-          style={styles.input}
-          keyboardType="email-address"
-        />
+          ]}
+          onPress={() => setSelectedTab('otp')}>
+          <Text
+            style={[
+              styles.tabText,
+              {color: selectedTab === 'otp' ? '#ffff' : blackColor},
+            ]}>
+            Login with OTP
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.tabButton,
+            selectedTab === 'password' && styles.activeTab,
+            ,
+            {
+              borderTopRightRadius: selectedTab === 'password' ? 8 : 8,
+              borderBottomRightRadius: selectedTab === 'password' ? 8 : 8,
+            },
+          ]}
+          onPress={() => setSelectedTab('password')}>
+          <Text
+            style={[
+              styles.tabText,
+              {color: selectedTab === 'password' ? '#ffff' : blackColor},
+            ]}>
+            Login with Password
+          </Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Password Input with Label */}
-      <View style={styles.inputContainer}>
-        <Text
-          style={[
-            styles.inputLabel,
-            {
-              width: '28%',
-              backgroundColor: '#fff',
-              marginLeft: 10,
-              marginBottom: -10,
-              zIndex: 99999,
-              textAlign: 'center',
-            },
-          ]}>
-          Password <Text style={styles.asterisk}>*</Text>
-        </Text>
-        <TextInput
-          placeholder="Enter your password"
-          placeholderTextColor="#aaa"
-          secureTextEntry
-          style={styles.input}
-        />
-      </View>
-
-      {/* Forgot Password */}
-      <TouchableOpacity style={styles.forgotPassword} onPress={()=>navigation.navigate("ForgetPassword")}>
-        <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-      </TouchableOpacity>
-
-      {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-
-      {/* Register Link */}
-      <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-        <Text style={styles.registerText}>
-          Don't have an account?{' '}
-          <Text style={styles.registerLink}>Register</Text>
-        </Text>
-      </TouchableOpacity>
+      {/* Conditional Rendering based on Selected Tab */}
+      {selectedTab === 'otp' ? (
+        // Login with OTP section
+        <View style={styles.formContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Your Mobile Number*"
+            keyboardType="phone-pad"
+            value={mobileNumber}
+            onChangeText={setMobileNumber}
+          />
+          <TouchableOpacity style={styles.otpButton}>
+            <Text style={styles.buttonText}>Send OTP / Resend OTP</Text>
+          </TouchableOpacity>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter OTP*"
+            keyboardType="numeric"
+            value={otp}
+            onChangeText={setOtp}
+          />
+          <TouchableOpacity style={styles.submitButton}>
+            <Text style={[styles.buttonText, {color: '#ffff', fontSize: 16}]}>
+              Submit
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        // <Text>with password</Text>
+        // Login with Password section
+        <View style={styles.formContainer}>
+          <TextInput
+            style={[styles.input, {marginBottom: 20}]}
+            placeholder="Email / Mobile Number*"
+            keyboardType="phone-pad"
+            value={mobileNumber}
+            onChangeText={setMobileNumber}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Password*"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity style={styles.submitButton}>
+            <Text style={[styles.buttonText, {color: '#ffff', fontSize: 16}]}>
+              Submit
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Social Login */}
       <View style={styles.socialLoginContainer}>
-        {/* <Text style={styles.orText}>or</Text> */}
         <View style={[flexDirectionRow, alignJustifyCenter, {width: '100%'}]}>
           <View
             style={{
@@ -180,25 +209,56 @@ const LoginScreen = ({navigation}) => {
               />
             </View>
           )}
-          {/* <Icon name="google" size={40} color="black" />
-          <Icon name="apple" size={40} color="black" style={styles.appleIcon} /> */}
         </View>
       </View>
-    </ScrollView>
+      <View
+        style={[
+          positionAbsolute,
+          alignJustifyCenter,
+          {bottom: 10, width: '100%'},
+        ]}>
+        <Text style={[{color: blackColor}, textAlign]}>
+          By continuing you agree to our{' '}
+        </Text>
+        <View
+          style={[
+            flexDirectionRow,
+            {marginTop: 4, width: '100%'},
+            alignJustifyCenter,
+          ]}>
+          <TouchableOpacity>
+            <Text style={[{color: redColor}, textDecorationUnderline]}>
+              Terms of Service
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text
+              style={[
+                {color: redColor, marginLeft: 4},
+                textDecorationUnderline,
+              ]}>
+              Privacy Policy
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={[{color: redColor}, textDecorationUnderline]}>
+              {' '}
+              Content Policy
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
+    flex: 1,
+    paddingHorizontal: 16,
     alignItems: 'center',
-  },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
+    backgroundColor: '#ffffff',
+    // justifyContent: 'center',
   },
   logo: {
     width: 120,
@@ -211,59 +271,72 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   title: {
-    fontSize: 22,
-    fontWeight: '600',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  tabContainer: {
+    width: wp(90),
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginBottom: 20,
+    // backgroundColor:"green",
+    borderRadius: 8,
   },
-  inputContainer: {
-    width: '100%',
-    marginBottom: 15,
+  tabButton: {
+    padding: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
+    width: '50%',
+    alignItems: 'center',
+    backgroundColor: '#e6e6e6',
+
+    // marginHorizontal: 10,
+    // backgroundColor:"red"
   },
-  inputLabel: {
+  activeTab: {
+    // borderBottomColor: '#0000ff',
+    backgroundColor: redColor,
+  },
+  tabText: {
     fontSize: 16,
-    // fontWeight: '500',
-    color: '#333',
-    marginBottom: 5,
+    fontWeight: '500',
   },
-  asterisk: {
-    color: redColor,
+  formContainer: {
+    marginTop: 10,
+    width: wp(80),
+    // backgroundColor:"red",
+    alignItems: 'center',
   },
   input: {
-    height: 50,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginBottom: 20,
-  },
-  forgotPasswordText: {
-    color: redColor,
-    fontSize: 14,
-  },
-  loginButton: {
-    backgroundColor: redColor,
     width: '100%',
-    height: 50,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
+    borderColor: '#808080',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 4,
   },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  registerText: {
-    fontSize: 14,
-    marginVertical: 10,
-  },
-  registerLink: {
+  otpButton: {
+    // backgroundColor: '#0000ff',
+    // paddingVertical: 10,
+    borderRadius: 8,
+    marginBottom: 16,
+    width: '100%',
+    alignItems: 'flex-end',
     color: redColor,
-    fontWeight: 'bold',
+  },
+  submitButton: {
+    backgroundColor: redColor,
+    paddingVertical: 10,
+    borderRadius: 8,
+    width: '80%',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  buttonText: {
+    color: redColor,
+    fontSize: 14,
   },
   socialLoginContainer: {
     alignItems: 'center',

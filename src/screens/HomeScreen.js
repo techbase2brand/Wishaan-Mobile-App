@@ -74,6 +74,7 @@ const filters = [
     name: 'Speakers',
   },
 ];
+
 export default function HomeScreen({navigation}) {
   const {loading, videos, error} = useSelector(state => state?.videos);
   const {cachedFiles} = useSelector(state => state.cachedFiles);
@@ -110,9 +111,7 @@ export default function HomeScreen({navigation}) {
 
   // loadmore videos
   // Track if there's more content to load
-
   const [currentIndex, setCurrentIndex] = useState();
-
   const VIDEO_DURATION = 5000;
   const [visibleVideoIndices, setVisibleVideoIndices] = useState([]);
   const [playingIndex, setPlayingIndex] = useState(0);
@@ -139,7 +138,6 @@ export default function HomeScreen({navigation}) {
       setPlayingIndex(0);
       timerRef.current = setInterval(togglePlayingVideo, VIDEO_DURATION);
     }
-
     return () => clearAllTimers();
   }, [visibleVideoIndices]);
 
@@ -292,7 +290,6 @@ export default function HomeScreen({navigation}) {
             // selectedFilter={selectedFilter}
           />
         );
-
       default:
         return null;
     }
@@ -301,10 +298,11 @@ export default function HomeScreen({navigation}) {
   return (
     <SectionList
       sections={sections}
-      keyExtractor={(item, index) => item.type + index}
+      keyExtractor={(item, index) => item?.type + index}
       renderItem={renderSectionContent}
       // renderSectionHeader={renderSectionHeader}
       contentContainerStyle={{paddingBottom: 20, backgroundColor: '#fff'}}
+      showsVerticalScrollIndicator={false}
     />
   );
 }
