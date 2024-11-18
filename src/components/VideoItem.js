@@ -7,6 +7,8 @@ import {
   Dimensions,
   Image,
   ActivityIndicator,
+  Animated,
+  Easing,
 } from 'react-native';
 import Video from 'react-native-video';
 import convertToProxyURL from 'react-native-video-cache';
@@ -16,22 +18,27 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ADD_TO_CART, SHARE, VOICE} from '../assets/Image';
-import {green, redColor} from '../constants/Color';
+import {grayColor, green, redColor} from '../constants/Color';
 import {toggleMute, resetMute} from '../redux/actions/videoActions';
 import {useIsFocused} from '@react-navigation/native';
+import HomeScreenModal from './Modal/HomeScreenModal';
+import Carousal from './Carousal';
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from '../utils';
 
+const {width: screenWidth} = Dimensions.get('window');
 const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
   const isFocused = useIsFocused();
   const isMuted = useSelector(state => state.muted.isMuted); // Access global state
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  // const [isMuted, setIsMuted] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  // const [isMuted, setIsMuted] = useState(false); // Manage mute state
-  // Function to toggle mute
-  // const toggleMute = () => {
-  //   setIsMuted(prevState => !prevState);
-  // };
+  const [modalVisible, setModalVisible] = useState(false);
+  // Animation reference for the heart
+  const heartScale = useRef(new Animated.Value(0)).current;
+
+  // To track last tap for double tap detection
+  const lastTap = useRef(null);
+  const DOUBLE_TAP_DELAY = 300;
   useEffect(() => {
     dispatch(resetMute());
   }, [dispatch]);
@@ -40,6 +47,9 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
     console.log('All videos muted:', isMuted);
   }, [isMuted]);
 
+  const onPressOpenModal = () => {
+    setModalVisible(true);
+  };
   const handleToggleMute = () => {
     dispatch(toggleMute());
   };
@@ -75,92 +85,169 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
   const handleAddToCart = () => {
     // dispatch(addProductInCart(product));
   };
-  const videoUrl =
-    'https://cdn.shopify.com/videos/c/vp/474e4c3b8a9a423ebd3d9ccf3fda0281/474e4c3b8a9a423ebd3d9ccf3fda0281.HD-1080p-4.8Mbps-32573231.mp4';
+
+  const handleLike = () => {
+    setIsSelected(!isSelected);
+    animateHeart();
+  };
+
+  // Detect single or double tap for navigation or like functionality
+  const handleSingleOrDoubleTap = () => {
+    const now = Date.now();
+
+    if (lastTap.current && now - lastTap.current < DOUBLE_TAP_DELAY) {
+      // Double tap detected, handle the like functionality
+      handleLike();
+      lastTap.current = null; // Reset lastTap to avoid triggering the single tap
+    } else {
+      // Single tap detected, wait for a double tap, if no second tap, navigate
+      lastTap.current = now;
+
+      // Set timeout to detect single tap navigation after DOUBLE_TAP_DELAY
+      setTimeout(() => {
+        if (lastTap.current === now) {
+          navigation.navigate('ReelsScreen');
+        }
+      }, DOUBLE_TAP_DELAY);
+    }
+  };
+  const animateHeart = () => {
+    heartScale.setValue(1);
+    Animated.timing(heartScale, {
+      toValue: 0,
+      duration: 900,
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: true,
+    }).start();
+  };
+  const renderItem = ({item}) => {
+    return <Image source={{uri: item}} style={styles.carouselImage} />;
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={onPress}
-        // onPress={() => navigation.navigate('ProductDetails')}
-        style={styles.videoContainer}
-        activeOpacity={0.8}>
-        {loading && (
-          <View style={styles.loaderContainer}>
-            <ActivityIndicator size="large" color="#fff" />
-          </View>
-        )}
-        <Video
-          bufferConfig={{
-            minBufferMs: 2000,
-            maxBufferMs: 5000,
-            bufferForPlaybackMs: 1000,
-            bufferForPlaybackAfterRebufferMs: 1500,
-          }}
-          // poster={item?.thumb_url}
-          // posterResizeMode={'cover'}
-          source={{uri: convertToProxyURL(item?.video_url)}}
-          style={styles.video}
-          resizeMode="cover"
-          repeat={true}
-          muted={isMuted}
-          maxBitRate={2000000}
-          paused={!isFocused || currentIndex !== index}
-          // paused={currentIndex === index ? false : true}
-          hideShutterView={true}
-          onLoad={handleLoad}
-          onEnd={handleEnd}
-          onBuffer={e => {
-            if (e.isBuffering == true) {
-              setLoading(true);
-            } else {
-              setLoading(false);
-            }
-          }}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          marginVertical: 10,
-          backgroundColor: 'black',
-          alignItems: 'center',
-          objectFit: 'contain',
-          position: 'absolute',
-          bottom: 120,
-          right: 10,
-          padding: 2,
-          borderRadius: 100,
-          width: 30,
-          height: 30,
-        }}
-        onPress={handleToggleMute}>
-        {isMuted ? (
-          <Ionicons
-            name="volume-mute-outline"
-            size={25}
-            color="white"
-            style={{
-              width: 20,
-              height: 20,
-            }}
-          />
-        ) : (
-          <Ionicons
-            name="volume-high-outline"
-            size={25}
-            color="white"
-            style={{
-              width: 20,
-              height: 20,
-            }}
-          />
-        )}
-      </TouchableOpacity>
-      <Entypo
-        name="dots-three-vertical"
-        size={20}
-        color="white"
-        style={{position: 'absolute', top: 20, right: 10}}
+      <View
+        style={{height: hp(0.4), width: wp(100), backgroundColor: '#E6E6E6'}}
       />
+      <View
+        style={{
+          marginLeft: 10,
+          marginVertical: 10,
+        }}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: '700',
+           
+          }}>
+          Regular Fit Slogan
+        </Text>
+        <Text
+          style={{
+            fontSize: 14,
+            fontWeight: '500',
+          }}>
+          In publishing and graphic design more
+        </Text>
+      </View>
+      {item?.images && item?.images.length > 0 ? (
+        <Carousal data={item?.images} dostsShow={true} />
+      ) : (
+        <TouchableOpacity
+          onPress={handleSingleOrDoubleTap}
+          // onPress={() => navigation.navigate('ProductDetails')}
+          style={styles.videoContainer}
+          activeOpacity={0.8}>
+          {loading && (
+            <View style={styles.loaderContainer}>
+              <ActivityIndicator size="large" color="#fff" />
+            </View>
+          )}
+
+          <Video
+            bufferConfig={{
+              minBufferMs: 2000,
+              maxBufferMs: 5000,
+              bufferForPlaybackMs: 1000,
+              bufferForPlaybackAfterRebufferMs: 1500,
+            }}
+            // poster={item?.thumb_url}
+            // posterResizeMode={'cover'}
+            source={{uri: convertToProxyURL(item?.video_url)}}
+            style={styles.video}
+            resizeMode="cover"
+            repeat={true}
+            muted={isMuted}
+            maxBitRate={2000000}
+            paused={!isFocused || currentIndex !== index}
+            // paused={currentIndex === index ? false : true}
+            hideShutterView={true}
+            onLoad={handleLoad}
+            onEnd={handleEnd}
+            onBuffer={e => {
+              if (e.isBuffering == true) {
+                setLoading(true);
+              } else {
+                setLoading(false);
+              }
+            }}
+          />
+        </TouchableOpacity>
+      )}
+      {!item.images && (
+        <TouchableOpacity
+          style={{
+            marginVertical: 10,
+            backgroundColor: 'black',
+            alignItems: 'center',
+            objectFit: 'contain',
+            position: 'absolute',
+            bottom: 120,
+            right: 10,
+            padding: 2,
+            borderRadius: 100,
+            width: 30,
+            height: 30,
+          }}
+          onPress={handleToggleMute}>
+          {isMuted ? (
+            <Ionicons
+              name="volume-mute-outline"
+              size={25}
+              color="white"
+              style={{
+                width: 20,
+                height: 20,
+              }}
+            />
+          ) : (
+            <Ionicons
+              name="volume-high-outline"
+              size={25}
+              color="white"
+              style={{
+                width: 20,
+                height: 20,
+              }}
+            />
+          )}
+        </TouchableOpacity>
+      )}
+
+      <Animated.View
+        style={[styles.centerHeart, {transform: [{scale: heartScale}]}]}>
+        <AntDesign
+          name="heart"
+          size={120}
+          color={isSelected ? redColor : 'white'}
+        />
+      </Animated.View>
+
+      <TouchableOpacity
+        style={{position: 'absolute', top: 90, right: 10}}
+        onPress={onPressOpenModal}>
+        <Entypo name="dots-three-vertical" size={20} color="white" />
+      </TouchableOpacity>
+
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={styles.iconContainer}>
           <AntDesign
@@ -170,6 +257,19 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             color={isSelected ? redColor : 'black'}
             style={styles.icon}
           />
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={handleAddToCart}>
+            <Image
+              source={ADD_TO_CART}
+              style={{
+                width: 22,
+                height: 22,
+                marginVertical: 5,
+                objectFit: 'contain',
+              }}
+            />
+          </TouchableOpacity>
           <Image
             source={SHARE}
             style={{
@@ -183,21 +283,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
         <View style={[styles.ratingcontainer, {marginRight: 10}]}>
           <Text style={styles.ratingText}>3.8</Text>
           <Icon name="star" size={16} color="#fff" />
-          {/* <Text style={styles.reviewsText}>| 3.7K</Text> */}
         </View>
-        {/* <TouchableOpacity
-          style={styles.iconContainer}
-          onPress={handleAddToCart}>
-          <Image
-            source={ADD_TO_CART}
-            style={{
-              width: 27,
-              height: 27,
-              marginVertical: 5,
-              objectFit: 'contain',
-            }}
-          />
-        </TouchableOpacity> */}
       </View>
       <View
         style={{
@@ -208,11 +294,6 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
         <Text style={{color: 'black', width: '60%'}}>
           In publishing and graphic design more
         </Text>
-        {/* <View style={styles.ratingcontainer}>
-          <Text style={styles.ratingText}>3.8</Text>
-          <Icon name="star" size={16} color="#fff" />
-          <Text style={styles.reviewsText}>| 3.7K</Text>
-        </View> */}
       </View>
       <View
         style={{
@@ -221,11 +302,6 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           marginHorizontal: 10,
           alignItems: 'center',
         }}>
-        {/* <View style={styles.ratingcontainer}>
-          <Text style={styles.ratingText}>3.8</Text>
-          <Icon name="star" size={16} color="#fff" />
-          <Text style={styles.reviewsText}>| 3.7K</Text>
-        </View> */}
         <View style={{flexDirection: 'row', gap: 10}}>
           <Text style={{color: 'black', fontSize: 16}}>₹620</Text>
           <Text
@@ -238,22 +314,22 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           </Text>
           <Text style={{color: green, fontSize: 14}}>60% off</Text>
         </View>
-        <TouchableOpacity style={styles.buyButton} onPress={handleAddToCart}>
+        <TouchableOpacity
+          style={styles.buyButton}
+          onPress={() => {
+            navigation.navigate('ProductDetails', {
+              product: item,
+            });
+          }}>
           <Text style={{color: '#fff', alignSelf: 'center'}}>{'Buy Now'}</Text>
         </TouchableOpacity>
       </View>
-      {/* <View style={{flexDirection: 'row', marginHorizontal: 10, gap: 10}}>
-        <Text style={{color: 'black', fontSize: 16}}>₹620</Text>
-        <Text
-          style={{
-            fontSize: 14,
-            textDecorationLine: 'line-through',
-            color: '#808080',
-          }}>
-          ₹800
-        </Text>
-        <Text style={{color: green, fontSize: 14}}>60% off</Text>
-      </View> */}
+      {modalVisible && (
+        <HomeScreenModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+        />
+      )}
     </View>
   );
 };
@@ -282,7 +358,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
-    gap: 14,
+    gap: 2,
     marginHorizontal: 10,
   },
   icon: {
@@ -318,6 +394,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 6,
     justifyContent: 'center',
+  },
+  centerHeart: {
+    position: 'absolute',
+    top: '30%',
+    left: '35%',
+    transform: [{translateX: -40}, {translateY: -40}],
+  },
+  carouselItem: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
 });
 

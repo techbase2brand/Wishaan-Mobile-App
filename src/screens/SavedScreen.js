@@ -14,23 +14,14 @@ import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import {blackColor, redColor, whiteColor} from '../constants/Color';
 import {spacings, style} from '../constants/Fonts';
 import {BaseStyle} from '../constants/Style';
-import {REEL_PLAY_WHITE} from '../assets/Image';
+import {REEL_PLAY_WHITE, SHARE} from '../assets/Image';
 import {staticWishList} from '../constants/Constants';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
 import Header from '../components/Header';
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import ReportIssueButton from '../components/ReportIssueButton';
 
-const {
-  alignJustifyCenter,
-  textAlign,
-  positionAbsolute,
-  resizeModeContain,
-  flexDirectionRow,
-  flex,
-  borderRadius10,
-  justifyContentSpaceBetween,
-  alignItemsCenter,
-} = BaseStyle;
+const {alignJustifyCenter, positionAbsolute} = BaseStyle;
 export default function SavedScreen({navigation}) {
   const isFocused = useIsFocused();
 
@@ -72,6 +63,9 @@ export default function SavedScreen({navigation}) {
 
   return (
     <View style={styles.container}>
+      <View style={{position: 'absolute', bottom: 180, right: 20, zIndex: 10}}>
+        <ReportIssueButton navigation={navigation} />
+      </View>
       <Header
         backIcon={true}
         text={'Saved Items'}
@@ -126,8 +120,7 @@ export default function SavedScreen({navigation}) {
                       navigation.navigate('ProductDetails', {
                         product: item,
                       });
-                    }}
-                  >
+                    }}>
                     <Video
                       bufferConfig={{
                         minBufferMs: 2000,
@@ -155,15 +148,31 @@ export default function SavedScreen({navigation}) {
 
                   <View
                     style={{
+                      flexDirection: 'row',
                       width: '100%',
                       height: hp(7),
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                     }}>
                     <Text
-                      style={[styles.wishListItemName, {color: blackColor}]}>
+                      style={[
+                        styles.wishListItemName,
+                        {color: blackColor, width: '80%'},
+                      ]}>
                       {item?.title}
                     </Text>
+                    <TouchableOpacity>
+                      <Image
+                        source={SHARE}
+                        style={{
+                          width: 20,
+                          height: 20,
+                          marginVertical: 10,
+                          objectFit: 'contain',
+                        }}
+                      />
+                    </TouchableOpacity>
+
                     {/* <Text style={[styles.wishListItemPrice]}>{itemCurrencyCode}</Text> */}
                   </View>
                   <View

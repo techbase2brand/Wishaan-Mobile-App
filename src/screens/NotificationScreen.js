@@ -294,7 +294,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   notificationItem: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     marginVertical: 8,
     borderRadius: 8,
     elevation: 2,
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
     backgroundColor: redColor,
     marginTop: 10,
     width: wp(40),
-    height: '80%',
+    height: '77%',
     borderTopRightRadius:8,
     borderBottomRightRadius:8,
   },

@@ -8,14 +8,24 @@ import {
   FlatList,
   TextInput,
   Keyboard,
+  Platform,
+  Modal,
+  Pressable,
 } from 'react-native';
 import {redColor, blackColor, grayColor, whiteColor} from '../constants/Color';
+import Entypo from 'react-native-vector-icons/dist/Entypo';
+import AntDesign from 'react-native-vector-icons/dist/AntDesign';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import {spacings, style} from '../constants/Fonts';
 import {BaseStyle} from '../constants/Style';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
-import {BELL_ICON, MAIN_ICON, MENU_ICON, SEARCH_ICON} from '../assets/Image';
-// import MenuModal from '../components/Modal/MenuModal';
+import {
+  BELL_ICON,
+  MAIN_ICON,
+  MENU_ICON,
+  SAVED_ICON,
+  SEARCH_ICON,
+} from '../assets/Image';
 const {
   alignItemsCenter,
   alignJustifyCenter,
@@ -33,6 +43,7 @@ const Header = ({
   onPress,
   textinput,
   notification,
+  saved,
   mainIcon,
   closeIcon,
   menuImage,
@@ -42,6 +53,12 @@ const Header = ({
   onPressShopByCatagory,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const handleOpenModal = () => setModalVisible(true);
+  const handleCloseModal = () => setModalVisible(false);
+  const handleSaved = () => {
+    navigation.navigate('Saved');
+    setModalVisible(false);
+  };
   const OnClickBackIcon = () => {
     navigation.goBack();
   };
@@ -57,7 +74,7 @@ const Header = ({
   const trimcateText = text => {
     const words = text.split(' ');
     if (words.length > 3) {
-      return words.slice(0, 3).join(' ') + '...';
+      return words?.slice(0, 3).join(' ') + '...';
     }
     return text;
   };
@@ -87,9 +104,33 @@ const Header = ({
           )}
           {menuImage && (
             <TouchableOpacity
-              style={[alignJustifyCenter, {width: wp(10)}]}
+              style={[alignJustifyCenter, {}]}
               onPress={() => setModalVisible(true)}>
-              <Image
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 5,
+                }}>
+                <Image
+                  source={require('../assets/LoginLogo.png')}
+                  style={{
+                    width: wp(24),
+                    height: hp(6),
+                    resizeMode: 'contain',
+                    marginLeft: spacings.large,
+                  }}
+                />
+                {/* <Text style={styles.logoText}>Wishaan</Text> */}
+                <Entypo
+                  name={'chevron-small-down'}
+                  size={24}
+                  color={blackColor}
+                  style={{marginTop: 8}}
+                />
+              </View>
+
+              {/* <Image
                 source={MENU_ICON}
                 style={{
                   width: wp(8),
@@ -97,7 +138,7 @@ const Header = ({
                   resizeMode: 'contain',
                   marginLeft: spacings.large,
                 }}
-              />
+              /> */}
             </TouchableOpacity>
           )}
           {text && (
@@ -122,7 +163,7 @@ const Header = ({
           )}
         </View>
 
-        {mainIcon && (
+        {/* {mainIcon && (
           <Image
             source={MAIN_ICON}
             style={{
@@ -132,7 +173,7 @@ const Header = ({
               marginLeft: 40,
             }}
           />
-        )}
+        )} */}
         <View
           style={[
             flexDirectionRow,
@@ -154,6 +195,35 @@ const Header = ({
                 }}
               />
             </TouchableOpacity>
+          )}
+          {saved && (
+            <View>
+              <TouchableOpacity
+                style={[alignJustifyCenter, {width: wp(10)}]}
+                onPress={() => navigation.navigate('Saved')}>
+                <AntDesign
+                  // onPress={handlePress}
+                  name={'hearto'}
+                  size={24}
+                  color={'black'}
+                  style={styles.icon}
+                />
+                {/* <Image
+                  source={SAVED_ICON}
+                  style={{
+                    width: wp(8),
+                    height: hp(3.3),
+                    resizeMode: 'contain',
+                    marginLeft: spacings.large,
+                  }}
+                /> */}
+              </TouchableOpacity>
+              {totalQuantity > 0 && (
+                <View style={styles.badgeContainer}>
+                  <Text style={styles.badgeText}>{'6'}</Text>
+                </View>
+              )}
+            </View>
           )}
           {notification && (
             <View>
@@ -179,6 +249,35 @@ const Header = ({
           )}
         </View>
       </View>
+      {/* Modal with Edit and Delete options */}
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={handleCloseModal}>
+        <Pressable style={styles.overlay} onPress={handleCloseModal}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={[
+                styles.modalOption,
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}
+              onPress={() => console.log('Edit clicked')}>
+              <Text style={styles.optionText}>Shop by categories</Text>
+              {/* <Entypo name={'chevron-right'} size={24} color={blackColor} /> */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.modalOption,
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}
+              onPress={handleSaved}>
+              <Text style={styles.optionText}>Saved</Text>
+              {/* <Entypo name={'chevron-right'} ssize={24} color={blackColor} /> */}
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
       {/* {modalVisible && <MenuModal
         modalVisible={modalVisible} setModalVisible={setModalVisible} onPressCart={OnClickCartIcon} onPressSearch={OnClickSearchBar} navigation={navigation} onPressShopByCatagory={onPressShopByCatagory} />} */}
     </View>
@@ -190,6 +289,13 @@ const styles = StyleSheet.create({
     fontSize: style.fontSizeMedium1x.fontSize,
     fontWeight: style.fontWeightMedium.fontWeight,
     color: blackColor,
+    marginLeft: spacings.normalx,
+  },
+  logoText: {
+    fontFamily: Platform.OS === 'ios' ? 'Billabong-iOS' : 'Billabong-Android',
+    // fontFamily: 'Billabong', // Use 'Billabong' for Instagram logo-like font or any cursive font available
+    fontSize: 14,
+    color: 'black',
     marginLeft: spacings.normalx,
   },
   input: {
@@ -267,6 +373,35 @@ const styles = StyleSheet.create({
     color: whiteColor,
     fontSize: wp(2.5), // Adjust based on the size of your badge
     fontWeight: 'bold',
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    position: 'absolute',
+    left: 10,
+    top: '13%',
+    paddingVertical: 10,
+    borderRadius: 8,
+    width: 200,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  modalOption: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderColor: '#f0f0f0',
+  },
+  optionText: {
+    fontSize: 16,
+    // textAlign: 'center',
   },
 });
 

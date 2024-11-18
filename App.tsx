@@ -4,7 +4,6 @@
  *
  * @format
  */
-
 import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {Alert, SafeAreaView, StyleSheet} from 'react-native';
@@ -19,7 +18,7 @@ import {
 import {useDispatch} from 'react-redux';
 import {Videos} from './src/constants/Constants';
 import AuthNavigator from './src/navigations/AuthNavigator';
-import PushNotification from 'react-native-push-notification';
+// import PushNotification from 'react-native-push-notification';
 import SplashScreen from './src/screens/SplashScreen';
 
 function App() {
@@ -38,7 +37,7 @@ function App() {
   }, [dispatch]);
   useEffect(() => {
     // Set the badge count to a static value, e.g., 10
-    PushNotification.setApplicationIconBadgeNumber(2);
+    // PushNotification.setApplicationIconBadgeNumber(2);
   }, []);
   const downloadVideos = async (videoList: any) => {
     console.log(`Video URL is null or undefined for video ID:`, videoList);

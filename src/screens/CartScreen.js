@@ -6,6 +6,7 @@ import {redColor, whiteColor} from '../constants/Color';
 import {spacings, style} from '../constants/Fonts';
 import {BaseStyle} from '../constants/Style';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
+import ReportIssueButton from '../components/ReportIssueButton';
 
 // Mock data for cart items
 const cartItems = [
@@ -21,6 +22,9 @@ export default function CartScreen({navigation}) {
 
   return (
     <View style={{flex: 1, backgroundColor: whiteColor}}>
+      <View style={{position: 'absolute', bottom: 100, right: 20, zIndex: 10}}>
+        <ReportIssueButton navigation={navigation} />
+      </View>
       <Header
         backIcon={true}
         text={'My Cart'}

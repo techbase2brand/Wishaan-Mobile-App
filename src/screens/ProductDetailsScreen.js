@@ -191,7 +191,11 @@ function ProductDetails({
               }}
               // poster={item?.thumb_url}
               // posterResizeMode={'cover'}
-              source={{uri: convertToProxyURL(product?.url)}}
+              source={{
+                uri: convertToProxyURL(
+                  product?.url ? product?.url : product?.video_url,
+                ),
+              }}
               style={{width: '100%', height: '100%'}}
               resizeMode="cover"
               repeat={true}
@@ -453,73 +457,7 @@ function ProductDetails({
                   View All Reviews
                 </Text>
               </Pressable>
-              {/* <Text
-                style={[
-                  styles.relatedProductsTitle,
-                  {color: blackColor, marginBottom: 20},
-                ]}>
-                Seller
-              </Text>
-
-              <View style={[flexDirectionRow, alignItemsCenter]}>
-                <View
-                  style={[{width: wp(20), height: hp(10)}, alignItemsCenter]}>
-                  <Image
-                    source={require('../assets/vipLogo.png')}
-                    style={[resizeModeContain, {width: wp(13), height: wp(13)}]}
-                  />
-                </View>
-                <View style={{width: '75%'}}>
-                  <Text
-                    style={[
-                      styles.productPrice,
-                      {padding: spacings.small, color: blackColor},
-                    ]}>
-                    David Smith
-                  </Text>
-
-                  <Text
-                    style={[
-                      styles.productDescription,
-                      {
-                        fontSize: style.fontSizeSmall1x.fontSize,
-                        color: blackColor,
-                      },
-                    ]}>
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                    aliquyam erat, sed ...
-                  </Text>
-                </View>
-              </View>
-              <Pressable
-                style={[
-                  styles.outOfStockButton,
-                  borderRadius10,
-                  {marginVertical: 20},
-                ]}
-                onPress={() =>
-                  navigation.navigate('SellerProfile', {
-                    product: product,
-                  })
-                }>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={[styles.addToCartButtonText, textAlign]}>
-                    View Profile
-                  </Text>
-                  <EvilIcons
-                    name="external-link"
-                    size={27}
-                    color={whiteColor}
-                    style={{marginTop: 0}}
-                  />
-                </View>
-              </Pressable> */}
+            
 
               {/* Recommended videos section */}
               <View style={{marginVertical: 10, marginLeft: 10}}>
@@ -1056,7 +994,7 @@ const styles = StyleSheet.create({
     fontSize: style.fontSizeExtraExtraSmall.fontSize,
     backgroundColor: redColor,
     padding: spacings.xxLarge,
-  }, 
+  },
   outOfStockButton: {
     width: wp(60),
     fontSize: style.fontSizeExtraExtraSmall.fontSize,

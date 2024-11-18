@@ -215,21 +215,21 @@ const ReportIssueScreen = ({navigation}) => {
   };
 
   const handleAddAttachment = () => {
-    if (attachments.length >= 3) {
+    if (attachments?.length >= 3) {
       alert('You can only upload up to 3 images.');
       return;
     }
     launchImageLibrary(
       {mediaType: 'photo', maxWidth: 300, maxHeight: 300},
       response => {
-        if (response.assets) {
-          setAttachments([...attachments, response.assets[0].uri]);
+        if (response?.assets) {
+          setAttachments([...attachments, response?.assets[0]?.uri]);
         }
       },
     );
   };
   const handleRemoveAttachment = index => {
-    const newAttachments = attachments.filter((_, i) => i !== index);
+    const newAttachments = attachments?.filter((_, i) => i !== index);
     setAttachments(newAttachments);
   };
   const handleSubmit = () => {
@@ -238,12 +238,12 @@ const ReportIssueScreen = ({navigation}) => {
     setForm({});
     setAttachments([]);
   };
-
+  //
   return (
     <View style={{flex: 1, backgroundColor: '#ffffff'}}>
       <Header
         backIcon={true}
-        text={'Report an Issue'}
+        text={'Report & Issue'}
         navigation={navigation}
         marginleft={20}
       />
@@ -259,14 +259,14 @@ const ReportIssueScreen = ({navigation}) => {
         <TextInput
           style={styles.input}
           placeholder="How can we help you *"
-          value={form.issueType}
+          value={form?.issueType}
           onChangeText={value => handleInputChange('issueType', value)}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Name*"
-          value={form.name}
+          value={form?.name}
           onChangeText={value => handleInputChange('name', value)}
         />
 
@@ -277,31 +277,28 @@ const ReportIssueScreen = ({navigation}) => {
           onChangeText={value => handleInputChange('email', value)}
           keyboardType="email-address"
         />
-
         <TextInput
           style={styles.input}
           placeholder="Phone number*"
-          value={form.phoneNumber}
+          value={form?.phoneNumber}
           onChangeText={value => handleInputChange('phoneNumber', value)}
           keyboardType="phone-pad"
         />
-
         <TextInput
           style={[styles.input, styles.messageInput]}
           placeholder="Message*"
-          value={form.message}
+          value={form?.message}
           onChangeText={value => handleInputChange('message', value)}
           multiline
         />
-
         <TouchableOpacity
           style={styles.attachmentButton}
           onPress={handleAddAttachment}>
           <Text style={styles.attachmentText}>+ Add attachment</Text>
         </TouchableOpacity>
 
-        {/* <View style={styles.attachmentsContainer}>
-          {attachments.map((uri, index) => (
+        <View style={styles.attachmentsContainer}>
+          {attachments?.map((uri, index) => (
             <View key={index} style={styles.attachmentWrapper}>
               <Image source={{uri}} style={styles.attachmentImage} />
               <TouchableOpacity
@@ -311,7 +308,7 @@ const ReportIssueScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
           ))}
-        </View> */}
+        </View>
 
         <Text style={styles.footerText}>
           Please use this form only for report and feedback purposes.
@@ -331,15 +328,12 @@ const ReportIssueScreen = ({navigation}) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: '#FFFFFF',
   },
   disclaimerBox: {
-    borderColor: '#808080',
-    borderWidth: 1,
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
@@ -369,7 +363,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   attachmentText: {
-    color: '#D32F2F',
+    color: redColor,
     fontSize: 16,
     fontWeight: '500',
   },

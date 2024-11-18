@@ -34,6 +34,8 @@ import ReferralScreen from '../screens/ReferralScreen';
 import ReportIssueScreen from '../screens/ReportIssueScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import {widthPercentageToDP as wp} from '../utils';
+import ChatScreen from '../screens/ChatScreen';
+import ConfirmReportIssues from '../screens/ConfirmReportIssues';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -68,6 +70,16 @@ function HomeStack() {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="ConfirmReportIssues"
+        component={ConfirmReportIssues}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
         options={{headerShown: false}}
@@ -92,6 +104,16 @@ function AddressStack() {
       <Stack.Screen
         name="NotificationScreen"
         component={NotificationScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ConfirmReportIssues"
+        component={ConfirmReportIssues}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -126,10 +148,41 @@ function SavedStack() {
         component={NotificationScreen}
         options={{headerShown: false}}
       />
+       <Stack.Screen
+        name="ConfirmReportIssues"
+        component={ConfirmReportIssues}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
 
+function CartStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Cart"
+        component={CartScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ConfirmReportIssues"
+        component={ConfirmReportIssues}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
 function ProfileStack() {
   return (
     <Stack.Navigator>
@@ -145,48 +198,7 @@ function ProfileStack() {
         component={SavedScreen}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="PickupAddressScreen"
-        component={PickupAddressScreen}
-        options={({ route }) => ({
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen
-        name="OrderDetailsScreen"
-        component={OrderDetailsScreen}
-        options={({ route }) => ({
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen
-        name="ReportIssueScreen"
-        component={ReportIssueScreen}
-        options={({ route }) => ({
-          headerShown: false,
-        })}
-      /> */}
-      {/* <Stack.Screen
-        name="ReturnRequestScreen"
-        component={ReturnRequestScreen}
-        options={({ route }) => ({
-          headerShown: false,
-        })} ReturnRequestScreen
-      />
-      <Stack.Screen
-        name="OrderHistory"
-        component={OrderHistory}
-        options={({ route }) => ({
-          headerShown: false,
-        })} ReturnRequestScreen
-      /> */}
-      {/* <Stack.Screen
-        name="HelpCenter"
-        component={HelpCenter}
-        options={({ route }) => ({
-          headerShown: false,
-        })} ReturnRequestScreen
-      /> */}
+
       <Stack.Screen
         name="Cart"
         component={CartScreen}
@@ -228,8 +240,23 @@ function ProfileStack() {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ConfirmDeliveryLocation"
+        component={ConfirmDeliveryLocation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="ReferralScreen"
         component={ReferralScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ConfirmReportIssues"
+        component={ConfirmReportIssues}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -376,7 +403,7 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Cart"
-        component={CartScreen}
+        component={CartStack}
         // options={{headerShown: false}}
         options={{
           tabBarStyle: {backgroundColor: whiteColor},
@@ -446,7 +473,8 @@ function BottomTabNavigator() {
                 routeName == 'ConfirmDeliveryLocation' ||
                 routeName == 'AccountSettings' ||
                 routeName == 'ReportIssueScreen' ||
-                routeName == 'ProfileScreen'
+                routeName == 'ProfileScreen' ||
+                routeName == 'ChatScreen'
                   ? 'none'
                   : 'flex',
             },

@@ -22,6 +22,7 @@ import RecommendedVideo from '../components/RecommendedVideo';
 import VideoList from '../components/VideoList';
 import FastImage from 'react-native-fast-image';
 import {spacings} from '../constants/Fonts';
+import ReportIssueButton from '../components/ReportIssueButton';
 
 const {width, height} = Dimensions.get('window');
 const GIF = {
@@ -81,7 +82,7 @@ export default function HomeScreen({navigation}) {
   const [productImagesAndTitles, setProductImagesAndTitles] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('All');
 
-  console.log('cachedFiles', cachedFiles);
+  console.log('cachedFiles', videos);
   useEffect(() => {}, [videos]);
   const handleFilterPress = item => {
     setSelectedFilter(item.name);
@@ -208,6 +209,10 @@ export default function HomeScreen({navigation}) {
       title: 'VIP Number Shop',
       data: [{type: 'vipNumberShop'}],
     },
+    {
+      title: 'Report Issue Button',
+      data: [{type: 'reportIssueButton'}],
+    },
   ];
 
   const renderSectionContent = ({item}) => {
@@ -222,6 +227,7 @@ export default function HomeScreen({navigation}) {
             mainIcon={true}
             menuImage={true}
             notification={true}
+            saved={true}
           />
         );
       case 'topSellingProducts':
@@ -296,14 +302,28 @@ export default function HomeScreen({navigation}) {
   };
 
   return (
+    // <SectionList
+    //   sections={sections}
+    //   keyExtractor={(item, index) => item?.type + index}
+    //   renderItem={renderSectionContent}
+    //   // renderSectionHeader={renderSectionHeader}
+    //   contentContainerStyle={{paddingBottom: 20, backgroundColor: '#fff'}}
+    //   showsVerticalScrollIndicator={false}
+    // />
+    <View style={{flex: 1, position: 'relative'}}>
     <SectionList
       sections={sections}
       keyExtractor={(item, index) => item?.type + index}
       renderItem={renderSectionContent}
-      // renderSectionHeader={renderSectionHeader}
       contentContainerStyle={{paddingBottom: 20, backgroundColor: '#fff'}}
       showsVerticalScrollIndicator={false}
     />
+
+    {/* The "Report Issue" button, positioned outside SectionList */}
+    <View style={{position: 'absolute', bottom: 50, right: 20, zIndex: 10}}>
+      <ReportIssueButton navigation={navigation}/>
+    </View>
+  </View>
   );
 }
 

@@ -160,7 +160,7 @@ const VideoList = ({
                   fontWeight: '500',
                   color: redColor,
                 }}>
-                See All
+                {/* See All */}
               </Text>
             </View>
             <FlatList
