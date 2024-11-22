@@ -11,6 +11,7 @@ import {
   Easing,
 } from 'react-native';
 import Video from 'react-native-video';
+import FontAwesome from 'react-native-vector-icons/dist/FontAwesome';
 import convertToProxyURL from 'react-native-video-cache';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,14 +19,25 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ADD_TO_CART, SHARE, VOICE} from '../assets/Image';
-import {grayColor, green, redColor} from '../constants/Color';
+import {
+  blackColor,
+  goldColor,
+  grayColor,
+  green,
+  lightGrayOpacityColor,
+  redColor,
+} from '../constants/Color';
 import {toggleMute, resetMute} from '../redux/actions/videoActions';
 import {useIsFocused} from '@react-navigation/native';
 import HomeScreenModal from './Modal/HomeScreenModal';
 import Carousal from './Carousal';
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from '../utils';
+import {BaseStyle} from '../constants/Style';
+import {spacings} from '../constants/Fonts';
 
 const {width: screenWidth} = Dimensions.get('window');
+const {flexDirectionRow, justifyContentSpaceBetween, alignItemsCenter} =
+  BaseStyle;
 const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
   const isFocused = useIsFocused();
   const isMuted = useSelector(state => state.muted.isMuted); // Access global state
@@ -137,7 +149,6 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           style={{
             fontSize: 18,
             fontWeight: '700',
-           
           }}>
           Regular Fit Slogan
         </Text>
@@ -201,7 +212,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             alignItems: 'center',
             objectFit: 'contain',
             position: 'absolute',
-            bottom: 120,
+            bottom: 140,
             right: 10,
             padding: 2,
             borderRadius: 100,
@@ -280,16 +291,27 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             }}
           />
         </View>
-        <View style={[styles.ratingcontainer, {marginRight: 10}]}>
+        <TouchableOpacity
+          style={[styles.buyButton, {marginRight: 10, marginTop: 10}]}
+          onPress={() => {
+            navigation.navigate('ProductDetails', {
+              product: item,
+            });
+          }}>
+          <Text style={{color: '#fff', alignSelf: 'center'}}>{'Buy Now'}</Text>
+        </TouchableOpacity>
+        {/* <View style={[styles.ratingcontainer, {marginRight: 10}]}>
           <Text style={styles.ratingText}>3.8</Text>
           <Icon name="star" size={16} color="#fff" />
-        </View>
+        </View> */}
       </View>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           marginHorizontal: 10,
+          // marginTop:10
+          marginVertical: 10,
         }}>
         <Text style={{color: 'black', width: '60%'}}>
           In publishing and graphic design more
@@ -314,7 +336,8 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           </Text>
           <Text style={{color: green, fontSize: 14}}>60% off</Text>
         </View>
-        <TouchableOpacity
+
+        {/* <TouchableOpacity
           style={styles.buyButton}
           onPress={() => {
             navigation.navigate('ProductDetails', {
@@ -322,7 +345,46 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
             });
           }}>
           <Text style={{color: '#fff', alignSelf: 'center'}}>{'Buy Now'}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'column',
+          position: 'absolute',
+          bottom: 20,
+          right: 10,
+        }}>
+        <Text style={[styles.relatedProductsTitle, {color: blackColor}]}>
+          {'Rating Reviews(4/5)'}
+        </Text>
+        <View
+          style={[styles.reviewSection, flexDirectionRow, alignItemsCenter]}>
+          <View
+            style={[
+              {width: wp(30), marginTop: 10},
+              justifyContentSpaceBetween,
+              flexDirectionRow,
+            ]}>
+            <FontAwesome name="star" size={17} color={goldColor} />
+            <FontAwesome name="star" size={17} color={goldColor} />
+            <FontAwesome name="star" size={17} color={goldColor} />
+            <FontAwesome name="star" size={17} color={goldColor} />
+            <FontAwesome name="star-o" size={17} color={goldColor} />
+          </View>
+          {/* <Text
+                  style={[
+                    styles.optionValue,
+                    {
+                      marginLeft: spacings.large,
+                      backgroundColor: lightGrayOpacityColor,
+                      paddingHorizontal: spacings.large,
+                      borderRadius: 5,
+                    },
+                  ]}>
+                  4/5
+                </Text> */}
+        </View>
       </View>
       {modalVisible && (
         <HomeScreenModal
@@ -412,6 +474,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 8,
+  },
+  reviewSection: {
+    width: '100%',
+    // height: hp(6),
   },
 });
 

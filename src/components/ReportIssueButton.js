@@ -12,7 +12,7 @@ const ReportIssueButton = ({navigation}) => {
           source={require('../assets/AccountScreen/about.png')}
           style={{width:30, height: 30,alignSelf:"center",}}
         /> */}
-        <Entypo name="info-with-circle" size={60} color={redColor} />
+        <Entypo name="info-with-circle" size={40} color={redColor} />
       </TouchableOpacity>
     </View>
   );

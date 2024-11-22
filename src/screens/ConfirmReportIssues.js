@@ -23,16 +23,7 @@ const ConfirmReportIssues = ({navigation}) => {
         marginleft={14}
         text={'Report & Issue'}
       />
-      {/* <Text style={styles.header}>Account settings</Text> */}
-
-      {/* Settings Options */}
-      {/* <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Delete account</Text>
-      </TouchableOpacity> 
-      <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Change Password</Text>
-      </TouchableOpacity> */}
-      <Text style={{textAlign: 'center', marginVertical: 20 , fontSize:18}}>
+      <Text style={{textAlign: 'center', marginVertical: 20, fontSize: 18}}>
         What issue are you facing?
       </Text>
       <View style={styles.sectionDivider} />
@@ -83,11 +74,6 @@ const ConfirmReportIssues = ({navigation}) => {
           source={require('../assets/vipPoster.png')}
           style={styles.adImage}
         />
-        {/* <Text style={styles.awardedByText}>
-          Awarded by Sonu Sood (Bollywood Actor)
-        </Text>
-        <Text style={styles.adTitle}>INTERNATIONAL BUSINESS AWARD</Text>
-        <Text style={styles.adWinner}>Winner 2023 - 24</Text> */}
       </View>
     </ScrollView>
   );
