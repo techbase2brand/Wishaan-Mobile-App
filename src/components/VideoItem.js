@@ -264,7 +264,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           <AntDesign
             onPress={handlePress}
             name={isSelected ? 'heart' : 'hearto'}
-            size={20}
+            size={22}
             color={isSelected ? redColor : 'black'}
             style={styles.icon}
           />
@@ -276,7 +276,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
               style={{
                 width: 22,
                 height: 22,
-                marginVertical: 5,
+                marginVertical: 10,
                 objectFit: 'contain',
               }}
             />

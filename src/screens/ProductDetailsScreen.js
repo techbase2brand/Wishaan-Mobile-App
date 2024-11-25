@@ -25,7 +25,11 @@ import {
 import {spacings, style} from '../constants/Fonts';
 import {BaseStyle} from '../constants/Style';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
-import {RATING_REVIEWS, recommendedVideos} from '../constants/Constants';
+import {
+  RATING_REVIEWS,
+  recommendedVideos,
+  staticWishList,
+} from '../constants/Constants';
 import RecommendedVideo from '../components/RecommendedVideo';
 import EvilIcons from 'react-native-vector-icons/dist/EvilIcons';
 import AntDesign from 'react-native-vector-icons/dist/AntDesign';
@@ -245,7 +249,7 @@ function ProductDetails({
                 {/* <Text style={[styles.productPrice, { color: blackColor }]}>{(variant?.price?.amount) ? (variant?.price?.amount) : (variant?.price)} {(variant?.price?.currencyCode) ? (variant?.price?.currencyCode) : shopCurrency}</Text> */}
 
                 <Text style={[styles.productPrice, {color: blackColor}]}>
-                  $ 620
+                  ₹ 620
                 </Text>
                 <Pressable
                   style={[
@@ -457,7 +461,6 @@ function ProductDetails({
                   View All Reviews
                 </Text>
               </Pressable>
-            
 
               {/* Recommended videos section */}
               <View style={{marginVertical: 10, marginLeft: 10}}>
@@ -511,17 +514,16 @@ function ProductDetails({
                 ]}>
                 {'You Might Like'}
               </Text>
-
               <View style={[styles.detailsBox]}>
                 <FlatList
-                  data={recommendedVideos}
+                  data={staticWishList}
                   keyExtractor={item => item?.id?.toString()}
-                  numColumns={2}
+                  horizontal
                   renderItem={({item, index}) => {
                     const isPlaying =
                       visibleVideoIndicesSaved[playingIndexSaved] === index;
-                    const itemPrice = '$200';
-                    const imageUrl = item?.video_url;
+                    const itemPrice = '₹200';
+                    const imageUrl = item?.url;
                     return (
                       <View style={[styles.itemContainer]}>
                         <Pressable
@@ -606,7 +608,7 @@ function ProductDetails({
                           style={{
                             width: '100%',
                             height: hp(7),
-                            alignItems: 'center',
+                            // alignItems: 'center',
                             justifyContent: 'center',
                           }}>
                           <Text

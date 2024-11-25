@@ -148,7 +148,7 @@ function SavedStack() {
         component={NotificationScreen}
         options={{headerShown: false}}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="ConfirmReportIssues"
         component={ConfirmReportIssues}
         options={{headerShown: false}}
@@ -401,7 +401,7 @@ function BottomTabNavigator() {
           };
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Cart"
         component={CartStack}
         // options={{headerShown: false}}
@@ -459,7 +459,69 @@ function BottomTabNavigator() {
             </View>
           ),
         }}
+      /> */}
+      <Tab.Screen
+        name="Cart"
+        component={CartStack}
+        options={({route}) => ({
+          headerShown: false,
+          tabBarStyle: {
+            // Hide the tab bar when on the Cart screen
+            display: 'none',
+          },
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 10,
+              }}>
+              <View
+                style={{
+                  height: 10,
+                  width: 50,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 1,
+                }}>
+                {totalQuantity > 0 && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      top: 4,
+                      right: 10,
+                      backgroundColor: redColor,
+                      borderRadius: wp(2),
+                      width: wp(4),
+                      height: wp(4),
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 999,
+                    }}>
+                    <Text
+                      style={{
+                        color: whiteColor,
+                        fontSize: wp(2.5),
+                        fontWeight: 'bold',
+                      }}>
+                      {totalQuantity}
+                    </Text>
+                  </View>
+                )}
+              </View>
+              <Image
+                source={CART_ICON}
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: focused ? redColor : grayColor,
+                }}
+              />
+            </View>
+          ),
+        })}
       />
+
       <Tab.Screen
         name="Account"
         component={ProfileStack}
