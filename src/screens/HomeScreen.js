@@ -320,9 +320,9 @@ export default function HomeScreen({navigation}) {
     />
 
     {/* The "Report Issue" button, positioned outside SectionList */}
-    <View style={{position: 'absolute', bottom: 50, right: 20, zIndex: 10}}>
+    {/* <View style={{position: 'absolute', bottom: 50, right: 20, zIndex: 10}}>
       <ReportIssueButton navigation={navigation}/>
-    </View>
+    </View> */}
   </View>
   );
 }

@@ -1,6 +1,7 @@
 import {Image, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import Feather from 'react-native-vector-icons/Feather';
 import HomeScreen from '../screens/HomeScreen';
 import WalletScreen from '../screens/WalletScreen';
 import AccountScreen from '../screens/AccountScreen';
@@ -183,6 +184,22 @@ function CartStack() {
     </Stack.Navigator>
   );
 }
+function ReportIssueScreenStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ConfirmReportIssues"
+        component={ConfirmReportIssues}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ReportIssueScreen"
+        component={ReportIssueScreen}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
 function ProfileStack() {
   return (
     <Stack.Navigator>
@@ -306,8 +323,8 @@ function BottomTabNavigator() {
             <Image
               source={iconSource}
               style={{
-                width: 24,
-                height: 24,
+                width: 25,
+                height: 25,
                 resizeMode: 'contain',
                 tintColor: focused ? redColor : grayColor,
               }}
@@ -521,7 +538,39 @@ function BottomTabNavigator() {
           ),
         })}
       />
-
+      <Tab.Screen
+        name="Help"
+        component={ReportIssueScreenStack}
+        options={({route}) => ({
+          headerShown: false,
+          tabBarStyle: {
+            // Hide the tab bar when on the Cart screen
+            display: 'none',
+          },
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                // marginBottom: 10,
+              }}>
+              <Feather
+                name="help-circle"
+                size={25}
+                color={focused ? redColor : grayColor}
+              />
+              {/* <Image
+                source={CART_ICON}
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: focused ? redColor : grayColor,
+                }}
+              /> */}
+            </View>
+          ),
+        })}
+      />
       <Tab.Screen
         name="Account"
         component={ProfileStack}

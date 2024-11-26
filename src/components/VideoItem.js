@@ -356,7 +356,7 @@ const VideoItem = ({item, index, currentIndex, navigation, onPress}) => {
           right: 10,
         }}>
         <Text style={[styles.relatedProductsTitle, {color: blackColor}]}>
-          {'Rating Reviews(4/5)'}
+          {'Total Reviews(345)'}
         </Text>
         <View
           style={[styles.reviewSection, flexDirectionRow, alignItemsCenter]}>

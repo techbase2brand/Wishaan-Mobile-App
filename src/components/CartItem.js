@@ -184,14 +184,14 @@ const CartItem = ({
           borderWidth: 1,
           borderColor: '#E6E6E6',
           backgroundColor: whiteColor,
-          paddingTop: 40,
+          // paddingTop: 40,
         },
       ]}>
-      <View>
         {/* Toggle Button at Bottom */}
         <Pressable
           onPress={() => toggleSelection(item.id)}
-          style={{position: 'absolute', top: -30, left: 0}}>
+          // style={{position: 'absolute', top: -30, left: 0}}
+          >
           <Icon
             name={'radio-button-checked'}
             size={24}
@@ -201,10 +201,10 @@ const CartItem = ({
         {/* Product Image */}
         <Image
           resizeMethod="resize"
-          style={[styles.productImage, resizeModeCover, borderRadius5]}
+          style={[styles.productImage, resizeModeCover, borderRadius5,{marginLeft:10}]}
           source={require('../assets/vipPoster.png')}
         />
-      </View>
+   
       {/* Product Info */}
       <View style={[styles.productText, flex, flexDirectionRow]}>
         <View style={[flex]}>
@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
-    padding: 15,
+    paddingVertical: 10,
+    paddingHorizontal:10,
     borderRadius: 5,
   },
   productText: {
