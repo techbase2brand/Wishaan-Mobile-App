@@ -20,6 +20,7 @@ const {
   positionAbsolute,
   textDecorationUnderline,
 } = BaseStyle;
+
 const LoginScreen = () => {
   const [selectedTab, setSelectedTab] = useState('otp'); // State to manage selected tab
   const [mobileNumber, setMobileNumber] = useState('');
@@ -113,8 +114,6 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
       ) : (
-        // <Text>with password</Text>
-        // Login with Password section
         <View style={styles.formContainer}>
           <TextInput
             style={[styles.input, {marginBottom: 20}]}

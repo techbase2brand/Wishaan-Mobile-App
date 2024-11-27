@@ -27,7 +27,6 @@ const DeleteAccountConfirmation = () => {
         instructions to complete the purchase, including providing shipping
         details and payment information.
       </Text>
-      {/* <Text>When you find a product you want to purchase, tap on it to view the product details .Check the price  </Text> */}
       <TouchableOpacity style={styles.deleteButton}>
         <Text style={styles.deleteButtonText}>Delete my account now</Text>
       </TouchableOpacity>

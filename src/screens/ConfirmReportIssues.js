@@ -8,13 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import {redColor} from '../constants/Color';
 import Header from '../components/Header';
 
 const ConfirmReportIssues = ({navigation}) => {
-  const adImageUrl = 'https://example.com/single-ad-image.jpg'; // Replace with your ad image URL
-
   return (
     <ScrollView style={styles.container}>
       <Header
@@ -53,6 +50,15 @@ const ConfirmReportIssues = ({navigation}) => {
         onPress={() => navigation.navigate('ReportIssueScreen')}>
         <View style={styles.sectionRow}>
           <Text style={styles.sectionText}>I want help with other issues</Text>
+        </View>
+        <Icon name="chevron-right" size={24} color="black" />
+      </TouchableOpacity>
+      <View style={styles.sectionDivider} />
+      <TouchableOpacity
+        style={styles.section}
+        onPress={() => navigation.navigate('ReportIssueScreen')}>
+        <View style={styles.sectionRow}>
+          <Text style={styles.sectionText}>App issues</Text>
         </View>
         <Icon name="chevron-right" size={24} color="black" />
       </TouchableOpacity>

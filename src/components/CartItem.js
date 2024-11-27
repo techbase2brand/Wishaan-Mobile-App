@@ -187,24 +187,29 @@ const CartItem = ({
           // paddingTop: 40,
         },
       ]}>
-        {/* Toggle Button at Bottom */}
-        <Pressable
-          onPress={() => toggleSelection(item.id)}
-          // style={{position: 'absolute', top: -30, left: 0}}
-          >
-          <Icon
-            name={'radio-button-checked'}
-            size={24}
-            color={item.selected ? '#39A937' : '#e6e6e6'}
-          />
-        </Pressable>
-        {/* Product Image */}
-        <Image
-          resizeMethod="resize"
-          style={[styles.productImage, resizeModeCover, borderRadius5,{marginLeft:10}]}
-          source={require('../assets/vipPoster.png')}
+      {/* Toggle Button at Bottom */}
+      <Pressable
+        onPress={() => toggleSelection(item.id)}
+        // style={{position: 'absolute', top: -30, left: 0}}
+      >
+        <Icon
+          name={'radio-button-checked'}
+          size={24}
+          color={item?.selected ? '#0C9409' : '#e6e6e6'}
         />
-   
+      </Pressable>
+      {/* Product Image */}
+      <Image
+        resizeMethod="resize"
+        style={[
+          styles.productImage,
+          resizeModeCover,
+          borderRadius5,
+          {marginLeft: 10},
+        ]}
+        source={require('../assets/vipPoster.png')}
+      />
+
       {/* Product Info */}
       <View style={[styles.productText, flex, flexDirectionRow]}>
         <View style={[flex]}>
@@ -219,10 +224,9 @@ const CartItem = ({
             Color: Black
           </Text>
           <Text style={[styles.productPrice, {color: blackColor}]}>
-          ₹{item.price}
+            ₹{item?.price}
           </Text>
         </View>
-
         {/* Quantity Container */}
         <View>
           <View style={[styles.quantityContainer, borderWidth1]}>
@@ -247,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
     paddingVertical: 10,
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     borderRadius: 5,
   },
   productText: {

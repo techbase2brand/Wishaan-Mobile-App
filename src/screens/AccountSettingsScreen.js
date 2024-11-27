@@ -8,13 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import {redColor} from '../constants/Color';
 import Header from '../components/Header';
 
 const AccountSettingsScreen = ({navigation}) => {
-  const adImageUrl = 'https://example.com/single-ad-image.jpg'; // Replace with your ad image URL
-
   return (
     <ScrollView style={styles.container}>
       <Header

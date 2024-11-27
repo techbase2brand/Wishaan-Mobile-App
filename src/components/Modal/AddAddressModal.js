@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: wp(100),
-    height: hp(80),
+    height: hp(90),
     paddingHorizontal: spacings.Large1x,
     paddingVertical: spacings.large,
     backgroundColor: whiteColor,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     width: wp(50),
     height: hp(5),
     backgroundColor: redColor,
-    marginTop: spacings.Large1x,
+    marginVertical: spacings.Large1x,
     alignSelf: 'center',
   },
 });

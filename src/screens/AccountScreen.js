@@ -230,20 +230,6 @@ export default function AccountScreen({navigation}) {
             </TouchableOpacity>
             <View style={styles.sectionDivider} />
 
-            {/* <TouchableOpacity
-              style={styles.section}
-              onPress={() => navigation.navigate('ReportIssueScreen')}>
-              <View style={styles.sectionRow}>
-                <Image
-                  source={require('../assets/AccountScreen/about.png')}
-                  style={{width: 20, height: 20}}
-                />
-                <Text style={styles.sectionText}>Report a Issue</Text>
-              </View>
-              <Icon name="chevron-right" size={24} color="black" />
-            </TouchableOpacity>
-            <View style={styles.sectionDivider} /> */}
-
             <TouchableOpacity
               style={styles.section}
               onPress={() => navigation.navigate('AccountSettings')}>

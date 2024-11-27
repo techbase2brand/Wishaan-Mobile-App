@@ -1,103 +1,3 @@
-// import {StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
-// import React from 'react';
-// import CartItem from '../components/CartItem';
-// import Header from '../components/Header';
-// import {redColor, whiteColor} from '../constants/Color';
-// import {spacings, style} from '../constants/Fonts';
-// import {BaseStyle} from '../constants/Style';
-// import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
-// import ReportIssueButton from '../components/ReportIssueButton';
-
-// // Mock data for cart items
-// const cartItems = [
-//   {id: '1', name: 'Product 1'},
-//   {id: '2', name: 'Product 2'},
-//   {id: '3', name: 'Product 3'},
-// ];
-
-// const {borderRadius10, textAlign} = BaseStyle;
-
-// export default function CartScreen({navigation}) {
-//   const renderItem = ({item}) => <CartItem item={item} />;
-
-//   return (
-//     <View style={{flex: 1, backgroundColor: whiteColor}}>
-//       <View style={{position: 'absolute', bottom: 100, right: 20, zIndex: 10}}>
-//         <ReportIssueButton navigation={navigation} />
-//       </View>
-//       <Header
-//         backIcon={true}
-//         text={'My Cart'}
-//         navigation={navigation}
-//         notification={true}
-//       />
-//       <View style={styles.container}>
-//         <FlatList
-//           data={cartItems}
-//           renderItem={renderItem}
-//           keyExtractor={item => item?.id}
-//           contentContainerStyle={{paddingVertical: 10}}
-//         />
-//       </View>
-//       <View style={styles.addToCartButtonContainer}>
-
-//         <Pressable
-//           // disabled={loading || !variantSelected}
-//           style={[styles.addToCartButton, borderRadius10, {width: wp(45)}]}
-//           // onPress={() => variant?.id && onAddToCart(variant.id, quantity)}
-//         >
-//           {/* {loading ? (
-//               <View style={[styles.addToCartButtonLoading, textAlign]}>
-//                 <ActivityIndicator size="small" color={whiteColor} />
-//               </View>
-//             ) : ( */}
-//           <Text
-//             style={[
-//               styles.addToCartButtonLoading,
-//               textAlign,
-//               {color: whiteColor},
-//             ]}>
-//             Buy Now
-//           </Text>
-//           {/* )} */}
-//         </Pressable>
-//       </View>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 10,
-//   },
-//   addToCartButtonContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end',
-//     alignItems: 'center',
-//     margin: 10,
-//   },
-//   addToCartButton: {
-//     fontSize: style.fontSizeExtraExtraSmall.fontSize,
-//     backgroundColor: redColor,
-//     padding: spacings.xxLarge,
-//   },
-//   outOfStockButton: {
-//     width: wp(60),
-//     fontSize: style.fontSizeExtraExtraSmall.fontSize,
-//     backgroundColor: redColor,
-//     paddingHorizontal: spacings.xxLarge,
-//     paddingVertical: 8,
-//     alignSelf: 'center',
-//   },
-//   addToCartButtonText: {
-//     fontSize: style.fontSizeNormal.fontSize,
-//     lineHeight: 20,
-//     color: whiteColor,
-//     fontWeight: style.fontWeightThin1x.fontWeight,
-//   },
-// });
-
 import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
@@ -111,7 +11,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CartItem from '../components/CartItem';
-import Header from '../components/Header';
 import {blackColor, redColor, whiteColor} from '../constants/Color';
 import {spacings, style} from '../constants/Fonts';
 import {BaseStyle} from '../constants/Style';
@@ -120,6 +19,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {heightPercentageToDP, widthPercentageToDP as wp} from '../utils';
 import ReportIssueButton from '../components/ReportIssueButton';
+import AddAddressModal from '../components/Modal/AddAddressModal';
 
 const cartItems = [
   {id: '1', name: 'Product 1', price: 1290},
@@ -128,6 +28,20 @@ const cartItems = [
   {id: '4', name: 'Product 1', price: 1290},
   {id: '5', name: 'Product 2', price: 990},
   {id: '6', name: 'Product 3', price: 690},
+];
+const addresses = [
+  {
+    id: '1',
+    type: 'Home',
+    details: '49 Featherstone Street, LONDON EC1Y 8SY',
+    phone: '+157 214 2541',
+  },
+  {
+    id: '2',
+    type: 'Office',
+    details: '10 Downing Street, LONDON SW1A 2AA',
+    phone: '+157 999 9999',
+  },
 ];
 
 const {alignItemsCenter, flexDirectionRow, alignJustifyCenter} = BaseStyle;
@@ -138,22 +52,13 @@ export default function CartScreen({navigation}) {
   );
   const [total, setTotal] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [addAddressModalVisible, setAddAddressModalVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const addresses = [
-    {
-      id: '1',
-      type: 'Home',
-      details: '49 Featherstone Street, LONDON EC1Y 8SY',
-      phone: '+157 214 2541',
-    },
-    {
-      id: '2',
-      type: 'Office',
-      details: '10 Downing Street, LONDON SW1A 2AA',
-      phone: '+157 999 9999',
-    },
-  ];
-
+  const [newAddress, setNewAddress] = useState({
+    type: '',
+    details: '',
+    phone: '',
+  });
   // Calculate the total whenever selectedItems changes
   useEffect(() => {
     const totalCost = selectedItems
@@ -247,16 +152,6 @@ export default function CartScreen({navigation}) {
           />
         </Pressable>
       </View>
-      {/* <View style={styles.addToCartButtonContainer}>
-        <Pressable
-          style={[styles.addToCartButton, borderRadius10, { width: wp(60) }]}
-          onPress={() => console.log('Selected Items:', selectedItems.filter((item) => item.selected))}
-        >
-          <Text style={[styles.addToCartButtonLoading, textAlign, { color: whiteColor }]}>
-            Buy Now (₹{total})
-          </Text>
-        </Pressable>
-      </View> */}
       {/* Modal for Address Selection */}
       <Modal
         visible={modalVisible}
@@ -280,11 +175,16 @@ export default function CartScreen({navigation}) {
                 marginVertical: 20,
                 width: wp(94),
               },
-            ]}>
+            ]}
+            onPress={() => {
+              setModalVisible(false); // Close the first modal
+              setAddAddressModalVisible(true);
+            }}>
             <View style={styles.sectionRow}>
-              <TouchableOpacity
-                style={{flexDirection: 'row'}}
-                onPress={() => navigation.navigate('ConfirmDeliveryLocation')}>
+              <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => {
+              setModalVisible(false); // Close the first modal
+              setAddAddressModalVisible(true);
+            }}>
                 <AntDesign name="plus" size={20} color={redColor} />
                 <Text
                   style={[styles.addAddress, {marginTop: 2, marginLeft: 2}]}>
@@ -294,18 +194,6 @@ export default function CartScreen({navigation}) {
             </View>
             <Icon name="chevron-right" size={24} color="black" />
           </TouchableOpacity>
-          {/* <FlatList
-            data={addresses}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.addressItem}
-                onPress={() => selectAddress(item)}
-              >
-                <Text style={styles.addressText}>{item}</Text>
-              </TouchableOpacity>
-            )}
-          /> */}
           <FlatList
             data={addresses}
             keyExtractor={item => item.id}
@@ -318,10 +206,10 @@ export default function CartScreen({navigation}) {
                   <View>
                     <Text style={styles.addressName}>{item.type}</Text>
                     <Text style={[styles.orderId, {width: '80%'}]}>
-                      {item.details}
+                      {item?.details}
                     </Text>
                     <Text style={[styles.addressPhone]}>
-                      Phone Number: {item.phone}
+                      Phone Number: {item?.phone}
                     </Text>
                   </View>
                 </View>
@@ -350,6 +238,15 @@ export default function CartScreen({navigation}) {
           {/* </View> */}
         </View>
       </Modal>
+
+      {/* Add Address Modal */}
+      {addAddressModalVisible && (
+        <AddAddressModal
+          visible={addAddressModalVisible}
+          onClose={() => setAddAddressModalVisible(false)}
+        />
+      )}
+      
     </View>
   );
 }

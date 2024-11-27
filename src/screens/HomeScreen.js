@@ -2,16 +2,12 @@ import {useState, useCallback, useRef, useEffect} from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
-  Image,
   FlatList,
   TouchableOpacity,
   Dimensions,
   SectionList,
-  ScrollView,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {useSelector, useDispatch} from 'react-redux';
 import Header from '../components/Header';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';

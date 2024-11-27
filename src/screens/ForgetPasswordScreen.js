@@ -7,7 +7,6 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  ImageBackground,
 } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from '../utils';
 import {spacings, style} from '../constants/Fonts';
@@ -20,20 +19,16 @@ import {
   mediumGray,
 } from '../constants/Color';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {EMAIL, CONFIRM_PASSWORD, PASSWORD} from '../constants/Constants';
 import OTPTextInput from 'react-native-otp-textinput';
 import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import SuccessModal from '../components/Modal/SuccessModal';
 const {
   flex,
   alignItemsCenter,
-  resizeModeContain,
   flexDirectionRow,
   alignJustifyCenter,
   positionAbsolute,
-  borderRadius5,
   borderWidth1,
-  justifyContentSpaceBetween,
 } = BaseStyle;
 
 const ForgetPasswordScreen = ({navigation}) => {
@@ -159,14 +154,7 @@ const ForgetPasswordScreen = ({navigation}) => {
               Enter your email for the verification process.We will send 6
               digits code to your email.
             </Text>
-            {/* <Text
-              style={[
-                styles.textInputHeading,
-                {marginTop: spacings.large, color: blackColor},
-              ]}>
-              {}
-            </Text> */}
-
+        
             <View style={styles.inputContainer}>
               <Text
                 style={[
@@ -197,44 +185,6 @@ const ForgetPasswordScreen = ({navigation}) => {
                 autoCapitalize="none"
               />
             </View>
-            {/* <View
-              style={[
-                styles.input,
-                borderRadius5,
-                borderWidth1,
-                flexDirectionRow,
-                alignItemsCenter,
-              ]}>
-              <Text
-                style={{
-                  width: '20%',
-                  backgroundColor: '#fff',
-                  marginLeft: 10,
-                  marginBottom: 40,
-                  zIndex: 99999,
-                  textAlign: 'center',
-                  fontSize: 16,
-                  color: '#333',
-                }}>
-                Email <Text style={styles.asterisk}>*</Text>
-              </Text> */}
-            {/* <View style={{flex: 1}}>
-                <TextInput
-                  placeholder={EMAIL}
-                  placeholderTextColor={grayColor}
-                  onChangeText={text => {
-                    setEmail(text);
-                    if (emailError) {
-                      setEmailError('');
-                    }
-                  }}
-                  value={email}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  style={{color: blackColor}}
-                />
-              </View> */}
-            {/* </View> */}
             {emailError ? (
               <Text style={styles.errorText}>{emailError}</Text>
             ) : null}
@@ -266,15 +216,7 @@ const ForgetPasswordScreen = ({navigation}) => {
                 containerStyle={styles.otpContainer}
                 textInputStyle={[styles.otpInput, {color: blackColor}]}
               />
-              {/* <TouchableOpacity disabled={resendButtonDisabled} onPress={hadleResendOtp}>
-                <Text style={{ color: blackColor, marginHorizontal: spacings.small }}>
-                  Email not Received?
-                  <Text style={{ color: resendButtonDisabled ? 'gray' : blackColor, fontWeight: style.fontWeightThin1x.fontWeight, textDecorationLine: "underline" }}>
-                    {resendButtonDisabled ? ` Resend code in ${timer}s` : ' Resend code'}
-
-                  </Text>
-                </Text>
-              </TouchableOpacity> */}
+             
             </View>
             <TouchableOpacity
               style={[styles.button, positionAbsolute, alignJustifyCenter]}
@@ -383,80 +325,7 @@ const ForgetPasswordScreen = ({navigation}) => {
               </View>
             </View>
 
-            {/* <View
-              style={[
-                {width: '100%', height: hp(18), marginTop: spacings.Large1x},
-              ]}>
-              <Text style={[styles.textInputHeading, {color: blackColor}]}>
-                {PASSWORD}
-              </Text>
-              <View
-                style={[
-                  styles.input,
-                  borderRadius5,
-                  borderWidth1,
-                  flexDirectionRow,
-                  alignItemsCenter,
-                ]}>
-                <View style={{flex: 1}}>
-                  <TextInput
-                    placeholder={PASSWORD}
-                    placeholderTextColor={grayColor}
-                    onChangeText={setPassword}
-                    value={password}
-                    secureTextEntry={!showPassword}
-                    style={{color: blackColor}}
-                  />
-                </View>
-                <TouchableOpacity onPress={toggleShowPassword}>
-                  <MaterialCommunityIcons
-                    name={showPassword ? 'eye' : 'eye-off'}
-                    size={20}
-                    color={grayColor}
-                  />
-                </TouchableOpacity>
-              </View>
-              {passwordError ? (
-                <Text style={styles.errorText}>{passwordError}</Text>
-              ) : null}
-              <Text style={[styles.textInputHeading, {color: blackColor}]}>
-                {CONFIRM_PASSWORD}
-              </Text>
-              <View
-                style={[
-                  styles.input,
-                  borderRadius5,
-                  borderWidth1,
-                  flexDirectionRow,
-                  alignItemsCenter,
-                ]}>
-                <View style={{flex: 1}}>
-                  <TextInput
-                    placeholder={CONFIRM_PASSWORD}
-                    placeholderTextColor={grayColor}
-                    onChangeText={text => {
-                      setConfirmPassword(text);
-                      if (passwordError) {
-                        setPasswordError('');
-                      }
-                    }}
-                    value={confirmPassword}
-                    secureTextEntry={!showConfirmPassword}
-                    style={{color: blackColor}}
-                  />
-                </View>
-                <TouchableOpacity onPress={toggleShowConfirmPassword}>
-                  <MaterialCommunityIcons
-                    name={showConfirmPassword ? 'eye' : 'eye-off'}
-                    size={20}
-                    color={grayColor}
-                  />
-                </TouchableOpacity>
-              </View>
-              {confirmPasswordError ? (
-                <Text style={styles.errorText}>{confirmPasswordError}</Text>
-              ) : null}
-            </View> */}
+        
             <TouchableOpacity
               style={[
                 styles.button,
@@ -509,7 +378,6 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 16,
-    // fontWeight: '500',
     color: '#333',
     marginBottom: 5,
   },
