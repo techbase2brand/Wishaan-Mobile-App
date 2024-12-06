@@ -257,12 +257,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    // justifyContent: 'center',
   },
   logo: {
     width: 120,
-    // height: 50,
-    // marginTop: 60,
   },
   illustration: {
     width: 250,
@@ -280,7 +277,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 20,
-    // backgroundColor:"green",
     borderRadius: 8,
   },
   tabButton: {
@@ -290,12 +286,8 @@ const styles = StyleSheet.create({
     width: '50%',
     alignItems: 'center',
     backgroundColor: '#e6e6e6',
-
-    // marginHorizontal: 10,
-    // backgroundColor:"red"
   },
   activeTab: {
-    // borderBottomColor: '#0000ff',
     backgroundColor: redColor,
   },
   tabText: {
@@ -305,7 +297,6 @@ const styles = StyleSheet.create({
   formContainer: {
     marginTop: 10,
     width: wp(80),
-    // backgroundColor:"red",
     alignItems: 'center',
   },
   input: {
@@ -317,8 +308,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   otpButton: {
-    // backgroundColor: '#0000ff',
-    // paddingVertical: 10,
     borderRadius: 8,
     marginBottom: 16,
     width: '100%',
@@ -346,7 +335,6 @@ const styles = StyleSheet.create({
   },
   socialIcons: {
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     width: 100,
   },
   appleIcon: {
